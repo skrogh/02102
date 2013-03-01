@@ -11,27 +11,27 @@ public class Opgave3 {
 	public static boolean stopProgram;
 	public static Scanner inputScanner;
 	
-	public static void main(String[] args) {
+	public static void main( String[] args ) {
 		stopProgram = false;
 		int iterations = 1;
 		int numberOfHits = 0;
 		inputScanner = new Scanner(System.in);
 		System.out.println("Type 'quit' to quit");
-		while( !stopProgram )  {
+		while ( !stopProgram )  {
 			iterations = getPositiveInt();
-			if( stopProgram ) 
+			if ( stopProgram ) 
 				break;
 			
 			numberOfHits = throwNeedle( iterations );
 			
-			if( numberOfHits == 0 ) {
-				System.out.println("No hits, try a larger number");
+			if ( numberOfHits == 0 ) {
+				System.out.println( "No hits, try a larger number" );
 				continue;
 			}
 			
 			double piApprox = (double)iterations / (double)numberOfHits;
-			System.out.println("Result: iterations = " + iterations + "\n Hits = " + numberOfHits
-					+ "\n Ratio = " + piApprox);
+			System.out.println( "Result: iterations = " + iterations + "\n Hits = " + numberOfHits
+					+ "\n Ratio = " + piApprox );
 			
 		}
 		
@@ -47,12 +47,12 @@ public class Opgave3 {
 		
 		int numberOfHits = 0;
 
-		for( int i=0; i<iterations; i++ ) {
-			needleCenter = Math.random()*lineSpacing;
+		for ( int i=0; i<iterations; i++ ) {
+			needleCenter = Math.random() * lineSpacing;
 			needleAngle = Math.random() * Math.PI/2.0f;
 			
-			if( lineSpacing - needleCenter < Math.cos(needleAngle)*needleLength/2 ||
-					needleCenter - Math.cos(needleAngle) * needleLength/2 < 0 )
+			if( lineSpacing - needleCenter < Math.cos( needleAngle ) * needleLength/2 ||
+					needleCenter - Math.cos( needleAngle ) * needleLength/2 < 0 )
 				numberOfHits++;
 		}
 		
@@ -68,13 +68,13 @@ public class Opgave3 {
 		try {
 			iterations = inputScanner.nextInt();
 		} catch( Exception InputMismatchException ) {
-			if( inputScanner.next().equals("quit"))
+			if ( inputScanner.next().equals("quit") )
 				stopProgram = true;
 			else
 				iterations = getPositiveInt();
 		}
 		
-		if( iterations <=0 )
+		if ( iterations <=0 )
 			iterations = getPositiveInt();
 		
 		return iterations;
