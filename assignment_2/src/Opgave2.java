@@ -1,3 +1,11 @@
+/*
+ * =============================================
+ * Carsten Nielsen og Søren Krogh Andersen
+ * Checks whether or not a string entered by
+ * the user is a palindrome.
+ * =============================================
+ */
+
 import static java.lang.System.out;
 import java.util.Scanner;
 
@@ -49,7 +57,7 @@ public class Opgave2 {
 	}
 	
 	
-	public static boolean charInString( char opa1, String opa2) {
+	public static boolean charInString( char opa1, String opa2 ) {
 		/*
 		 *  Returns true if the character "opa1" exists in the string "opa2"
 		 */

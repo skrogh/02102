@@ -2,14 +2,25 @@
  * =============================================
  * Carsten Nielsen og Søren Krogh Andersen
  * Approximates pi by "throwing Buffon's Needle"
+ * a number of times as specified by a user.
  * =============================================
  */
+
 import java.util.*;
 
 public class Opgave3 {
 	
 	public static boolean stopProgram;
 	public static Scanner inputScanner;
+	
+	/*
+	 * ================================================
+	 * Main program loop, continuously approximates PI
+	 * by throwing Buffon's a number of times entered by
+	 * the user.
+	 * 
+	 * ==================================================
+	 */
 	
 	public static void main( String[] args ) {
 		stopProgram = false;
@@ -30,13 +41,24 @@ public class Opgave3 {
 			}
 			
 			double piApprox = (double)iterations / (double)numberOfHits;
+			double absDeviation = Math.abs( piApprox - Math.PI );
 			System.out.println( "Result: iterations = " + iterations + "\n Hits = " + numberOfHits
-					+ "\n Ratio = " + piApprox );
+					+ "\n Ratio = " + piApprox + "\n Distance to Math.PI: " + absDeviation );
 			
 		}
 		
 	}
 	
+	/*
+	 * =========================================
+	 * throwNeedle:
+	 * Takes number of iterations as input.
+	 * Returns number of line crossings.
+	 * Simulates a needle throw by calculating
+	 * a center between two lines and determining
+	 * if the needle crosses the closest line
+	 * =========================================
+	 */
 	public static int throwNeedle( int iterations ) {
 		double needleLength = 1.0d;
 		double lineSpacing = 2.0d;
@@ -59,6 +81,14 @@ public class Opgave3 {
 		return numberOfHits;
 	}
 	
+	/*
+	 * ============================
+	 * getPositiveInt:
+	 * Returns a positive integer 
+	 * entered by a user. Also 
+	 * performs input validation.
+	 * ============================
+	 */
 	public static int getPositiveInt() {
 		
 		System.out.print( "Enter a positive number of iterations: " );

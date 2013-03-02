@@ -1,9 +1,13 @@
+/*
+ * =============================================
+ * Carsten Nielsen og Søren Krogh Andersen
+ * Converts a number entered by the user to
+ * roman numerals.
+ * =============================================
+ */
+
 import static java.lang.System.out;
 import java.util.Scanner;
-
-
-
-
 
 public class Opgave1 {
 	
