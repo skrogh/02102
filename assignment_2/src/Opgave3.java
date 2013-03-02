@@ -21,13 +21,13 @@ public class Opgave3 {
 	 * 
 	 * ==================================================
 	 */
-	
 	public static void main( String[] args ) {
 		stopProgram = false;
 		int iterations = 1;
 		int numberOfHits = 0;
 		inputScanner = new Scanner(System.in);
-		System.out.println("Type 'quit' to quit");
+		System.out.println( "Type 'quit' to quit ");
+		
 		while ( !stopProgram )  {
 			iterations = getPositiveInt();
 			if ( stopProgram ) 
@@ -42,8 +42,8 @@ public class Opgave3 {
 			
 			double piApprox = (double)iterations / (double)numberOfHits;
 			double absDeviation = Math.abs( piApprox - Math.PI );
-			System.out.println( "Result: iterations = " + iterations + "\n Hits = " + numberOfHits
-					+ "\n Ratio = " + piApprox + "\n Distance to Math.PI: " + absDeviation );
+			System.out.println( "Result: \n \titerations = " + iterations + "\n\tHits = " + numberOfHits
+					+ "\n\tRatio = " + piApprox + "\n\tDistance to Math.PI: " + absDeviation );
 			
 		}
 		
