@@ -82,7 +82,7 @@ public class Opgave2 {
 		/*
 		 * Returns true if the entered string is the same, no matter in which direction you read it
 		 */
-		in = leaveLiterals( in.toLowerCase() , ALPHABET_LOWER ); // cast to lowercase and trimm of all non letters.
+		in = leaveLiterals( in.toLowerCase() , ALPHABET_LOWER ); // cast to lower case and trim of all non letters.
 		return in.matches( reverseString( in ) );
 	}
 	
