@@ -1,108 +1,12 @@
-\documentclass{article}
-\usepackage{fancyhdr}
-\usepackage[top=3cm, bottom=2cm, left=2cm, right=4cm]{geometry}
-\usepackage[english]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{graphicx}
-\usepackage{caption}
-%\usepackage{textpos}
-\usepackage{color}
-\usepackage{xcolor}
- \usepackage{listingsutf8}
-  \usepackage{courier}
- 
-\definecolor{javared}{rgb}{0.6,0,0} % for strings
-\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
-\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
-\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
-%\definecolor{box}{rgb}{0.98,0.98,0.98} % box
+\input{Pre}
 
-\lstset{language=Java,
-basicstyle=\ttfamily,
-keywordstyle=\color{javapurple}\bfseries,
-stringstyle=\color{javared},
-commentstyle=\color{javagreen},
-morecomment=[s][\color{javadocblue}]{/**}{*/},
-numbers=left,
-numberstyle=\tiny\color{black},
-stepnumber=2,
-numbersep=10pt,
-tabsize=4,
-frame=single,
-xleftmargin=17pt,
- framexleftmargin=17pt,
- framexrightmargin=5pt,
- framexbottommargin=4pt,
-%backgroundcolor=\color{box},
-showspaces=false,
-showstringspaces=false}
-	 
-%  \lstset{
-%          basicstyle=\footnotesize\ttfamily, % Standardschrift
-%          %numbers=left,               % Ort der Zeilennummern
-%          numberstyle=\tiny,          % Stil der Zeilennummern
-%          %stepnumber=2,     s          % Abstand zwischen den Zeilennummern
-%          numbersep=5pt,              % Abstand der Nummern zum Text
-%          tabsize=2,                  % Groesse von Tabs
-%          extendedchars=true,         %
-%          breaklines=true,            % Zeilen werden Umgebrochen
-%          keywordstyle=\color{red},
-%     		frame=b,         
-%  %        keywordstyle=[1]\textbf,    % Stil der Keywords
-%  %        keywordstyle=[2]\textbf,    %
-%  %        keywordstyle=[3]\textbf,    %
-%  %        keywordstyle=[4]\textbf,   \sqrt{\sqrt{}} %
-%          stringstyle=\color{white}\ttfamily, % Farbe der String
-%          showspaces=false,           % Leerzeichen anzeigen ?
-%          showtabs=false,             % Tabs anzeigen ?
-%          xleftmargin=17pt,
-%          framexleftmargin=17pt,
-%          framexrightmargin=5pt,
-%          framexbottommargin=4pt,
-%          backgroundcolor=\color{lightgray},
-%          showstringspaces=false,      % Leerzeichen in Strings anzeigen ?  
-%          extendedchars=true      
-%  }
- 
- \lstloadlanguages{% Check Dokumentation for further languages ...
-         %[Visual]Basic
-         %Pascal
-         %C
-         %C++
-         %XML
-         %HTML
-         Java
-         %VHDL
- }
-    %\DeclareCaptionFont{blue}{\color{blue}} 
 
-  %\captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
-  \usepackage{caption}
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
-%\lstset{language=Java}
 
-\addto\captionsdanish{%
-  \renewcommand{\abstractname}%
-    {Abstract}%
-}
-
-%\setcounter{chapter}{1}
-\setcounter{section}{0}
-
-\pagestyle{fancy}
-
-%\lhead{}
-%\chead[<ch-even>]{<ch-odd>}	
-\rhead{Carsten Nielsen s123161, Søren Krogh Andersen s123369}
-
-\cfoot[\thepage]{\thepage}
 \begin{document}
 
 Test
 \input{Opgave1}
+\input{Opgave2}
+\input{Opgave3}
 
 \end{document}
