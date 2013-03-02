@@ -9,7 +9,28 @@ public class Opgave2 {
 	public static final String ALPHABET = ALPHABET_LOWER + ALPHABET_UPPER;
 	
 	public static void main( String[] arg ) {
-		out.println( isPalindrome( "Do geese see god?" ) );
+		
+		Scanner console = new Scanner( System.in );
+		
+		boolean exit = false;
+		while( !exit ) {
+			out.println( "Input a string. Input \"exit\" to end the program." );
+	
+			String in  = console.nextLine(); // temporary string storing the input
+			
+			if ( in.matches( "exit" ) )
+				exit = true; // escape the while-loop and continue.
+			else {
+				if ( isPalindrome( in ) )
+					out.println( "\"" + in + "\"\nIs a palindrome." );
+				else
+					out.println( "\"" + in + "\"\nIs not a palindrome!" );
+			}
+		}
+		
+		out.println( "Done!" );
+		
+		console.close();
 	}
 	
 	public static String leaveLiterals( String from, String literals ) {
