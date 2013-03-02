@@ -26,7 +26,7 @@ public class Opgave3 {
 		int iterations = 1;
 		int numberOfHits = 0;
 		inputScanner = new Scanner(System.in);
-		System.out.println( "Type 'quit' to quit ");
+		System.out.println( "Type 'quit' to quit" );
 		
 		while ( !stopProgram )  {
 			iterations = getPositiveInt();
