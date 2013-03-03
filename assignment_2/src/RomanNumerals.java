@@ -193,7 +193,7 @@ public class RomanNumerals {
 				int testNumber = (int) ( j * Math.pow( 10, i ) );
 				String romanTestNumeral = arabToRoman( testNumber );
 				
-				System.out.print( j + "*" + "10^" + i + " = " + romanTestNumeral + "  " );
+				out.print( j + "*" + "10^" + i + " = " + romanTestNumeral + "\t" );
 				
 				if ( i == 8 )
 					break;
