@@ -9,6 +9,7 @@
 *.aux
 *.dvi
 *.pdf
+!src/assignment_2/Rapport/picures/**/*
 
 # Packages #
 ############

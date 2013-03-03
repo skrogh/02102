@@ -1,6 +1,44 @@
 \section{Opgave 1}
 \subsection{Beskrivelse og Design}
-
+	Et program ønskes, der kan omskrive arabiske tal til romerske,
+	således at ex. 15 konverteres til \emph{XV}.
+	
+	Romertal er opbygget af en række bogstaver med forskellige værdier,
+	\emph{I} har værdien 1 \emph{V}, værdien 5. En komplet liste over værdier findes i tabel~\ref{fig:romertal1}.
+	Det ses at nogle værdier kan udtrykkes på flere måder, en liste over vores valg af bogstaver findes i tabel~\ref{fig:romertal2}.
+	
+	Romertal stykkes så sammen af disse bogstaver, læses de fra højre mod venstre lægges værdierne af de bogstaver man møder sammen;
+	med mindre man møder et bogstav, med en værdi mindre end de forgående. I dette tilfælde trækkes værdien fra.
+	Det er kun ``lovligt'' at trække ét bogstav fra af gangen og kun hvis dette har en værdi der ligger en dekade under værdien af det forgående bogstav.
+	Desuden skal det være et bogstav med værdien $10^n~n\in\mathbb{N}$.
+	Dvs. der må stå et enkelt \emph{I} før \emph{X} og \emph{V}, \emph{X} før \emph{C} og \emph{L} osv.
+	
+	I table~\ref{fig:romertal1} kan vi se at tallede 1 og 5 findes i alle dekader (op til et maksimum på 100.000.000).
+	tallene 1-9 kan således skrives:
+	\begin{align*}
+		1 &= 1\\
+		2 &= 1 + 1\\
+		3 &= 1 + 1 + 1\\
+		4 &= 5 - 1\\
+		5 &= 5\\
+		6 &= 5 + 1\\
+		7 &= 5 + 1 + 1\\
+		8 &= 5 + 1 + 1 + 1\\
+		9 &= 10 - 1\\
+	\end{align*}
+	
+	vælger vi bogstaver i den rigtige dekade kan vi således skrive alle cifre i tallet op til 100.000.000.
+	Efter dette skiftes til 1-talssystemet, så der bare lægges det korrekte multipum af 100.000.000 til.
+	
+	Et flowdiagram over programmets struktur er vist i figur~\ref{fig:1a01}
+	
+	\begin{figure}[h!]
+	  \centering
+	      \includegraphics[width=0.8\textwidth]{1a01}
+	  \caption{Flow diagram over programmets struktur}\label{fig:1a01}
+	\end{figure}
+		 
+	\include{Romertal_tables}
 
 
 
