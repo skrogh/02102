@@ -8,6 +8,7 @@
 *.so
 *.aux
 *.pdf
+*.dvi
 
 # Packages #
 ############
@@ -21,6 +22,13 @@
 *.rar
 *.tar
 *.zip
+
+# Pictures #
+############
+*.png
+*.bmp
+*.jpg
+*.eps
 
 # Logs and databases #
 ######################

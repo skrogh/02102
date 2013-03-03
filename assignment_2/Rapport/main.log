@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.18)  3 MAR 2013 01:14
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.18)  3 MAR 2013 05:13
 entering extended mode
 **main.tex
-(C:\Users\Overlord\Git\02102\assignment_2\Rapport\main.tex
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\main.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -13,7 +13,7 @@ an, ngerman-x-2009-06-19, nynorsk, oriya, panjabi, pinyin, polish, portuguese,
 romanian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swis
 sgerman, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, u
 senglishmax, welsh, loaded.
-(C:\Users\Overlord\Git\02102\assignment_2\Rapport\Pre.tex
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\Pre.tex
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
@@ -500,7 +500,7 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2004/09/05 1.3 listings language file
 ))
-(C:\Users\Overlord\Git\02102\assignment_2\Rapport\main.aux)
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\main.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 5.
@@ -566,31 +566,82 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \c@lstlisting=\count119
- (C:\Users\Overlord\Git\02102\assignment_2\Rapport\Opgave1.tex)
-(C:\Users\Overlord\Git\02102\assignment_2\Rapport\Opgave2.tex)
-(C:\Users\Overlord\Git\02102\assignment_2\Rapport\Opgave3.tex)
+ (C:\Users\Overlord\Git\02102\assignment_2\rapport\Frontpage.tex
+<s123161.png, id=1, 42.1575pt x 56.46094pt>
+File: s123161.png Graphic file (type png)
+ <use s123161.png>
+Package pdftex.def Info: s123161.png used on input line 20.
+(pdftex.def)             Requested size: 42.15738pt x 56.46078pt.
 
-Package caption Warning: Unused \captionsetup[lstlisting] on input line 70.
-See the caption package documentation for explanation.
+<s123369.png, id=2, 42.1575pt x 56.46094pt>
+File: s123369.png Graphic file (type png)
+ <use s123369.png>
+Package pdftex.def Info: s123369.png used on input line 21.
+(pdftex.def)             Requested size: 42.15738pt x 56.46078pt.
+)
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave1.tex)
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave2.tex [1
 
-[1{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Overlord/Git/021
+02/assignment_2/rapport/s123161.png> <C:/Users/Overlord/Git/02102/assignment_2/
+rapport/s123369.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 18--21
 
-]
-(C:\Users\Overlord\Git\02102\assignment_2\Rapport\main.aux) ) 
+ []
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 25.
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 25.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+)
+Overfull \hbox (6.0pt too wide) in paragraph at lines 25--25
+[][][][][][][] 
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 35--35
+[][][][][][][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--39
+
+ []
+
+[2]
+Overfull \hbox (6.0pt too wide) in paragraph at lines 44--44
+[][][][][][][] 
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 50--50
+[][][][][][][] 
+ []
+
+) (C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave3.tex) [3]
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\main.aux) ) 
 Here is how much of TeX's memory you used:
- 6031 strings out of 494045
- 85043 string characters out of 3148377
- 196556 words of memory out of 3000000
- 9242 multiletter control sequences out of 15000+200000
- 5203 words of font info for 19 fonts, out of 3000000 for 9000
+ 6977 strings out of 494045
+ 94920 string characters out of 3148377
+ 243460 words of memory out of 3000000
+ 10160 multiletter control sequences out of 15000+200000
+ 11233 words of font info for 43 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 38i,11n,43p,343b,252s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,11n,43p,540b,1692s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmr10.pfb>
-Output written on main.pdf (1 page, 31913 bytes).
+.9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
+mr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+Output written on main.pdf (3 pages, 119930 bytes).
 PDF statistics:
- 14 PDF objects out of 1000 (max. 8388607)
+ 42 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
