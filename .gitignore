@@ -8,6 +8,7 @@
 *.so
 *.aux
 *.dvi
+*.pdf
 
 # Packages #
 ############
