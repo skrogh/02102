@@ -42,14 +42,16 @@ public class RomanNumerals {
 			
 			/* check if the entered input is really a number. We could use nextInt and handle exceptions, 
 			 * but this way we would not be able to: 1. look for "exit" 2. handle numbers larger than 2^31-1,
-			 * of cause this is a bit stupid when working with Roman numerals.
+			 * of course this is a bit stupid when working with Roman numerals.
 			 */
 			if ( isPosInt(in) ) {  
 				out.println( arabToRoman(in) ); // print the number	
 			} else if ( in.matches( "exit" ) ) {
 				exit = true; // escape the while-loop and continue.
+			} else if ( in.matches( "test" ) ) {
+				testDecades();
 			} else {
-				out.println( "Please enter an integer, " +
+				out.println( "Please enter a positive integer, " +
 						"that's a number without a decimal point," +
 						"larger than zero" ); // throw error message to console
 			}
@@ -176,5 +178,30 @@ public class RomanNumerals {
 		return result;
 	}
 
-
+	/*
+	 * ===============================================================
+	 * testDecades:
+	 * Runs through the program with the values [1-9]^n for n=0 to n=8
+	 * and prints the values to the console
+	 * ===============================================================
+	 */
+	public static void testDecades() {
+		System.out.println("STARTING TEST");
+		
+		for ( int i = 1; i <= 8; i++ ) {
+			for ( int j = 1; j <= 9; j++ ) {
+				int testNumber = (int) ( j * Math.pow( 10, i ) );
+				String romanTestNumeral = arabToRoman( testNumber );
+				
+				System.out.print( j + "*" + "10^" + i + " = " + romanTestNumeral + "  " );
+				
+				if ( i == 8 )
+					break;
+			}
+			
+			System.out.println();
+		}
+		
+		
+	}
 }

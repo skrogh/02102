@@ -1,1 +1,43 @@
 \section{Opgave 1}
+\subsection{Beskrivelse og Design}
+
+\subsection{Programtest}
+	For at teste at dette program virker som forventet er det nødvendigt at teste følgene:
+ 	\begin{enumerate}
+ 		\item Programmet håndterer hver dekade korrekt og lægger dekader korrekt sammen
+ 		\item Programmet håndterer fejl-input uden at bryde sammen og at det genkender exit kommandoen
+ 	\end{enumerate}
+ 	For at teste at programmet håndterer hver dekade op til 100.000.000 som er den højeste dekade programmet har et romersk numeral for, er der inkluderet en metode kaldet $testDecades$ i klassen $RomanNumerals$ som tilgås ved at indtaste den skjulte kommando "test" i konsollen. Resultatet af dette ses nedenfor som et screenshot da listings pakken til latex ikke kan håndtere unicode karakteren for et overstreget bogstav.
+ 	\begin{figure}[h]
+ 	
+ 	\includegraphics[scale=0.8]{test_opgave_1.png}
+ 	\caption{Output fra testDecade metoden}
+	
+	\end{figure}
+	
+	Herefter testes om programmet kan kombinere tal i flere dekader. Resultatet af testen ses nedenfor.
+	\begin{lstlisting}[caption=Test af dekadekombination]
+Input any positive integer. Type "exit" to end the program
+1337
+MCCCXXXVII
+	\end{lstlisting}
+	Hvilket er korrekt. \\
+	\\
+	Til sidst testes punkt nr. 2, at programmet afbrydes når brugeren indtaster "exit" kommandoen.
+	\begin{lstlisting}[caption=Test af exit kommando]
+Input any positive integer. Type "exit" to end the program
+exit
+Done!
+	\end{lstlisting}
+	Og at det kan håndtere input af negative tal samt ikke-tal.
+	\begin{lstlisting}[caption=Test af dårligt input]
+Input any positive integer. Type "exit" to end the program
+-42
+Please enter a positive integer, that's a number without a decimal point,larger than zero
+Input any positive integer. Type "exit" to end the program
+NaN
+Please enter a positive integer, that's a number without a decimal point,larger than zero
+Input any positive integer. Type "exit" to end the program
+	\end{lstlisting}
+	
+	Disse tests opnår 100\% kode dækning. Selvom dette selvfølgelig ikke er en garanti for at programmet altid vil virke vil vi ikke gå videre med tests da det ville kræve at teste alle tænkelige input, hvilket er umuligt med den tid vi har til rådighed. Yderligere er programmet ikke begrænset af integer overflow, så dette er ikke testet.

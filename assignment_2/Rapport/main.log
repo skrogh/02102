@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.18)  3 MAR 2013 05:13
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2012.10.18)  3 MAR 2013 08:21
 entering extended mode
 **main.tex
 (C:\Users\Overlord\Git\02102\assignment_2\rapport\main.tex
@@ -579,69 +579,102 @@ File: s123369.png Graphic file (type png)
 Package pdftex.def Info: s123369.png used on input line 21.
 (pdftex.def)             Requested size: 42.15738pt x 56.46078pt.
 )
-(C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave1.tex)
-(C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave2.tex [1
+(C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave1.tex [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <C:/Users/Overlord/Git/021
 02/assignment_2/rapport/s123161.png> <C:/Users/Overlord/Git/02102/assignment_2/
 rapport/s123369.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 18--21
-
- []
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 25.
-("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
+LaTeX Font Info:    Try loading font information for U+msa on input line 10.
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 25.
+LaTeX Font Info:    Try loading font information for U+msb on input line 10.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
-Overfull \hbox (6.0pt too wide) in paragraph at lines 25--25
+<test_opgave_1.png, id=10, 682.80093pt x 166.37157pt>
+File: test_opgave_1.png Graphic file (type png)
+ <use test_opgave_1.png>
+Package pdftex.def Info: test_opgave_1.png used on input line 13.
+(pdftex.def)             Requested size: 546.24149pt x 133.09741pt.
+
+Overfull \hbox (102.66301pt too wide) in paragraph at lines 13--14
+[][] 
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 23--23
 [][][][][][][] 
  []
 
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 35--35
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
+
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 31--31
 [][][][][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 36--39
+Overfull \hbox (6.0pt too wide) in paragraph at lines 41--41
+[][][][][][][] 
+ []
+
+) (C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave2.tex [2 <C:/Users/Ov
+erlord/Git/02102/assignment_2/rapport/test_opgave_1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
 
  []
 
-[2]
-Overfull \hbox (6.0pt too wide) in paragraph at lines 44--44
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 27--27
 [][][][][][][] 
  []
 
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 50--50
+Overfull \hbox (6.0pt too wide) in paragraph at lines 37--37
 [][][][][][][] 
  []
 
-) (C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave3.tex) [3]
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--41
+
+ []
+
+[3]
+Overfull \hbox (6.0pt too wide) in paragraph at lines 46--46
+[][][][][][][] 
+ []
+
+
+Overfull \hbox (6.0pt too wide) in paragraph at lines 52--52
+[][][][][][][] 
+ []
+
+) (C:\Users\Overlord\Git\02102\assignment_2\rapport\Opgave3.tex) [4]
 (C:\Users\Overlord\Git\02102\assignment_2\rapport\main.aux) ) 
 Here is how much of TeX's memory you used:
- 6977 strings out of 494045
- 94920 string characters out of 3148377
- 243460 words of memory out of 3000000
- 10160 multiletter control sequences out of 15000+200000
+ 6998 strings out of 494045
+ 95197 string characters out of 3148377
+ 263460 words of memory out of 3000000
+ 10180 multiletter control sequences out of 15000+200000
  11233 words of font info for 43 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 38i,11n,43p,540b,1692s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,11n,43p,540b,1690s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2
 .9/fonts/type1/public/amsfonts/cm/cmbx8.pfb><C:/Program Files/MiKTeX 2.9/fonts/
 type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
 onts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on main.pdf (3 pages, 119930 bytes).
+mr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C
+:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on main.pdf (4 pages, 150548 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
+ 50 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
