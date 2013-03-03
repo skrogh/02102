@@ -66,7 +66,7 @@ public class Palindrome {
 	 * ================================================================
 	 */
 	public static boolean charInString( char opa1, String opa2 ) {
-		return opa2.indexOf( opa1 ) > -1;
+		return opa2.indexOf( opa1 ) > -1; //indexOf(String string) returns -1 if the sequence is not found.
 	}
 	
 	/*

@@ -7,6 +7,8 @@
 *.o
 *.so
 *.aux
+*.pdf
+*.dvi
 
 # Packages #
 ############
@@ -20,6 +22,16 @@
 *.rar
 *.tar
 *.zip
+
+# Pictures #
+############
+*.png
+*.bmp
+*.jpg
+*.eps
+
+# Eclipse files #
+*.project
 
 # Logs and databases #
 ######################
