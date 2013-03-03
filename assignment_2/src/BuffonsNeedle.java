@@ -8,7 +8,7 @@
 
 import java.util.*;
 
-public class Opgave3 {
+public class BuffonsNeedle {
 	
 	public static boolean stopProgram;
 	public static Scanner inputScanner;
