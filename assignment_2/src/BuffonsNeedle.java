@@ -23,10 +23,10 @@ public class BuffonsNeedle {
 	 */
 	public static void main( String[] args ) {
 		stopProgram = false;
-		int iterations = 1;
-		int numberOfHits = 0;
+		long iterations = 1;
+		long numberOfHits = 0;
 		inputScanner = new Scanner(System.in);
-		System.out.println( "Type 'quit' to quit" );
+		System.out.println( "Type 'exit' to exit" );
 		
 		while ( !stopProgram )  {
 			iterations = getPositiveInt();
@@ -47,6 +47,8 @@ public class BuffonsNeedle {
 			
 		}
 		
+		System.out.println("Done!");
+		
 	}
 	
 	/*
@@ -59,22 +61,21 @@ public class BuffonsNeedle {
 	 * if the needle crosses the closest line
 	 * =========================================
 	 */
-	public static int throwNeedle( int iterations ) {
+	public static long throwNeedle( long iterations ) {
 		double needleLength = 1.0d;
 		double lineSpacing = 2.0d;
 		
 		double needleAngle = 0.0d;
 		double needleCenter = 0.0d;
-		double needleEndPoint = 0.0d;
 		
-		int numberOfHits = 0;
+		long numberOfHits = 0;
 
-		for ( int i=0; i<iterations; i++ ) {
+		for ( long i=0; i<iterations; i++ ) {
 			needleCenter = Math.random() * lineSpacing;
 			needleAngle = Math.random() * Math.PI/2.0f;
 			
-			if( lineSpacing - needleCenter < Math.cos( needleAngle ) * needleLength/2 ||
-					needleCenter - Math.cos( needleAngle ) * needleLength/2 < 0 )
+			if( lineSpacing - needleCenter <= Math.cos( needleAngle ) * needleLength/2 ||
+					needleCenter <= Math.cos( needleAngle ) * needleLength/2 )
 				numberOfHits++;
 		}
 		
@@ -98,7 +99,7 @@ public class BuffonsNeedle {
 		try {
 			iterations = inputScanner.nextInt();
 		} catch( Exception InputMismatchException ) {
-			if ( inputScanner.next().equals("quit") )
+			if ( inputScanner.next().equals("exit") )
 				stopProgram = true;
 			else
 				iterations = getPositiveInt();
