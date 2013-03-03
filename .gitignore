@@ -30,6 +30,9 @@
 *.jpg
 *.eps
 
+# Eclipse files #
+*.project
+
 # Logs and databases #
 ######################
 *.log
