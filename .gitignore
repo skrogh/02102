@@ -9,7 +9,7 @@
 *.aux
 *.dvi
 *.pdf
-!src/assignment_2/Rapport/picures/**/*
+!src/assignment_2/Rapport/pictures/**/*
 
 # Packages #
 ############
