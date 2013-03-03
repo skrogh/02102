@@ -93,7 +93,8 @@ public class Palindrome {
 	 * ========================================================================================
 	 */
 	public static boolean isPalindrome ( String in ) {
-		in = leaveLiterals( in.toLowerCase() , ALPHABET_LOWER ); // cast to lowercase and trimm of all non letters.
+		in = leaveLiterals( in.toLowerCase() , ALPHABET_LOWER ); // cast to lower case and trim of all non letters.
+
 		return in.matches( reverseString( in ) );
 	}
 	

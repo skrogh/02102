@@ -13,20 +13,20 @@ public class RomanNumerals {
 	
 	/*
 	 * Literals have the following values:
-	 *	I = 1	 				*	V = 5
-	 *	X = 10	 				*	L = 50
-	 *  C = 100	 				*  D = 500
-	 *  M = 1000	 			*  V\u0305 = 5000
-	 *  X\u0305 = 10000	 		*  L\u0305 = 50000
-	 *  |I\u0305| = 100000	 	*  |V\u0305| = 500000
-	 *  |X\u0305| = 1000000	 	*  |L\u0305| = 5000000
-	 *  |C\u0305| = 10000000	*  |D\u0305| = 50000000
-	 *  |M\u0305| = 100000000
+	 *	 I = 1	 		*	V = 5
+	 * 	 X = 10	 		*	L = 50
+	 *   C = 100 		*   D = 500
+	 *   M = 1000	 	*   V̅ = 5000
+	 *   X̅ = 10000	 	*   L̅ = 50000
+	 *  |I̅| = 100000	*  |V̅| = 500000
+	 *  |X̅| = 1000000	*  |L̅| = 5000000
+	 *  |C̅| = 10000000	*  |D̅| = 50000000
+	 *  |M̅| = 100000000
 	 */
 	
 	// these two constants store the literals in decade 1-9 and 1-8 respectively
 	public static final String[] LITERAL_ONES = 
-		{ "I", "X", "C", "M", "X\u0305", "C\u0305", "|X\u0305|", "|C\u0305|", "|M\u0305|" };
+		{ "I", "X", "C", "M", "X\u0305", "|I\u0305|", "|X\u0305|", "|C\u0305|", "|M\u0305|" };
 	public static final String[] LITERAL_FIVES = 
 		{ "V", "L", "D", "V\u0305", "L\u0305", "|V\u0305|", "|L\u0305|", "|D\u0305|" };
 
