@@ -9,7 +9,7 @@
 import static java.lang.System.out;
 import java.util.Scanner;
 
-public class Opgave2 {
+public class Palindrome {
 	
 	// strings for storing all letters in the alphabet, letters in these strings will be "allowed"
 	public static final String ALPHABET_LOWER = "abcdefghijklmnopqrstuvwxyzæøå";

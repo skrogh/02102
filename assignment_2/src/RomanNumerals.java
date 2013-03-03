@@ -9,7 +9,7 @@
 import static java.lang.System.out;
 import java.util.Scanner;
 
-public class Opgave1 {
+public class RomanNumerals {
 	
 	/*
 	 * Literals have the following values:
