@@ -25,10 +25,6 @@
 
 # Pictures #
 ############
-*.png
-*.bmp
-*.jpg
-*.eps
 
 # Eclipse files #
 *.project
