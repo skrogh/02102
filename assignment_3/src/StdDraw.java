@@ -410,8 +410,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (r < 0) throw new RuntimeException("circle radius can't be negative");
         double xs = x;
         double ys = y;
-        double ws = r;
-        double hs = r;
+        double ws = r * 2;
+        double hs = r * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.draw(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -428,8 +428,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (r < 0) throw new RuntimeException("circle radius can't be negative");
         double xs = x;
         double ys = y;
-        double ws = r;
-        double hs = r;
+        double ws = r * 2;
+        double hs = r * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.fill(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -449,8 +449,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (semiMinorAxis < 0) throw new RuntimeException("ellipse semiminor axis can't be negative");
         double xs = x;
         double ys = y;
-        double ws = semiMajorAxis;
-        double hs = semiMinorAxis;
+        double ws = semiMajorAxis * 2;
+        double hs = semiMinorAxis * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.draw(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -469,8 +469,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (semiMinorAxis < 0) throw new RuntimeException("ellipse semiminor axis can't be negative");
         double xs = x;
         double ys = y;
-        double ws = semiMajorAxis;
-        double hs = semiMinorAxis;
+        double ws = semiMajorAxis * 2;
+        double hs = semiMinorAxis * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.fill(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -492,8 +492,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         while (angle2 < angle1) angle2 += 360;
         double xs = x;
         double ys = y;
-        double ws = r;
-        double hs = r;
+        double ws = r * 2;
+        double hs = r * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.draw(new Arc2D.Double(xs - ws/2, ys - hs/2, ws, hs, angle1, angle2 - angle1, Arc2D.OPEN));
         draw();
@@ -510,8 +510,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (r < 0) throw new RuntimeException("square side length can't be negative");
         double xs = x;
         double ys = y;
-        double ws = r;
-        double hs = r;
+        double ws = r * 2;
+        double hs = r * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.draw(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -528,8 +528,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (r < 0) throw new RuntimeException("square side length can't be negative");
         double xs = x;
         double ys = y;
-        double ws = r;
-        double hs = r;
+        double ws = r * 2;
+        double hs = r * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.fill(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -549,8 +549,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (halfHeight < 0) throw new RuntimeException("half height can't be negative");
         double xs = x;
         double ys = y;
-        double ws = halfWidth;
-        double hs = halfHeight;
+        double ws = halfWidth * 2;
+        double hs = halfHeight * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.draw(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();
@@ -569,8 +569,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         if (halfHeight < 0) throw new RuntimeException("half height can't be negative");
         double xs = x;
         double ys = y;
-        double ws = halfWidth;
-        double hs = halfHeight;
+        double ws = halfWidth * 2;
+        double hs = halfHeight * 2;
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.fill(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
         draw();

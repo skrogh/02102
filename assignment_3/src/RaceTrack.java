@@ -1,20 +1,23 @@
+import java.util.*;
 
 public class RaceTrack {
 
+	public static ArrayList<GameObject> gameObjects;
+	
 	public static void main( String args[] ) {
+		gameObjects = new ArrayList<GameObject>();
 		
-		StdDraw.setXscale( 0, 0 );
-		StdDraw.setYscale( 0, 0 );
-		
-		StdDraw.setCanvasSize( 1000, 1000 );
-		StdDraw.setPenRadius( 2.0 / 1000 );
-		int n = 100;
-		
-		StdDraw.line( 0, 0, 200, 199 );
-		
-		StdDraw.rectangle(500, 500, 250, 250);
-		
-		
+		Map map = new Map();
+		gameObjects.add( map );
+		Player player = new Player( 10, 3, 0, 0, 16 );
+		gameObjects.add( player );
+		render();
+	}
+	
+	public static void render() {
+		for (int i = 0; i < gameObjects.size(); i++ ) {
+			gameObjects.get( i ).render();
+		}
 		
 	}
 }

@@ -1,11 +1,15 @@
+import java.util.*;
 
 public class GameObject {
 	
-	public static enum IDs{ BACKGROUND, MAP, RACE_CAR, AI, PLAYER, MISC };
+	public static enum IDs{ BACKGROUND, MAP, RACE_CAR, AI, PLAYER, TILE, MISC };
 	public static enum states{ ALIVE, DEAD, INVISIBLE };
 	
 	protected int xPos;
 	protected int yPos;
+	
+	protected int xTile;
+	protected int yTile;
 	
 	protected IDs ID;
 	protected states state;
