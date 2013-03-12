@@ -3,20 +3,31 @@ import java.util.*;
 public class RaceTrack {
 
 	public static ArrayList<GameObject> gameObjects;
+	private static boolean game_over;	
 	
 	public static void main( String args[] ) {
-		gameObjects = new ArrayList<GameObject>();
+		Scanner console = new Scanner( System.in );
 		
-		setupMap( new Map() );
-		
-		// Game loop
-		StdDraw.show(0);
-		while (true) {
-			Scanner scn = new Scanner(System.in);
-			//scn.nextLine();
-			update();
-			render();
+		while ( true ) {
+			gameObjects = new ArrayList<GameObject>();
+			game_over = false;
+			setupMap( new Map() );
+			
+			System.out.println( "Game has started!" );
+			// Game loop
+			StdDraw.show(0);
+			while ( !game_over ) {
+				update();
+				render();
+			}
+			System.out.println( "Game has ended. Type \"more!\" to play again.\n" +
+					"type anything else to be a wuz and quit." );
+			if ( !console.nextLine().matches( "more!" ) )
+				break;
+			
 		}
+		
+		console.close();
 	}
 	
 	public static void render() {
@@ -29,12 +40,16 @@ public class RaceTrack {
 	
 	public static void update() {
 		// key events:
-		while ( StdDraw.hasNextKeyTyped() ) {
+		// only send first key
+		if ( StdDraw.hasNextKeyTyped() ) {
 			int key = StdDraw.nextKeyTyped();
-			System.out.println(key);
 			for ( GameObject gameObject : gameObjects ) {
 				gameObject.keyPressed( key );
 			}
+		}
+		// clear buffer
+		while ( StdDraw.hasNextKeyTyped() ) {
+			StdDraw.nextKeyTyped();
 		}
 		
 		// position and collision update:
@@ -57,7 +72,15 @@ public class RaceTrack {
 			gameObjects.add( new Wall( wall[0], wall[1], wall[2], wall[3] ) );
 		}
 		
-		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1] ) );
+		// add checkpoints
+		ArrayList<Checkpoint> checkpoints = new ArrayList<Checkpoint>();
+		for ( int[] checkpoint : map.getCheckpoints() ) {
+			checkpoints.add( new Checkpoint( checkpoint[0], checkpoint[1], checkpoint[2], checkpoint[3] ) );
+			gameObjects.add( checkpoints.get( checkpoints.size() - 1 ) );
+		}
+		
+		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
+		
 	}
 	
 	public static void collisionCheck() {
@@ -68,8 +91,6 @@ public class RaceTrack {
 						collideObjects( gameObjects.get(i), gameObjects.get(j) ) ) {
 					gameObjects.get(i).collided( gameObjects.get(j) );
 					gameObjects.get(j).collided( gameObjects.get(i) );
-					// debug message
-					System.out.println( gameObjects.get(j) + " Collided with " + gameObjects.get(i) );
 				}
 			}
 		}
@@ -102,8 +123,21 @@ public class RaceTrack {
 					return true;
 			}
 		}
-		
 		return false;
 	}
 	
+	public static void onWin( int steps ) {
+		System.out.println( "You sir, or ma'am, win \"one million\" internetz!\n" +
+				"Well not really; men du klarede det på:\n" +
+				steps + " træk.");
+		game_over = true;
+	}
+	public static void onDeath( int steps ) {
+		System.out.println( "Derp °_o\n" +
+				"Du døde vist\n" +
+				"Ej hvor flot du smadrede din \"vektor\" på bare:\n" +
+				steps +" træk.");
+		game_over = true;
+	}
+
 }

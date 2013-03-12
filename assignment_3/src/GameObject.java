@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GameObject {
 	
-	public static enum IDs{ BACKGROUND, MAP, RACE_CAR, AI, PLAYER, WALL, MISC };
+	public static enum IDs{ BACKGROUND, MAP, RACE_CAR, AI, PLAYER, WALL, MISC, CHECKPOINT };
 	public static enum states{ ALIVE, DEAD, INVISIBLE };
 	
 	protected int xPos;
