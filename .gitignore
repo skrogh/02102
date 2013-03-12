@@ -46,3 +46,13 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+# LAtex #
+#########
+*.aux
+.project
+.texlipse
+.metadata
+.pdf
+*/Rapport/tmp/**/*
+!*Rapport/pictures/**/*
