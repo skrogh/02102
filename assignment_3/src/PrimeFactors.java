@@ -8,6 +8,7 @@ public class PrimeFactors {
 		long timestart = System.currentTimeMillis();
 		System.out.println( primeFactors( 9223372036854775807L ).toString() );
 		System.out.println( System.currentTimeMillis() - timestart );
+		System.out.println( Runtime.getRuntime().availableProcessors() );
 		//System.out.println( eratosthenesSieve( 15 ).toString() );
 	}
 	
