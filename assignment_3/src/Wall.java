@@ -6,10 +6,14 @@ public class Wall extends GameObject {
 	
 	
 	public Wall( int x0, int y0, int x1, int y1 ) {
+		ID = IDs.WALL;
+		collidable = true;
 		xPos = x0;
 		yPos = y0;
 		xEnd = x1;
 		yEnd = y1;
+		collisionBox = new ArrayList<int[]>();
+		collisionBox.add( new int[]{xPos, yPos, xEnd, yEnd} );
 	}
 	
 	public void render() {
