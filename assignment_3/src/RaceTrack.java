@@ -6,25 +6,40 @@ public class RaceTrack {
 	
 	public static void main( String args[] ) {
 		gameObjects = new ArrayList<GameObject>();
-		StdDraw.setCanvasSize( 640, 480 );
-		StdDraw.setXscale( 32 / 1.1, 640 - ( 32 / 1.1 ) );
-		StdDraw.setYscale( 480 - ( 24 / 1.1 ), 24 / 1.1 );
-		StdDraw.line(0, 0, 1, 1);
+		
+		setupMap( new Map() );
+		
+		// Game loop
 		StdDraw.show(0);
-		Map map = new Map();
-		gameObjects.add( map );
-		Player player = new Player( 10, 3, 0, 0, 16 );
-		gameObjects.add( player );
-		render();
+		while (true) {
+			update();
+			render();
+		}
 	}
 	
 	public static void render() {
-		StdDraw.show( 0 );
-		
 		for (int i = 0; i < gameObjects.size(); i++ ) {
 			gameObjects.get( i ).render();
 		}
-		
-		StdDraw.show( 0 );
+		StdDraw.show(0);
 	}
+	
+	public static void update() {
+		for (int i = 0; i < gameObjects.size(); i++ ) {
+			gameObjects.get( i ).update();
+		}
+	}
+	
+	public static void setupMap( Map map ) {
+		// setup canvas size:
+		StdDraw.setCanvasSize( map.getSize()[0], map.getSize()[1] );
+		StdDraw.setXscale( 0, map.getSize()[0] );
+		StdDraw.setYscale( map.getSize()[1], 0 );
+		
+		// add walls
+		for ( int[] wall : map.getWalls() ) {
+			gameObjects.add( new Wall( wall[0], wall[1], wall[2], wall[3] ) );
+		}
+	}
+	
 }

@@ -1,66 +1,40 @@
 import java.util.ArrayList;
 
 
-public class Map extends GameObject {
+public class Map {
 	
 	private int mapHeight;
 	private int mapWidth;
 	
-	ArrayList<GameObject> tileList;
+	private int xStart;
+	private int yStart;
 	
-	protected int tileSize;
+	private ArrayList<int[]> walls;
+	private ArrayList<int[]> Checkpoints; // first is startline, last is Finishline.
 	
 	public Map() {
-		this( 640, 480 ); 
+		this.mapHeight = 0;
+		this.mapWidth = 0;
+		this.walls = new ArrayList<int[]>();
+		loadMap(); // load dummy map
 	}
 	
-	public Map( int mapWidth, int mapHeight ) {
-		
-		this.ID = IDs.MAP;
-		tileSize = 16;
-		
-		this.mapHeight = mapHeight;
-		this.mapWidth = mapWidth;
-		
-		tileList = new ArrayList<GameObject>();
-		createMap();
-//		StdDraw.setCanvasSize( mapWidth, mapHeight );
+	public void loadMap() { // dummy
+		this.mapWidth = 640;
+		this.mapHeight = 480;
+		this.walls = new ArrayList<int[]>();
+		walls.add( new int[]{0, 0, 640, 0} );
+		walls.add( new int[]{640, 0, 640, 480} );
+		walls.add( new int[]{640, 480, 0, 480} );
+		walls.add( new int[]{0, 480, 0, 0} );
 	}
 	
-	public void update() {
-		
+	public int[] getSize() {
+		return new int[] {mapWidth, mapHeight};
 	}
 	
-	public void render() {
-		drawMap();
-		
+	public ArrayList<int[]> getWalls() {
+		return walls;
 	}
 	
-	public void drawMap() {
-		StdDraw.setPenColor( StdDraw.GRAY );
-		
-		for ( int i = 0; i < tileList.size(); i++ ) {
-			tileList.get( i ).render();
-		}
-		
-		StdDraw.setPenColor( StdDraw.GREEN );
-		StdDraw.filledRectangle( tileSize * 10, tileSize * 2.5, 2, tileSize * 2.5 );
-	}
-	
-	public void createMap() {
-		int initialX = tileSize / 2;
-		int initialY = tileSize / 2;
-		
-		for ( int i = 0; i < 20; i++ ) {
-			int tileCenterY = initialY + i * tileSize;
-			for ( int j = 0; j < 20; j++ ) {
-				int tileCenterX = initialX + j * tileSize;
-				if( i >= 5 && i <= 14 && j <= 14 && j >= 5 )
-					continue;
-					
-				Tile nextTile = new Tile(tileCenterX, tileCenterY, tileSize, states.ALIVE );
-				tileList.add( nextTile );
-			}
-		}
-	}
 }
