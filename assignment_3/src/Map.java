@@ -24,7 +24,7 @@ public class Map extends GameObject {
 		
 		tileList = new ArrayList<GameObject>();
 		createMap();
-		StdDraw.setCanvasSize( mapWidth, mapHeight );
+//		StdDraw.setCanvasSize( mapWidth, mapHeight );
 	}
 	
 	public void update() {

@@ -20,7 +20,7 @@ public class Tile extends GameObject {
 		if ( state == states.ALIVE ) {
 			StdDraw.setPenColor( StdDraw.GRAY );
 			StdDraw.filledSquare( xPos, yPos, tileSize / 2 );
-			StdDraw.setPenColor( StdDraw.BLACK );
+			StdDraw.setPenColor( StdDraw.WHITE );
 			StdDraw.square( xPos, yPos, tileSize / 2 );
 			
 		}
