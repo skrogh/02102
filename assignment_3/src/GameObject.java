@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GameObject {
 	
-	public static enum IDs{ BACKGROUND, MAP, RACE_CAR, AI, PLAYER, TILE, MISC };
+	public static enum IDs{ BACKGROUND, MAP, RACE_CAR, AI, PLAYER, WALL, MISC, CHECKPOINT };
 	public static enum states{ ALIVE, DEAD, INVISIBLE };
 	
 	protected int xPos;
@@ -15,6 +15,7 @@ public class GameObject {
 	protected states state;
 	
 	protected boolean collidable;
+	protected ArrayList<int[]> collisionBox;
 	
 	public GameObject() {
 		
@@ -59,6 +60,18 @@ public class GameObject {
 
 	public boolean isCollidable() {
 		return collidable;
+	}
+	
+	public ArrayList<int[]> getCollisionBox() {
+		return collisionBox;
+	}
+	
+	public void collided( GameObject object ) {
+		
+	}
+	
+	public void keyPressed( int key ) {
+		
 	}
 	
 	

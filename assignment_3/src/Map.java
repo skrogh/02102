@@ -1,66 +1,59 @@
 import java.util.ArrayList;
 
 
-public class Map extends GameObject {
+public class Map {
 	
 	private int mapHeight;
 	private int mapWidth;
 	
-	ArrayList<GameObject> tileList;
+	private int xStart;
+	private int yStart;
 	
-	protected int tileSize;
+	private ArrayList<int[]> walls;
+	private ArrayList<int[]> checkpoints; // first is startline, last is Finishline.
 	
 	public Map() {
-		this( 640, 480 ); 
+		this.xStart = 7;
+		this.yStart = 24;
+		this.mapHeight = 0;
+		this.mapWidth = 0;
+		this.walls = new ArrayList<int[]>();
+		this.checkpoints = new ArrayList<int[]>();
+		loadMap(); // load dummy map
 	}
 	
-	public Map( int mapWidth, int mapHeight ) {
+	public void loadMap() { // dummy
+		this.mapWidth = 64;
+		this.mapHeight = 48;
+		this.walls = new ArrayList<int[]>();
+		walls.add( new int[]{0, 0, 64, 0} );
+		walls.add( new int[]{64, 0, 64, 48} );
+		walls.add( new int[]{64, 48, 0, 48} );
+		walls.add( new int[]{0, 48, 0, 0} );
+		walls.add( new int[]{14, 24, 50, 24} );
 		
-		this.ID = IDs.MAP;
-		tileSize = 16;
-		
-		this.mapHeight = mapHeight;
-		this.mapWidth = mapWidth;
-		
-		tileList = new ArrayList<GameObject>();
-		createMap();
-		StdDraw.setCanvasSize( mapWidth, mapHeight );
+		this.checkpoints = new ArrayList<int[]>();
+		checkpoints.add( new int[]{0, 24, 14, 24} );
+		checkpoints.add( new int[]{32, 0, 32, 24} );
+		checkpoints.add( new int[]{50, 24, 64, 24} );
+		checkpoints.add( new int[]{32, 24, 32, 48} );
+		checkpoints.add( new int[]{0, 24, 14, 24} );
 	}
 	
-	public void update() {
-		
+	public int[] getSize() {
+		return new int[] {mapWidth, mapHeight};
 	}
 	
-	public void render() {
-		drawMap();
-		
+	public int[] getStart() {
+		return new int[] {xStart, yStart};
 	}
 	
-	public void drawMap() {
-		StdDraw.setPenColor( StdDraw.GRAY );
-		
-		for ( int i = 0; i < tileList.size(); i++ ) {
-			tileList.get( i ).render();
-		}
-		
-		StdDraw.setPenColor( StdDraw.GREEN );
-		StdDraw.filledRectangle( tileSize * 10, tileSize * 2.5, 2, tileSize * 2.5 );
+	public ArrayList<int[]> getWalls() {
+		return walls;
 	}
 	
-	public void createMap() {
-		int initialX = tileSize / 2;
-		int initialY = tileSize / 2;
-		
-		for ( int i = 0; i < 20; i++ ) {
-			int tileCenterY = initialY + i * tileSize;
-			for ( int j = 0; j < 20; j++ ) {
-				int tileCenterX = initialX + j * tileSize;
-				if( i >= 5 && i <= 14 && j <= 14 && j >= 5 )
-					continue;
-					
-				Tile nextTile = new Tile(tileCenterX, tileCenterY, tileSize, states.ALIVE );
-				tileList.add( nextTile );
-			}
-		}
+	public ArrayList<int[]> getCheckpoints() {
+		return checkpoints;
 	}
+	
 }
