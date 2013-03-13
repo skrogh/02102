@@ -6,7 +6,8 @@ public class RaceTrack {
 	
 	public static void main( String args[] ) {
 		gameObjects = new ArrayList<GameObject>();
-		
+		StdDraw.setXscale(0,1000);
+		StdDraw.setYscale(0,1000);
 		Map map = new Map();
 		gameObjects.add( map );
 		Player player = new Player( 10, 3, 0, 0, 16 );
