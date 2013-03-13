@@ -13,7 +13,7 @@ public class RaceTrack {
 			gameObjects = new ArrayList<GameObject>();
 			game_over = false;
 			setupMap( new Map() );
-			
+			Map map = new Map();
 			System.out.println( "Game has started!" );
 			// Game loop
 			StdDraw.show(0);
@@ -29,7 +29,6 @@ public class RaceTrack {
 		}
 		
 		console.close();
->>>>>>> d755b5a822adf9dffa712f7c1ee2abae18dd84b9
 	}
 	
 	public static void render() {
