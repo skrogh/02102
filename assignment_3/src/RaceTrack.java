@@ -81,12 +81,18 @@ public class RaceTrack {
 		
 		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
 		
+		for ( int i = 0; i < 10000; i++ ) {
+			gameObjects.add( new GhostPlayer( map.getStart()[0], map.getStart()[1], checkpoints ) );
+		}
+		
 	}
 	
 	public static void collisionCheck() {
 		for ( int i = 0; i < gameObjects.size(); i++ ) {
 			for ( int j = i + 1; j < gameObjects.size(); j++ ) {
 				if ( ( gameObjects.get(i).getId() != gameObjects.get(j).getId() ) &&
+						( gameObjects.get(i).getState() != GameObject.states.DEAD ) &&
+						( gameObjects.get(j).getState() != GameObject.states.DEAD ) &&
 						gameObjects.get(i).isCollidable() && gameObjects.get(j).isCollidable() &&
 						collideObjects( gameObjects.get(i), gameObjects.get(j) ) ) {
 					gameObjects.get(i).collided( gameObjects.get(j) );

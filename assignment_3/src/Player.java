@@ -9,6 +9,7 @@ public class Player extends GameObject {
 	
 	public Player( int x, int y, ArrayList<Checkpoint> checkpoints ){
 		ID = IDs.PLAYER;
+		state = states.ALIVE;
 		collidable = true;
 		xPos = x;
 		yPos = y;
@@ -18,8 +19,10 @@ public class Player extends GameObject {
 		path = new ArrayList<int[]>();
 		path.add( new int[]{xPos, yPos, 0} );
 		path.add( new int[]{xPos, yPos, 0} );
-		this.checkpoints = checkpoints;
+		this.checkpoints = (ArrayList<Checkpoint>) checkpoints.clone();
 		collisionBox = new ArrayList<int[]>();
+		
+		System.out.println( this.checkpoints );
 	}
 	
 	public void render() {
@@ -39,9 +42,6 @@ public class Player extends GameObject {
 	}
 	
 	public void update() {
-		if ( checkpoints.isEmpty() )
-			RaceTrack.onWin( steps );
-		
 		collisionBox = new ArrayList<int[]>();
 		collisionBox.add( new int[]{xPos, yPos,
 				path.get( path.size() - 2 )[0], path.get( path.size() - 2 )[1]} );
@@ -88,7 +88,7 @@ public class Player extends GameObject {
 	
 	public void collided( GameObject object ) {
 		if ( object.getId() == IDs.WALL ) {
-			RaceTrack.onDeath( steps );
+			onDeath( steps );
 			xSpeed = 0;
 			ySpeed = 0;
 			xPos = path.get( path.size() - 2 )[0];
@@ -96,14 +96,29 @@ public class Player extends GameObject {
 			path.add( new int[]{xPos, yPos, 1} );
 			path.add( new int[]{xPos, yPos, 0} );
 		} else if ( object.getId() == IDs.CHECKPOINT ) {
+			// If more checkpoints and the hit is next in line, remove it from checkpoints, that has to be hit.
 			if ( !checkpoints.isEmpty() && ( object == checkpoints.get( 0 ) ) )
 				checkpoints.remove( 0 );
+			// Check if we hit the last checkpoint
+			if ( checkpoints.isEmpty() )
+				onWin( steps );
+			
+			
+			
 		}
 	}
 	
 	public void keyPressed( int key ) {
 		if ( ( key > 0x30 ) && ( key < 0x3A ) )
 			movePlayer( key - 0x30 );
+	}
+	
+	public void onWin( int steps ) {
+		RaceTrack.onWin( steps );
+	}
+	
+	public void onDeath( int steps ) {
+		RaceTrack.onDeath( steps );
 	}
 	
 }
