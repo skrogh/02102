@@ -6,13 +6,14 @@ public class RaceTrack {
 	private static boolean game_over;	
 	
 	public static void main( String args[] ) {
+
 		Scanner console = new Scanner( System.in );
 		
 		while ( true ) {
 			gameObjects = new ArrayList<GameObject>();
 			game_over = false;
 			setupMap( new Map() );
-			
+			Map map = new Map();
 			System.out.println( "Game has started!" );
 			// Game loop
 			StdDraw.show(0);
