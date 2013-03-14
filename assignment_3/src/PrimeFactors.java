@@ -3,13 +3,20 @@ import java.util.*;
 
 public class PrimeFactors {
 
+	private static final Scanner inputScanner = new Scanner( System.in );
+	private static boolean end_program;
+	
 	public static void main(String[] args) {
-		//System.out.println(Integer.MAX_VALUE);
-		long timestart = System.currentTimeMillis();
-		System.out.println( primeFactors( 9223372036854775807L ).toString() );
-		System.out.println( System.currentTimeMillis() - timestart );
-		System.out.println( Runtime.getRuntime().availableProcessors() );
-		//System.out.println( eratosthenesSieve( 15 ).toString() );
+		
+		while ( !end_program ) {
+			
+			long factorNum = getInput();
+			if ( end_program )
+				break;
+			System.out.println( primeFactors( factorNum ).toString() );
+
+			
+		}
 	}
 	
 	
@@ -28,6 +35,28 @@ public class PrimeFactors {
 			factorList.add( n );
 		
 		return factorList;
+	}
+	
+	public static long getInput() {
+		System.out.println( "Enter a positive integer greater than 1 to factorize" +
+				", exit to termite: " );
+		long factorNumber = 2;
+		try {
+			factorNumber = inputScanner.nextLong();
+		}
+		catch ( InputMismatchException e ) {
+			if ( inputScanner.next().equals( "exit" ) ) {
+				end_program = true;
+			}
+			else {
+				factorNumber = getInput();
+			}
+				
+		}
+		
+		if ( factorNumber <= 1 )
+			return getInput();
+		return factorNumber;
 	}
 	
 }
