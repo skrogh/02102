@@ -79,6 +79,9 @@ public class AgentManager extends GameObject {
 				move.add( agent.fertility );
 				move.addAll( (ArrayList<Integer>) agent.child.clone() );
 				moves.add( move );
+				
+				// Print progress
+				System.out.println( "Progress: " + moves.size() + " / " + waitNumber );
 			}
 			agents.remove( agent );
 			addAgent();

@@ -2,13 +2,14 @@ import java.util.*;
 
 
 public class AgentPlayer extends Player {
-	
+
 	private ArrayList<Integer> moves; // stores list of moves
 	public ArrayList<Integer> drove; // stores list of moves
 	public ArrayList<Integer> child; // stores list of moves
 	private int goal;
 	public int fertility;
-	
+	private double cpDistance;
+
 	public AgentPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, int goal, ArrayList<Integer> moves ){
 		super( x, y, checkpoints );
 		this.ID = IDs.AI;
@@ -17,9 +18,10 @@ public class AgentPlayer extends Player {
 		this.drove = new ArrayList<Integer>();
 		this.child = new ArrayList<Integer>();
 		this.goal = this.checkpoints.size() - goal;
+		cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
 
 	}
-	
+
 	public AgentPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, int goal ){
 		super( x, y, checkpoints );
 		this.ID = IDs.AI;
@@ -28,8 +30,10 @@ public class AgentPlayer extends Player {
 		this.drove = new ArrayList<Integer>();
 		this.child = new ArrayList<Integer>();
 		this.goal = this.checkpoints.size() - goal;
+		cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
+
 	}
-	
+
 	public void render() {
 		if ( state == states.ALIVE ) {
 			int[] pointP = path.get(0);
@@ -49,20 +53,30 @@ public class AgentPlayer extends Player {
 			StdDraw.point( xPos, yPos );
 		}
 	}
-	
+
 	public void update()  {
+		// Kill if moving the wrong way
+		double dis;
+		if ( checkpoints.size() > 0 )
+			dis = distanceToCheckpointSq( checkpoints.get( 0 ) );
+		else
+			dis = 0;
+		if ( dis > cpDistance )
+			state = states.DEAD;
+		cpDistance = dis;
+
 		if ( moves.isEmpty() )
 			moves.add( (int) ( Math.floor(Math.random()*9) + 1 ) );
-		
+
 		drove.add( moves.remove( 0 ) );
 		movePlayer( drove.get( drove.size() - 1) );
-		
+
 		super.update();
 	}
-	
+
 	public void keyPressed( int key ) {
 	}
-	
+
 	public void onDeath( int steps ) {
 		state = states.DEAD;
 	}
@@ -70,6 +84,11 @@ public class AgentPlayer extends Player {
 
 	}
 	public void onCheckpoint ( int steps ) {
+		if ( checkpoints.size() > 0 )
+			cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
+		else
+			cpDistance = 0;
+		
 		if ( checkpoints.size() == goal + 1 ) {
 			child = (ArrayList<Integer>) drove.clone();
 			if ( goal == -1 ) {
@@ -82,5 +101,5 @@ public class AgentPlayer extends Player {
 			state = states.DEAD;
 		}
 	}
-	
+
 }

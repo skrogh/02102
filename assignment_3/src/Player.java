@@ -1,7 +1,12 @@
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.*;
+
 
 public class Player extends GameObject {
 	
+	private double cpDistance;
+
 	ArrayList<int[]> path; // x, y, alive/dead
 	ArrayList<Checkpoint> checkpoints; // stores all checkpoints. They are removed when passed. When empty, you win!
 
@@ -21,6 +26,8 @@ public class Player extends GameObject {
 		path.add( new int[]{xPos, yPos, 0} );
 		this.checkpoints = (ArrayList<Checkpoint>) checkpoints.clone();
 		collisionBox = new ArrayList<int[]>();
+		cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
+
 	}
 	
 	public void render() {
@@ -101,16 +108,23 @@ public class Player extends GameObject {
 			}
 			// Check if we hit the last checkpoint
 			if ( checkpoints.isEmpty() )
-				onWin( steps );
-			
-			
-			
+				onWin( steps );		
 		}
 	}
 	
 	public void keyPressed( int key ) {
+		// Warn if moving the wrong way
+		double dis;
+		if ( checkpoints.size() > 0 )
+			dis = distanceToCheckpointSq( checkpoints.get( 0 ) );
+		else
+			dis = 0;
+		if ( dis > cpDistance )
+			System.out.println("WRONG WAY!");
+		cpDistance = dis;
+		
 		if ( ( key > 0x30 ) && ( key < 0x3A ) )
-			movePlayer( key - 0x30 );
+			movePlayer( key - 0x30 );	
 	}
 	
 	public void onWin( int steps ) {
@@ -121,6 +135,16 @@ public class Player extends GameObject {
 		RaceTrack.onDeath( steps );
 	}
 	public void onCheckpoint( int steps ) {
+		if ( checkpoints.size() > 0 )
+			cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
+		else
+			cpDistance = 0;
+	}
+	
+	public double distanceToCheckpointSq( Checkpoint checkpoint ) {
+		return Line2D.ptSegDistSq( checkpoint.getPosition()[0], checkpoint.getPosition()[1],
+				checkpoint.getPosition()[2], checkpoint.getPosition()[3],
+				xPos, yPos );
 	}
 	
 }

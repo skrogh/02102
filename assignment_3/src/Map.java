@@ -31,12 +31,15 @@ public class Map {
 		walls.add( new int[]{64, 48, 0, 48} );
 		walls.add( new int[]{0, 48, 0, 0} );
 		walls.add( new int[]{14, 24, 50, 24} );
+		walls.add( new int[]{32, 10, 32, 38} );
+
+
 		
 		this.checkpoints = new ArrayList<int[]>();
 		checkpoints.add( new int[]{0, 24, 14, 24} );
-		checkpoints.add( new int[]{32, 0, 32, 24} );
+		checkpoints.add( new int[]{32, 0, 32, 10} );
 		checkpoints.add( new int[]{50, 24, 64, 24} );
-		checkpoints.add( new int[]{32, 24, 32, 48} );
+		checkpoints.add( new int[]{32, 38, 32, 48} );
 		checkpoints.add( new int[]{0, 24, 14, 24} );
 	}
 	
