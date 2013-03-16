@@ -160,8 +160,8 @@ public class MapCreator {
 		xEnd = addedCheckpoints.get( 0 ).xEnd;
 		yEnd = addedCheckpoints.get( 0 ).yEnd;
 		
-		saveString = Integer.toString( xStart ) + " " + Integer.toString( yStart ) + " " + Integer.toString( xEnd )
-				+ " " + Integer.toString( yEnd ) + " " + "checkpoint" + "\n";
+    saveString = Integer.toString( xStart ) + " " + Integer.toString( yStart ) + " " + Integer.toString( xEnd )
+            + " " + Integer.toString( yEnd ) + " " + "checkpoint" + "\n";
 		try {
 			out.write( saveString );
 		} catch (IOException e) {
