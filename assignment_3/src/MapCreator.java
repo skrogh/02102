@@ -23,21 +23,13 @@ public class MapCreator {
 		addedWalls = new ArrayList<Wall>();
 		addedCheckpoints = new ArrayList<Checkpoint>();
 		
-		String fileName = getFileName();
-		try {
-			fstream = new FileWriter( fileName );
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		out = new BufferedWriter( fstream );
 		
 		boolean exit_and_save = false;
 		
 		StdDraw.setCanvasSize( 640, 480 );
 		StdDraw.setXscale( 0, 640 );
 		StdDraw.setYscale( 480, 0 );
-		
+        StdDraw.show();		
 		
 		while ( !exit_and_save ) {
 			if( StdDraw.mousePressed() ) {
@@ -45,15 +37,15 @@ public class MapCreator {
 				try {
 					Thread.currentThread().sleep(100);
 				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
+            		Thread.currentThread().interrupt();
 				}
 			}
 			
 			if( StdDraw.hasNextKeyTyped() ) {
 				switch ( StdDraw.nextKeyTyped() ) {
 				case KeyEvent.VK_ESCAPE:
-					exit_and_save = true;
 					saveToFile();
+					exit_and_save = true;
 					break;
 				case KeyEvent.VK_W:
 					recordWall();
@@ -63,15 +55,10 @@ public class MapCreator {
 					break;
 				}
 			}
+            //render();
 		}
 		
 		System.out.println("durr");
-		try {
-			out.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	
@@ -112,44 +99,60 @@ public class MapCreator {
 		int xStart = (int) StdDraw.mouseX();
 		int yStart = (int) StdDraw.mouseY();
 		
-		int xEnd = 0;
-		int yEnd = 0;
+		int xEnd = xStart;
+		int yEnd = yStart;
 		
+		Wall wall = new Wall( xStart, yStart, xEnd, yEnd );
+		addedWalls.add( wall );
+
 		while( !StdDraw.hasNextKeyTyped() ) {
+			wall.xEnd = (int) StdDraw.mouseX();
+			wall.yEnd = (int) StdDraw.mouseY();
+            render();
 			if (StdDraw.mousePressed() ) {
-				xEnd = (int) StdDraw.mouseX();
-				yEnd = (int) StdDraw.mouseY();
 				break;
 			}
 		}
 		
-		Wall wall = new Wall( xStart, yStart, xEnd, yEnd );
-		addedWalls.add( wall );
-		render();
 	}
 	
 	public static void recordCheckpoint() {
 		int xStart = (int) StdDraw.mouseX();
 		int yStart = (int) StdDraw.mouseY();
 		
-		int xEnd = 0;
-		int yEnd = 0;
+		int xEnd = xStart;
+		int yEnd = yStart;
 		
+		Checkpoint checkpoint = new Checkpoint( xStart, yStart, xEnd, yEnd );
+		addedCheckpoints.add( checkpoint );
+
 		while( !StdDraw.hasNextKeyTyped() ) {
+
+    		checkpoint.xEnd = (int) StdDraw.mouseX();
+			checkpoint.yEnd = (int) StdDraw.mouseY();
+            
+		    render();
 			if (StdDraw.mousePressed() ) {
-				xEnd = (int) StdDraw.mouseX();
-				yEnd = (int) StdDraw.mouseY();
 				break;
 			}
 		}
 		
-		Checkpoint checkpoint = new Checkpoint( xStart, yStart, xEnd, yEnd );
-		addedCheckpoints.add( checkpoint );
-		render();
 	}
 	
 	public static void saveToFile() {
-		String saveString = "";
+        if ( addedWalls.size() == 0 || addedCheckpoints.size() == 0 ) {
+            System.out.println( "No map saved, you cannot save a map without walls or checkpoints" );
+            return;
+        }
+		String fileName = getFileName();
+		try {
+			fstream = new FileWriter( fileName );
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		out = new BufferedWriter( fstream );
+        String saveString = "";
 		//save first checkpoint for starting line
 		int xStart, yStart, xEnd, yEnd;
 		xStart = addedCheckpoints.get( 0 ).xPos;
@@ -209,6 +212,14 @@ public class MapCreator {
 				+ " " + Integer.toString( yEnd ) + " " + "checkpoint" + "\n";
 		try {
 			out.write( saveString );
+            System.out.println( " Map saved" );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			out.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,13 +227,14 @@ public class MapCreator {
 	}
 	
 	public static void render() {
-		
+        StdDraw.clear( StdDraw.WHITE );
 		for ( int i = 0; i < addedWalls.size(); i++ ) 
 			addedWalls.get( i ).render();
 		
 		for ( int i = 0; i < addedCheckpoints.size(); i++ ) {
 			addedCheckpoints.get( i ).render();
 		}
-		
+
+        StdDraw.show(0);
 	}
 }

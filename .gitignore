@@ -23,6 +23,7 @@
 *.rar
 *.tar
 *.zip
+*.swp
 
 # Pictures #
 ############
