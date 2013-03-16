@@ -1,19 +1,22 @@
 import java.util.*;
 
 public class RaceTrack {
-
+	public static boolean debug;
 	public static ArrayList<GameObject> gameObjects;
+	public static ArrayList<Checkpoint> checkpoints;
 	private static boolean game_over;	
+	public static Map map;	
 	
 	public static void main( String args[] ) {
-
+		debug = false;
 		Scanner console = new Scanner( System.in );
 		
 		while ( true ) {
 			gameObjects = new ArrayList<GameObject>();
+			checkpoints = new ArrayList<Checkpoint>();
 			game_over = false;
-			setupMap( new Map() );
-			Map map = new Map();
+			map = new Map();
+			setupMap( map );
 			System.out.println( "Game has started!" );
 			// Game loop
 			StdDraw.show(0);
@@ -47,6 +50,8 @@ public class RaceTrack {
 			for ( GameObject gameObject : gameObjects ) {
 				gameObject.keyPressed( key );
 			}
+			if ( key == 'd' )
+				debug = !debug;
 		}
 		// clear buffer
 		while ( StdDraw.hasNextKeyTyped() ) {
@@ -63,6 +68,9 @@ public class RaceTrack {
 	}
 	
 	public static void setupMap( Map map ) {
+		// reset lists
+		gameObjects = new ArrayList<GameObject>();
+		
 		// setup canvas size:
 		StdDraw.setCanvasSize( 640, 480 );
 		StdDraw.setXscale( 0, map.getSize()[0] );
@@ -74,7 +82,7 @@ public class RaceTrack {
 		}
 		
 		// add checkpoints
-		ArrayList<Checkpoint> checkpoints = new ArrayList<Checkpoint>();
+		checkpoints = new ArrayList<Checkpoint>();
 		for ( int[] checkpoint : map.getCheckpoints() ) {
 			checkpoints.add( new Checkpoint( checkpoint[0], checkpoint[1], checkpoint[2], checkpoint[3] ) );
 			gameObjects.add( checkpoints.get( checkpoints.size() - 1 ) );
@@ -82,9 +90,7 @@ public class RaceTrack {
 		
 		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
 		
-		for ( int i = 0; i < 10000; i++ ) {
-			gameObjects.add( new GhostPlayer( map.getStart()[0], map.getStart()[1], checkpoints ) );
-		}
+		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 20000, checkpoints, gameObjects ) );
 		
 	}
 	
@@ -103,7 +109,7 @@ public class RaceTrack {
 		}
 	}
 	
-	private static boolean lineLineCollision( double x00, double y00, double x01, double y01,
+	public static boolean lineLineCollision( double x00, double y00, double x01, double y01,
 			double x10, double y10, double x11, double y11) {
 		
 		double nom = -x11 * y01 + x11 * y00 + x10 * y01 - x10 * y00 +
@@ -122,7 +128,7 @@ public class RaceTrack {
 		}
 	}
 	
-	private static boolean collideObjects( GameObject obj1, GameObject obj2 ) {
+	public static boolean collideObjects( GameObject obj1, GameObject obj2 ) {
 		for ( int[] side1 : obj1.getCollisionBox() ) {
 			for ( int[] side2 : obj2.getCollisionBox() ) {
 				if ( lineLineCollision( side1[0], side1[1], side1[2], side1[3],
@@ -137,7 +143,7 @@ public class RaceTrack {
 		System.out.println( "You sir, or ma'am, win \"one million\" internetz!\n" +
 				"Well not really; men du klarede det på:\n" +
 				steps + " træk.");
-		game_over = true;
+		game_over = true;		
 	}
 	public static void onDeath( int steps ) {
 		System.out.println( "Derp °_o\n" +
