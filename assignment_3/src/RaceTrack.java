@@ -1,3 +1,4 @@
+import java.awt.geom.Line2D;
 import java.util.*;
 
 public class RaceTrack {
@@ -90,7 +91,7 @@ public class RaceTrack {
 		
 		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
 		
-		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 10000, checkpoints, gameObjects ) );
+		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 20000, checkpoints, gameObjects ) );
 		
 	}
 	
@@ -109,29 +110,10 @@ public class RaceTrack {
 		}
 	}
 	
-	public static boolean lineLineCollision( double x00, double y00, double x01, double y01,
-			double x10, double y10, double x11, double y11) {
-		
-		double nom = -x11 * y01 + x11 * y00 + x10 * y01 - x10 * y00 +
-				y11 * x01 - y11 * x00 - y10 * x01 + y10 * x00;
-		if ( nom == 0 ) {
-			return false;
-		} else {
-			double t = x11 * y00 + y11 * x10 - x11 * y10 - x10 * y00 - y11 * x00 + y10 * x00;
-			double s = x10 * y01 - x10 * y00 + y10 * x00 + y00 * x01 - y10 * x01 - x00 * y01;
-			t /= nom;
-			s /= nom;
-			if ( ( t >= 0 ) && ( t <= 1 ) && ( s >= 0 ) && ( s <= 1 ) )
-				return true;
-			else
-				return false;
-		}
-	}
-	
 	public static boolean collideObjects( GameObject obj1, GameObject obj2 ) {
 		for ( int[] side1 : obj1.getCollisionBox() ) {
 			for ( int[] side2 : obj2.getCollisionBox() ) {
-				if ( lineLineCollision( side1[0], side1[1], side1[2], side1[3],
+				if ( Line2D.linesIntersect( side1[0], side1[1], side1[2], side1[3],
 						side2[0], side2[1], side2[2], side2[3] ) )
 					return true;
 			}
