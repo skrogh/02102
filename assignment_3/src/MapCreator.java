@@ -11,6 +11,9 @@ import java.util.*;
 
 public class MapCreator {
 	
+    private static int pStartX;
+    private static int pStartY;
+
 	private static FileWriter fstream;
 	private static BufferedWriter out;
 	
@@ -53,6 +56,9 @@ public class MapCreator {
 				case KeyEvent.VK_C:
 					recordCheckpoint();
 					break;
+                case KeyEvent.VK_S:
+                    recordStartPoint();
+                    break;
 				}
 			}
             //render();
@@ -212,6 +218,21 @@ public class MapCreator {
 				+ " " + Integer.toString( yEnd ) + " " + "checkpoint" + "\n";
 		try {
 			out.write( saveString );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        xStart = pStartX;
+        yStart = pStartY;
+        xEnd = pStartX;
+        yEnd = pStartY;
+
+		saveString = Integer.toString( xStart ) + " " + Integer.toString( yStart ) + " " + Integer.toString( xEnd )
+				+ " " + Integer.toString( yEnd ) + " " + "startpoint" + "\n";
+        
+		try {
+			out.write( saveString );
             System.out.println( " Map saved" );
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -234,7 +255,14 @@ public class MapCreator {
 		for ( int i = 0; i < addedCheckpoints.size(); i++ ) {
 			addedCheckpoints.get( i ).render();
 		}
-
+        StdDraw.setPenColor( StdDraw.GREEN );
+        StdDraw.point(pStartX, pStartY);
         StdDraw.show(0);
 	}
+
+    public static void recordStartPoint() {
+        pStartX = (int) StdDraw.mouseX();
+        pStartY = (int) StdDraw.mouseY();
+        render();
+    }
 }
