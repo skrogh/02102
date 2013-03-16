@@ -3,22 +3,19 @@ import java.util.*;
 
 public class GhostPlayer extends Player {
 	
-	private List<Integer> moves; // stores list of moves
+	private ArrayList<Integer> moves; // stores list of moves
 	
-	public GhostPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, List<Integer> moves ){
+	public GhostPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, ArrayList<Integer> moves ){
 		super( x, y, checkpoints );
-		this.moves = moves;
-	
+		ID = IDs.AI;
+		this.moves = (ArrayList<Integer>) moves.clone();
+
 	}
 	
-	public GhostPlayer( int x, int y, ArrayList<Checkpoint> checkpoints){
+	public GhostPlayer( int x, int y, ArrayList<Checkpoint> checkpoints ){
 		super( x, y, checkpoints );
-		this.moves = new ArrayList<Integer>(); 
-		
-		for( long i = 0; i < 200; i++ ) {
-			moves.add( (int) ( Math.floor(Math.random()*9) + 1 ) );
-		}
-		
+		ID = IDs.AI;
+		moves = new ArrayList<Integer>();
 	}
 	
 	public void render() {
@@ -28,29 +25,34 @@ public class GhostPlayer extends Player {
 				if ( point[2] == 1 )
 					StdDraw.setPenColor( StdDraw.RED );
 				else
-					StdDraw.setPenColor( StdDraw.BOOK_BLUE );
-				StdDraw.setPenRadius( 0.0007 );
+					StdDraw.setPenColor( StdDraw.BOOK_RED );
+				StdDraw.setPenRadius( 0.007 );
 				StdDraw.line( pointP[0], pointP[1], point[0], point[1] );
 				pointP = point;
 			}
-			StdDraw.setPenColor( StdDraw.GREEN );
-			StdDraw.setPenRadius( 0.001 );
+			StdDraw.setPenColor( StdDraw.BLACK );
+			StdDraw.setPenRadius( 0.01 );
 			StdDraw.point( xPos, yPos );
 		}
 	}
 	
+	
 	public void keyPressed( int key ) {
-		if ( ( state == states.ALIVE ) && ( key > 0x30 ) && ( key < 0x3A ) )
+		if ( ( key > 0x30 ) && ( key < 0x3A ) ) {
+			if ( moves.isEmpty() )
+				moves.add( (int) ( Math.floor(Math.random()*9) + 1 ) );
 			movePlayer( moves.remove( 0 ) );
-		else if ( !( ( key > 0x30 ) && ( key < 0x3A ) ) )
-			System.out.println( this + " has this left: " + this.checkpoints );
+		}
 	}
 	
 	public void onDeath( int steps ) {
 		state = states.DEAD;
 	}
 	public void onWin( int steps ) {
-		System.out.println( "Ghost vundet" );
+
+	}
+	public void onCheckpoint ( int steps ) {
+
 	}
 	
 }

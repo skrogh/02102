@@ -21,8 +21,6 @@ public class Player extends GameObject {
 		path.add( new int[]{xPos, yPos, 0} );
 		this.checkpoints = (ArrayList<Checkpoint>) checkpoints.clone();
 		collisionBox = new ArrayList<int[]>();
-		
-		System.out.println( this.checkpoints );
 	}
 	
 	public void render() {
@@ -97,8 +95,10 @@ public class Player extends GameObject {
 			path.add( new int[]{xPos, yPos, 0} );
 		} else if ( object.getId() == IDs.CHECKPOINT ) {
 			// If more checkpoints and the hit is next in line, remove it from checkpoints, that has to be hit.
-			if ( !checkpoints.isEmpty() && ( object == checkpoints.get( 0 ) ) )
+			if ( !checkpoints.isEmpty() && ( object == checkpoints.get( 0 ) ) ) {
 				checkpoints.remove( 0 );
+				onCheckpoint( steps );
+			}
 			// Check if we hit the last checkpoint
 			if ( checkpoints.isEmpty() )
 				onWin( steps );
@@ -119,6 +119,8 @@ public class Player extends GameObject {
 	
 	public void onDeath( int steps ) {
 		RaceTrack.onDeath( steps );
+	}
+	public void onCheckpoint( int steps ) {
 	}
 	
 }
