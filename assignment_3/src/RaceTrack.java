@@ -90,7 +90,7 @@ public class RaceTrack {
 		
 		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
 		
-		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 20000, checkpoints, gameObjects ) );
+		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 10000, checkpoints, gameObjects ) );
 		
 	}
 	

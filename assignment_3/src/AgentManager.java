@@ -33,7 +33,7 @@ public class AgentManager extends GameObject {
 		this.gameObjects = gameObjects; // Make reference to game objects
 		checkpointsToPass = 3;
 		waitNumber = 200;
-		passNumber = 1;
+		passNumber = 20;
 		mutateRate = 0.005;
 		optimizationRuns = 5;
 		
@@ -88,10 +88,15 @@ public class AgentManager extends GameObject {
 	
 	private void addAgent() {
 		ArrayList<Integer> path = (ArrayList<Integer>) breed.get( (int) ( Math.random() * breed.size() ) ).clone();
+		// Alter steps
 		for ( int i = 0; i < path.size(); i++ ) {
 			if ( Math.random() < mutateRate )
 				path.set( i, (int) ( (int) ( Math.floor(Math.random() * 9 ) + 1 ) ) );
 		}
+		// Remove steps
+		for ( int i = 0; i < Math.random() * 0.1 * mutateRate * path.size(); i++ )
+			path.remove( (int) Math.floor(Math.random() * path.size() ) );
+		
 		agents.add( new AgentPlayer( this.startX, this.startY, this.checkpoints, checkpointsToPass, path ) );
 	}
 
