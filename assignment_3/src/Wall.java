@@ -7,6 +7,7 @@ public class Wall extends GameObject {
 	
 	public Wall( int x0, int y0, int x1, int y1 ) {
 		ID = IDs.WALL;
+		state = states.ALIVE;
 		collidable = true;
 		xPos = x0;
 		yPos = y0;
