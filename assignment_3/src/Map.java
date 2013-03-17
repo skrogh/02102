@@ -37,7 +37,8 @@ public class Map {
 		
 		this.checkpoints = new ArrayList<int[]>();
 		checkpoints.add( new int[]{0, 24, 14, 24} );
-		checkpoints.add( new int[]{32, 0, 32, 10} );
+		checkpoints.add( new int[]{14, 0, 14, 24} );
+		checkpoints.add( new int[]{50, 0, 50, 24} );
 		checkpoints.add( new int[]{50, 24, 64, 24} );
 		checkpoints.add( new int[]{32, 38, 32, 48} );
 		checkpoints.add( new int[]{0, 24, 14, 24} );

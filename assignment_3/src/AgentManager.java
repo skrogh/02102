@@ -36,7 +36,7 @@ public class AgentManager extends GameObject {
 		passNumber = 20;
 		mutateRate = 0.005;
 		optimizationRuns = 3;
-		lookAhead = 0;
+		lookAhead = 1;
 		checkpointsToPass = 2 + lookAhead;
 		
 		// Create agents:

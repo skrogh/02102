@@ -77,12 +77,15 @@ public class RaceTrack {
 		StdDraw.setXscale( 0, map.getSize()[0] );
 		StdDraw.setYscale( map.getSize()[1], 0 );
 		
-		// add walls
+		// Add grid
+		gameObjects.add( new Grid( map.getSize()[0], map.getSize()[1] ) );
+		
+		// Add walls
 		for ( int[] wall : map.getWalls() ) {
 			gameObjects.add( new Wall( wall[0], wall[1], wall[2], wall[3] ) );
 		}
 		
-		// add checkpoints
+		// Add checkpoints
 		checkpoints = new ArrayList<Checkpoint>();
 		for ( int[] checkpoint : map.getCheckpoints() ) {
 			checkpoints.add( new Checkpoint( checkpoint[0], checkpoint[1], checkpoint[2], checkpoint[3] ) );
