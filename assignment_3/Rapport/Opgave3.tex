@@ -1,0 +1,34 @@
+\section{Opgave 3}
+\subsection{Beskrivelse og Design}
+Der ønskes en implementation af det klassiske spil vektorrally, hvor man kan styre en vektor rundt på en bane ved hjælp af numpad tasterne. Udover dette har vi også valgt at implementere følgene i programmet.
+\begin{itemize}
+\item Kode der registrerer når vektoren kører den forkerte vej
+\item Kode der registerer når vektoren passerer målstregen og angiver antal træk
+\item Kode der muliggør at man kan spille mod computeren
+\item Et separat editeringsprogram hvor en bane kan kreeres og gemmes til brug i hovedeprogrammet.
+\end{itemize}
+Der er således skrevet 2 programmer. Dog ville det være muligt at sætte dem sammen med et menu-system, men dette har vi udeladt da programmets funktionalitet ikke ville være synderligt ændret i forhold til den ekstra implementeringstid. 
+De 2 programmer deler et tegnesystem hvor der kreeres et 640x480 vindue, men selvom vinduet har en fikseret størrelse er der mulighed for at have skalerede baner da banerne har et indbygget grid system. Man kan derfor spille på store eller små baner i et vindue der ikke ændrer størrelse.
+De elementer der tegnes er alle af typen GameObject. Dette er en klasse der indeholder alle de spilelementer der skal tegnes og som kan interagere med hinanden i spillet. Børn af GameObject er f.eks. Player, GhostPlayer, Checkpoint og Wall. Hvert objekt i spillet har et ID, en update metode og en render metode. Dette sørger GameObject for er opfyldt. GameObject behøver dog ikke at være et interface, og dermed tvinge de andre klasser til at implementere disse metoder, men indeholder i stedet tomme placeholder metoder der medfører at lister af GameObjects kan laves og dermed simplicere rendering og opdatering af alle gameobjects.
+I programmet foregår alt efter initaliseringen  i et main loop hvor update() og render() metoderne kaldes gang på gang.
+\subsubsection{Spilprogrammet}
+RaceTrack programmet er hovedeprogrammet hvor det er muligt at spille vektorrally. Programflowet er:
+\begin{enumerate}
+\item Spørg spilleren hvilken bane han/hun gerne vil køre på
+\item Initaliser spillervinduet med den valgte bane 
+\item Lad spilleren bevæge sig rundt indtil han/hun støder ind i en væg eller passerer målstregen
+\item Spørg spilleren om spillet ønskes fortset, hvis ja så gå til 1, hvis nej så stop.
+\end{enumerate}
+Rundt på banen er der placeret checkpoints der fungerer som sub-målstreger og sikrer at spilleren kører den rigtige vej igennem en bane. Denne åbner muligheden for baner der ikke er cirkulære i deres udformning. Spilleren får en advarsel hvis han/hun har passeret 2 checkpoints i den forkerte retning.
+Støder spilleren ind i en mur, eller færdiggør spilleren, spørger programmet spilleren om at indtaste hvorvidt han/hun ønsker at fortsætte i konsollen. Er svaret ja, genstartets spillet med mulighed for at vælge en ny bane at spille på.
+
+\subsubsection{Baneeditor programmet}
+Køres MapCreator programmet åbnes et vindue hvor det er muligt at tegne ens egen bane og gemme den til senere gennemkørsler i RaceTrack programmet.
+Der kan interageres med programmet med følgene keybindings
+\begin{itemize}
+\item SHIFT-W Starter en væg ved det gridpunkt der ligger nærmest ved cursoren, væggen ender der hvor brugeren klikker med musen.
+\item SHIFT+C Samme som for en væg, skaber bare et checkpoint i stedet. Når banen gennemkøres skal checkpoints passeres i den rækkefølge de blev placeret i MapCreator.
+\item SHIFT+S Placerer spillerens startposition under cursoren.
+\item ESCAPE Gemmer banen i maps folderen med filnavnet mapN.map hvor N er det laveste tal der ikke findes i folderen i forvejen.
+\end{itemize}
+Er der ikke placeret både et checkpoint og en wall vil programmet ikke gemme banen. Det er dog op til brugeren selv om han/hun vil placere et startpoint, dette defaulter til (0,0) og kan senere ændres i .map filen.
