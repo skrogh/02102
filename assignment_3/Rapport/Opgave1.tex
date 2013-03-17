@@ -1,0 +1,31 @@
+\section{Opgave 1}
+\subsection{Beskrivelse og Design}
+Der ønskes et program der kan beregne primfaktorerne af et tal indskrevet af brugeren. Der er derfor brug for en algoritme der med en acceptabelt køretid kan bestemme primfaktorerne af et tal, i dette tilfælde mellem 1 og $2^{63}-1$.
+En naiv implementering er at tjekke om alle primtal op til halvdelen af tallets værdi går op i tallet. Dette kræver dog at primtallene allerede kendes, og metoden finder heller ikke flere forekomster af faktorer. Der er derfor brug for en metode der også kan håndtere flere forekomster af den samme primfaktor. En sådan metode kunne følge denne udførsel: 
+\begin{enumerate}
+\item Sæt i=2.
+\item Del primtallet med i. Hvis i er større end primtallets kvadratrod; så stop.
+\item Hvis i går rent op i primtallet; træk 1 fra i og gå til 2, ellers læg 1 til i og gå til 2.
+\end{enumerate}
+Denne algoritme vil finde gentagende forekomster af den samme faktor. Selvom metoden kræver at man forsøger at dele primtallet med tal der ikke selv er primtal, vil den alligevel kun finde primfaktorer, da disse tal ifølge aritmetikkens hovedesætning selv kan skrives som produkter af primtal. \\
+\\
+Programeksekveringen kan derfor reduceres til
+\begin{enumerate}
+\item Få et tal fra brugeren, hvis brugeren indtaster "exit", så stop. Hvis inputtet er dårligt, så spørg om et nyt tal.
+\item Udregn og print en liste af primfaktorer.
+\item Gå til 1.
+\end{enumerate}
+En implementering af dette ses i kildekoden. \\
+\\
+
+\subsection{Programtest}
+For at teste programmets korrekthed er det nødvendigt at teste følgene:
+\begin{itemize}
+\item Programmet kan udregne primfaktorer af tal mellem 2 og $2^{63}-1$ 
+\item Programmet kan håndtere fejlagtigt input.
+\end{itemize}
+Nedenfor ses en test af programmets evne til at beregne primfaktorer af tal indtastet af brugeren.
+\lstinputlisting[caption=Test af primfaktorering]{primefactortest.txt}
+Og her ses en test af programmets evne til at håndtere fejlinput.
+\lstinputlisting[caption=Test af fejlinput]{primefactortest2.txt}
+Med disse tests er der opnået 100\% linjedækning af programmet. Det er umuligt at teste alle eksekveringsmuligheder da det indtastede tal som sagt accepteres så længe det ligger mellem 1 og $2^{63}-1$, men primeFactors algoritmen har ingen edge cases, så det er rimeligt at antage at den fungerer på alle accepterede input.
