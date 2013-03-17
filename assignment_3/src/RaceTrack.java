@@ -19,6 +19,7 @@ public class RaceTrack {
 			game_over = false;
 			map = new Map();
 			setupMap( map );
+            setupGUI();
 			System.out.println( "Game has started!" );
 			// Game loop
 			StdDraw.show(0);
@@ -148,4 +149,9 @@ public class RaceTrack {
 		game_over = true;
 	}
 
+
+    public static void setupGUI() {
+        Button testButton = new Button( 25, 25, 4, 4, "hello world!" );
+        gameObjects.add( testButton );
+    }
 }

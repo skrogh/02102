@@ -62,7 +62,7 @@ public class MapCreator {
                     break;
 				}
 			}
-            //render();
+            render();
 		}
 		
 		System.out.println("durr");
@@ -273,6 +273,19 @@ public class MapCreator {
 		}
         StdDraw.setPenColor( StdDraw.GREEN );
         StdDraw.point(pStartX, pStartY);
+
+        //draw grid
+        StdDraw.setPenRadius( 0.001 );
+        for( int i = 0; i <= 640 / gridSize; i++ ) {
+            StdDraw.setPenColor( StdDraw.LIGHT_GRAY );
+            StdDraw.line( i, 0, i, 480 / gridSize );
+        }
+
+        for( int i = 0; i <= 480 / gridSize; i++ ) {
+            StdDraw.setPenColor( StdDraw.LIGHT_GRAY );
+            StdDraw.line( 0, i, 640 / gridSize, i );
+        }
+
         StdDraw.show(0);
 	}
 
