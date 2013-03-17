@@ -1,0 +1,15 @@
+0 21 29 21 wall
+0 0 0 22 wall
+29 21 29 0 wall
+0 0 29 0 wall
+6 14 6 5 wall
+6 5 20 5 wall
+20 5 20 14 wall
+20 14 6 14 wall
+2 10 6 10 checkpoint
+12 4 12 0 checkpoint
+20 10 29 10 checkpoint
+12 14 12 21 checkpoint
+2 10 6 10 checkpoint
+20 20 20 20 gridsize
+2 10 2 10 startpoint

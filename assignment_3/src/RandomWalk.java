@@ -1,28 +1,32 @@
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 
 
 public class RandomWalk {
-	public static final int WIDTH = 512*9;
-	public static final int HEIGHT = 512*9;
+	public static int canvasSize = 512;
+	public static Scanner scanner;
 
 
 	public static void main( String[] args ) {
-		Scanner console = new Scanner( System.in );
-		StdDraw.setCanvasSize( WIDTH, HEIGHT );
+		scanner = new Scanner( System.in );
 		StdDraw.show(0); // Disable automatic update
 		while(true)
 			try {
-				drawWalk( 500 );
+				canvasSize = promtForPosInt( "Type size for canvas: " );
+				StdDraw.setCanvasSize( canvasSize, canvasSize );
+				int walkSize = promtForPosInt( "Type size of walk: " );
+				drawWalk( walkSize );
 				StdDraw.show(0);
-				if ( console.nextLine().matches( "exit" ) )
+				if ( scanner.nextLine().matches( "exit" ) )
 					break;
 			}
 		catch ( IllegalArgumentException e )  {
 			System.out.println( "ERROR!" );
 		}
 
-		console.close();
+		scanner.close();
 
 
 	}
@@ -35,7 +39,7 @@ public class RandomWalk {
 		
 		StdDraw.setXscale( -size , size );
 		StdDraw.setYscale( -size , size );
-		StdDraw.setPenRadius( 0.4 / size );
+		StdDraw.setPenRadius( canvasSize / 1200d / size );
 
 		StdDraw.clear();
 		StdDraw.setPenColor( StdDraw.BLACK );
@@ -62,5 +66,22 @@ public class RandomWalk {
 			StdDraw.point( xPos, yPos );			
 		}
 
+	}
+	
+	public static int promtForInt( String message ) {
+		System.out.print( message );
+		try {		
+			return scanner.nextInt();
+		} catch ( Exception e ) {
+			return promtForInt( message );
+		}
+	}
+	
+	public static int promtForPosInt( String message ) {
+			int got = promtForInt( message );
+			if ( got > 0 )
+				return got;
+			else
+				return promtForPosInt( message );
 	}
 }
