@@ -25,7 +25,7 @@ public class RaceTrack {
 		while ( true ) {
 			game_over = false;
 			setupMap( map );
-            setupGUI();
+            // setupGUI();
 			System.out.println( "Game has started!" );
 
 			// Game loop
