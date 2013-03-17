@@ -283,12 +283,12 @@ public class MapCreator {
     }
 
     public static int getGridSize() {
-        System.out.println( "Please enter a positive integer gridsize" );
+        System.out.println( "Please enter a gridsize >=1" );
         int gridSize = 0;
         try {
             Scanner inputScanner = new Scanner( System.in );
             gridSize = inputScanner.nextInt();
-            if ( gridSize <= 0 ) 
+            if ( gridSize <= 1 ) 
                 return getGridSize();
             else
                 return gridSize;
