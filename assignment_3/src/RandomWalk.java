@@ -17,7 +17,7 @@ public class RandomWalk {
 				canvasSize = promtForPosInt( "Type size for canvas: " );
 				StdDraw.setCanvasSize( canvasSize, canvasSize );
 				int walkSize = promtForPosInt( "Type size of walk: " );
-				drawWalk( walkSize );
+				drawWalk( walkSize, false );
 				StdDraw.show(0);
 				if ( scanner.nextLine().matches( "exit" ) )
 					break;
@@ -32,7 +32,7 @@ public class RandomWalk {
 	}
 
 
-	public static void drawWalk( int size ) {
+	public static void drawWalk( int size, boolean debug ) {
 		int xPos = 0;
 		int yPos = 0;
 		Random random = new Random();
@@ -63,7 +63,12 @@ public class RandomWalk {
 			// Exit loop, if left window
 			if ( ( Math.abs(xPos) > size ) || ( Math.abs(yPos) > size ) )
 				break;
-			StdDraw.point( xPos, yPos );			
+
+			StdDraw.point( xPos, yPos );
+			if ( debug ) {
+				StdDraw.show( 0 );
+				System.out.println( "Position: (" + xPos + ", " + yPos + ")" );
+			}
 		}
 
 	}
@@ -72,8 +77,10 @@ public class RandomWalk {
 		System.out.print( message );
 		try {		
 			return scanner.nextInt();
-		} catch ( Exception e ) {
+		} catch ( InputMismatchException  e ) {
 			return promtForInt( message );
+		} catch ( Exception e) {
+			return 1;
 		}
 	}
 	
