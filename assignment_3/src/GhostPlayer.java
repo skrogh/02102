@@ -1,6 +1,10 @@
 import java.util.*;
 
-
+/**
+ * Object for an opponent 
+ * @author Søren Andersen, s123369
+ *
+ */
 public class GhostPlayer extends Player {
 	
 	private ArrayList<Integer> moves; // stores list of moves
@@ -36,7 +40,9 @@ public class GhostPlayer extends Player {
 		}
 	}
 	
-	
+	/**
+	 * When player moves, move this too
+	 */
 	public void keyPressed( int key ) {
 		if ( ( key > 0x30 ) && ( key < 0x3A ) ) {
 			if ( moves.isEmpty() )
@@ -49,7 +55,7 @@ public class GhostPlayer extends Player {
 		state = states.DEAD;
 	}
 	public void onWin( int steps ) {
-
+		// overwrite, so ass not to end the game. After finishing Ghost drives randomly.
 	}
 	public void onCheckpoint ( int steps ) {
 

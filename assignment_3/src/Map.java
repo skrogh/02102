@@ -21,8 +21,11 @@ public class Map {
 		this.checkpoints = new ArrayList<int[]>();
         loadMapFromFile();
 	}
-	
-	public void loadMap() { // dummy
+	 
+	/**
+	 * load a dummy map
+	 */
+	public void loadMap() {
 		this.mapWidth = 64;
 		this.mapHeight = 48;
 		this.walls = new ArrayList<int[]>();
