@@ -5,10 +5,13 @@ hvor man kan styre en vektor rundt på en bane ved hjælp af numpad tasterne.
 Udover dette har vi også valgt at implementere følgene i programmet:
 \begin{itemize}
   \item Kode der registrerer når vektoren kører den forkerte vej
-  \item Kode der registerer når vektoren passerer målstregen og angiver antal træk
+  \item Kode der registrerer når vektoren passerer målstregen og angiver antal træk
   \item Kode der muliggør at man kan spille mod computeren
   \item Et separat editeringsprogram hvor en bane kan kreeres og gemmes til brug i hovedeprogrammet.
 \end{itemize}
+
+Vi har valgt at ændre styre-mekanismen, så man ikke behøver at trykke \emph{enter} efter at vælge retning med numpad.
+Vi blev simpelt hen trætte af det ekstra taste tryk.
 
 Der er således skrevet 2 programmer. Det ville være muligt at sætte dem sammen med et menu-system,
 men dette har vi udeladt, da programmets funktionalitet ikke ville være synderligt ændret i forhold til den ekstra implementeringstid.
@@ -105,7 +108,94 @@ Er der ikke placeret både et checkpoint og en wall vil programmet ikke gemme ba
 \subsection{Programtest}
 
 \subsubsection{Test af RaceTrack}
-blablabla 123
+Følgende ting testes i \emph{RaceTrack}:
+\begin{itemize}
+  \item Kode der registrerer når vektoren kører den forkerte vej
+  \item Kode der registrerer når vektoren passerer målstregen og angiver antal træk
+  \item Kode der registrerer når vektoren kører ind i en mur
+\end{itemize}
+
+\paragraph{Vektoren kører den forkerte vej}
+I det øjeblik hvor spilleren drejer til venstre, væk fra næste checkpoint, printes:
+\begin{lstlisting}
+WRONG WAY!
+\end{lstlisting}
+til konsollen, se figur~\ref{fig:wrongway}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{wrongway}
+		\caption{I det øjeblik hvor spilleren drejer til venstre, væk fra næste checkpoint, printes ``WRONG WAY!'' til konsollen}\label{fig:wrongway}
+\end{figure}
+
+\paragraph{Vektoren kører i mål} Figur~\ref{fig:maal}
+I det øjeblik hvor spilleren har passeret alle checkpoints (den sidste er oveni den første, der hvor man starter) printes følgende til konsollen:
+\begin{lstlisting}
+You sir, or ma'am, win "one million" internetz!
+Well not really; men du klarede det på:
+23 træk.
+Game has ended. Type "more!" to play again.
+type anything else to be a wuz and quit.
+\end{lstlisting}
+Antallet af skridt er selvfølgelig afhængit af, hvor godt man klarer sig.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{maal}
+		\caption{Spilleren kører i mål}\label{fig:maal}
+\end{figure}
+
+\paragraph{Vektoren kører i en væg} Figur~\ref{fig:vaeg}
+I det øjeblik hvor spilleren rammer en væg printes følgende til konsollen:
+\begin{lstlisting}
+Derp °_o
+Du døde vist
+Ej hvor flot du smadrede din "vektor" på bare:
+15 træk.
+Game has ended. Type "more!" to play again.
+type anything else to be a wuz and quit.
+\end{lstlisting}
+Antallet af skridt er selvfølgelig afhængit af, hvor dårligt man klarer sig.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{vaeg}
+		\caption{Spilleren kører i mål}\label{fig:vaeg}
+\end{figure}
+
+\subsubsection{test af AgentManager}
+Det er muligt undervejs at tegne de agenter, der er i live, men da dette tager lang tid
+(et par tusinde agenter, er mange linjer, der skal tegnes) er dette en debug feature, 
+der kan slåes til ved at trykke \emph{d}.
+
+For en simplel bane (banen \emph{simple}) ser et billede af agenterne undervejs ud som i figur~\ref{fig:simpleD},
+den færdige rute er at se i figur~\ref{fig:simpleF} (spilleren står stille ved at trykke på \emph{5})
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{simpleD}
+		\caption{Debug billede fra banen \emph{simple}}\label{fig:simpleD}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{simpleF}
+		\caption{Færdig rute fra banen \emph{simple}, længden er 19 skridt.}\label{fig:simpleF}
+\end{figure}
+
+For en mere kompliceret bane (banen \emph{complicated}) ser et billede af agenterne undervejs ud som i figur~\ref{fig:compD},
+den færdige rute er at se i figur~\ref{fig:compF} (spilleren står stille ved at trykke på \emph{5})
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{compD}
+		\caption{Debug billede fra banen \emph{complicated}}\label{fig:compD}
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\textwidth]{compF}
+		\caption{Færdig rute fra banen \emph{complicated}, længden er 25 skridt.}\label{fig:compF}
+\end{figure}
+
+\clearpage
 
 \subsubsection{Test af baneeditor}
 Følgende ting er testet i MapCreator

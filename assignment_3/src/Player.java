@@ -52,7 +52,20 @@ public class Player extends GameObject {
 	}
 	
 	public void update() {
-		// set collision box to last line segment og path
+		// Warn if moving the wrong way for more that 1 step, only for players. not for agents
+		if ( ID == IDs.PLAYER ) {
+			double dis;
+			if ( checkpoints.size() > 0 )
+				dis = distanceToCheckpointSq( checkpoints.get( 0 ) );
+			else
+				dis = 0;
+	
+			if ( dis > cpDistance )
+				System.out.println("WRONG WAY!");
+			cpDistance = dis;
+		}
+		
+		// set collision box to last line segment and path
 		collisionBox = new ArrayList<int[]>();
 		collisionBox.add( new int[]{xPos, yPos,
 				path.get( path.size() - 2 )[0], path.get( path.size() - 2 )[1]} );
@@ -120,18 +133,7 @@ public class Player extends GameObject {
 		}
 	}
 	
-	public void keyPressed( int key ) {
-		// Warn if moving the wrong way for more that 1 step
-		double dis;
-		if ( checkpoints.size() > 0 )
-			dis = distanceToCheckpointSq( checkpoints.get( 0 ) );
-		else
-			dis = 0;
-		
-		if ( dis > cpDistance )
-			System.out.println("WRONG WAY!");
-		cpDistance = dis;
-		
+	public void keyPressed( int key ) {	
 		if ( ( key > 0x30 ) && ( key < 0x3A ) )
 			movePlayer( key - 0x30 );	
 	}
