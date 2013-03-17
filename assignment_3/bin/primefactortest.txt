@@ -1,0 +1,17 @@
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[2, 2, 2, 3]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[1111111111111111111]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[3033333343, 3033333343]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[9223372036854775783]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[7, 7, 73, 127, 337, 92737, 649657]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[2, 3, 7]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[7, 191]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
+[314159265359]
+Enter a positive integer greater than 1 to factorize, exit to termite: 
