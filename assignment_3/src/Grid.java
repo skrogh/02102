@@ -15,9 +15,9 @@ public class Grid extends GameObject{
 	public void render() {
 		StdDraw.setPenColor( StdDraw.BOOK_LIGHT_BLUE );
 		StdDraw.setPenRadius( 0.0005 );
-		for ( int i = 0; i < xPos; i++ )
+		for ( int i = 0; i <= xPos; i++ )
 				StdDraw.line( i, 0, i, yPos );
-		for ( int i = 0; i < yPos; i++ )
+		for ( int i = 0; i <= yPos; i++ )
 			StdDraw.line( 0, i, xPos, i );
 			
 	}

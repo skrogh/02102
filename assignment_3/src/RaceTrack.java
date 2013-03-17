@@ -2,6 +2,7 @@ import java.awt.geom.Line2D;
 import java.util.*;
 
 public class RaceTrack {
+	public static final int CANVAS_WIDTH = 640, CANVAS_HEIGHT = 480;
 	public static boolean debug;
 	public static ArrayList<GameObject> gameObjects;
 	public static ArrayList<Checkpoint> checkpoints;
@@ -73,9 +74,18 @@ public class RaceTrack {
 		gameObjects = new ArrayList<GameObject>();
 		
 		// setup canvas size:
-		StdDraw.setCanvasSize( 640, 480 );
-		StdDraw.setXscale( 0, map.getSize()[0] );
-		StdDraw.setYscale( map.getSize()[1], 0 );
+		StdDraw.setCanvasSize( CANVAS_WIDTH, CANVAS_HEIGHT );
+		
+		// Scale "camera" to full map:
+		if (  map.getSize()[0] / (double) CANVAS_WIDTH > map.getSize()[1] / (double) CANVAS_HEIGHT ) {
+			StdDraw.setXscale( 0, map.getSize()[0] );
+			StdDraw.setYscale( map.getSize()[0] * CANVAS_HEIGHT / (double) CANVAS_WIDTH * 0.5 + map.getSize()[1] * 0.5,
+					- map.getSize()[0] * CANVAS_HEIGHT / (double) CANVAS_WIDTH * 0.5 + map.getSize()[1] * 0.5);
+		} else {
+			StdDraw.setXscale( - map.getSize()[1] * CANVAS_WIDTH / (double) CANVAS_HEIGHT * 0.5 + map.getSize()[0] * 0.5,
+					map.getSize()[1] * CANVAS_WIDTH / (double) CANVAS_HEIGHT * 0.5 + map.getSize()[0] * 0.5);
+			StdDraw.setYscale( map.getSize()[1], 0 );
+		}
 		
 		// Add grid
 		gameObjects.add( new Grid( map.getSize()[0], map.getSize()[1] ) );
