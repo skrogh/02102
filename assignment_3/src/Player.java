@@ -2,7 +2,12 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.*;
 
-
+/**
+ * A playable character
+ * 
+ * @author Søren Andersen, s123369
+ *
+ */
 public class Player extends GameObject {
 	
 	private double cpDistance;
@@ -47,6 +52,7 @@ public class Player extends GameObject {
 	}
 	
 	public void update() {
+		// set collision box to last line segment og path
 		collisionBox = new ArrayList<int[]>();
 		collisionBox.add( new int[]{xPos, yPos,
 				path.get( path.size() - 2 )[0], path.get( path.size() - 2 )[1]} );
@@ -93,7 +99,9 @@ public class Player extends GameObject {
 	
 	public void collided( GameObject object ) {
 		if ( object.getId() == IDs.WALL ) {
+			// Call, and say we died
 			onDeath( steps );
+			// The rest is for moving the player back, we could change the rules, so a death would not end the game
 			xSpeed = 0;
 			ySpeed = 0;
 			xPos = path.get( path.size() - 2 )[0];
@@ -113,12 +121,13 @@ public class Player extends GameObject {
 	}
 	
 	public void keyPressed( int key ) {
-		// Warn if moving the wrong way
+		// Warn if moving the wrong way for more that 1 step
 		double dis;
 		if ( checkpoints.size() > 0 )
 			dis = distanceToCheckpointSq( checkpoints.get( 0 ) );
 		else
 			dis = 0;
+		
 		if ( dis > cpDistance )
 			System.out.println("WRONG WAY!");
 		cpDistance = dis;
@@ -135,12 +144,17 @@ public class Player extends GameObject {
 		RaceTrack.onDeath( steps );
 	}
 	public void onCheckpoint( int steps ) {
+		// Update previous distance to checkpoint
 		if ( checkpoints.size() > 0 )
 			cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
 		else
 			cpDistance = 0;
 	}
-	
+	/**
+	 *  Checks for the distance to a  checkpoint
+	 * @param checkpoint Checkpoint to check for distance
+	 * @return
+	 */
 	public double distanceToCheckpointSq( Checkpoint checkpoint ) {
 		return Line2D.ptSegDistSq( checkpoint.getPosition()[0], checkpoint.getPosition()[1],
 				checkpoint.getPosition()[2], checkpoint.getPosition()[3],

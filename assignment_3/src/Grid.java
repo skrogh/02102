@@ -18,11 +18,7 @@ public class Grid extends GameObject{
 		for ( int i = 0; i <= xPos; i++ )
 				StdDraw.line( i, 0, i, yPos );
 		for ( int i = 0; i <= yPos; i++ )
-			StdDraw.line( 0, i, xPos, i );
-			
+			StdDraw.line( 0, i, xPos, i );	
 	}
-
-	
-	
 	
 }

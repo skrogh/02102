@@ -1,6 +1,11 @@
 import java.awt.geom.Line2D;
 import java.util.*;
 
+/**
+ * Main Class for playing "Vector Rally"
+ * @author Søren Andersen, Carsten Nielsen
+ *
+ */
 public class RaceTrack {
 	public static final int CANVAS_WIDTH = 640, CANVAS_HEIGHT = 480;
 	public static boolean debug;
@@ -8,34 +13,40 @@ public class RaceTrack {
 	public static ArrayList<Checkpoint> checkpoints;
 	private static boolean game_over;	
 	public static Map map;	
-	
+
 	public static void main( String args[] ) {
 		debug = false;
 		Scanner console = new Scanner( System.in );
-		
+
+		gameObjects = new ArrayList<GameObject>();
+		checkpoints = new ArrayList<Checkpoint>();
+		map = new Map();
+
 		while ( true ) {
-			gameObjects = new ArrayList<GameObject>();
-			checkpoints = new ArrayList<Checkpoint>();
 			game_over = false;
-			map = new Map();
 			setupMap( map );
 			System.out.println( "Game has started!" );
+
 			// Game loop
 			StdDraw.show(0);
 			while ( !game_over ) {
 				update();
 				render();
 			}
+
+			// Game end, ask for rematch
 			System.out.println( "Game has ended. Type \"more!\" to play again.\n" +
 					"type anything else to be a wuz and quit." );
 			if ( !console.nextLine().matches( "more!" ) )
 				break;
-			
 		}
-		
+
 		console.close();
 	}
-	
+
+	/**
+	 * Call all GameObjects and tell them to render
+	 */
 	public static void render() {
 		StdDraw.clear( StdDraw.WHITE );
 		for ( GameObject gameObject : gameObjects ) {
@@ -43,10 +54,13 @@ public class RaceTrack {
 		}
 		StdDraw.show(0);
 	}
-	
+
+	/**
+	 * Call all GameObjects and tell them to update
+	 */
 	public static void update() {
-		// key events:
-		// only send first key
+		// Key events:
+		// Only send first key
 		if ( StdDraw.hasNextKeyTyped() ) {
 			int key = StdDraw.nextKeyTyped();
 			for ( GameObject gameObject : gameObjects ) {
@@ -55,28 +69,32 @@ public class RaceTrack {
 			if ( key == 'd' )
 				debug = !debug;
 		}
-		// clear buffer
+		// Clear buffer
 		while ( StdDraw.hasNextKeyTyped() ) {
 			StdDraw.nextKeyTyped();
 		}
-		
-		// position and collision update:
+
+		// Position and collision update:
 		for ( GameObject gameObject : gameObjects ) {
 			gameObject.update();
 		}
-		
-		// collision checking:
+
+		// Collision checking:
 		collisionCheck();
 	}
-	
+
+	/**
+	 * Setup the map from a Map objects
+	 * @param map Map object to setup map from
+	 */
 	public static void setupMap( Map map ) {
 		// reset lists
-		gameObjects = new ArrayList<GameObject>();
-		
+		gameObjects.clear();
+
 		// setup canvas size:
 		StdDraw.setCanvasSize( CANVAS_WIDTH, CANVAS_HEIGHT );
-		
-		// Scale "camera" to full map:
+
+		// Scale "camera" to full map: Ungh this is messy, but such is the life of the SdtDraw library
 		if (  map.getSize()[0] / (double) CANVAS_WIDTH > map.getSize()[1] / (double) CANVAS_HEIGHT ) {
 			StdDraw.setXscale( 0, map.getSize()[0] );
 			StdDraw.setYscale( map.getSize()[0] * CANVAS_HEIGHT / (double) CANVAS_WIDTH * 0.5 + map.getSize()[1] * 0.5,
@@ -86,44 +104,55 @@ public class RaceTrack {
 					map.getSize()[1] * CANVAS_WIDTH / (double) CANVAS_HEIGHT * 0.5 + map.getSize()[0] * 0.5);
 			StdDraw.setYscale( map.getSize()[1], 0 );
 		}
-		
+
 		// Add grid
 		gameObjects.add( new Grid( map.getSize()[0], map.getSize()[1] ) );
-		
+
 		// Add walls
 		for ( int[] wall : map.getWalls() ) {
 			gameObjects.add( new Wall( wall[0], wall[1], wall[2], wall[3] ) );
 		}
-		
+
 		// Add checkpoints
-		checkpoints = new ArrayList<Checkpoint>();
+		checkpoints.clear();
 		for ( int[] checkpoint : map.getCheckpoints() ) {
 			checkpoints.add( new Checkpoint( checkpoint[0], checkpoint[1], checkpoint[2], checkpoint[3] ) );
 			gameObjects.add( checkpoints.get( checkpoints.size() - 1 ) );
 		}
-		
+
 		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
-		
+
 		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 20000, checkpoints, gameObjects ) );
-		
+
 	}
-	
+
+
+	/**
+	 * Do collision checking for all GameObjects.
+	 */
 	public static void collisionCheck() {
 		for ( int i = 0; i < gameObjects.size(); i++ ) {
-			for ( int j = i + 1; j < gameObjects.size(); j++ ) {
-				if ( ( gameObjects.get(i).getId() != gameObjects.get(j).getId() ) &&
-						( gameObjects.get(i).getState() != GameObject.states.DEAD ) &&
-						( gameObjects.get(j).getState() != GameObject.states.DEAD ) &&
-						gameObjects.get(i).isCollidable() && gameObjects.get(j).isCollidable() &&
-						collideObjects( gameObjects.get(i), gameObjects.get(j) ) ) {
-					gameObjects.get(i).collided( gameObjects.get(j) );
-					gameObjects.get(j).collided( gameObjects.get(i) );
+			for ( int j = i + 1; j < gameObjects.size(); j++ ) { // made s that for ex. 2 objects a, b only ab collision is checked and not ba, aa or bb
+				if ( ( gameObjects.get(i).getId() != gameObjects.get(j).getId() ) && // If they are of same type (ex. two walls), no collision
+						( gameObjects.get(i).getState() != GameObject.states.DEAD ) && // If either is dead, no collision
+						( gameObjects.get(j).getState() != GameObject.states.DEAD ) && // ----||----
+						gameObjects.get(i).isCollidable() && gameObjects.get(j).isCollidable() && // If either is uncollidable, no collision
+						collideObjects( gameObjects.get(i), gameObjects.get(j) ) ) { // If the two collide
+					gameObjects.get(i).collided( gameObjects.get(j) ); // Call the first, and tell it, it collided with the second
+					gameObjects.get(j).collided( gameObjects.get(i) ); // And vice versa
 				}
 			}
 		}
 	}
-	
+
+	/**
+	 * Check for collision between two objects
+	 * @param obj1 Object #1
+	 * @param obj2 Object #2
+	 * @return Returns true if they collide
+	 */
 	public static boolean collideObjects( GameObject obj1, GameObject obj2 ) {
+		// Check if any line in the colliosionBox from one object intersects with any other line in the colliosionBox from the other object
 		for ( int[] side1 : obj1.getCollisionBox() ) {
 			for ( int[] side2 : obj2.getCollisionBox() ) {
 				if ( Line2D.linesIntersect( side1[0], side1[1], side1[2], side1[3],
@@ -133,13 +162,22 @@ public class RaceTrack {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Called from Player, when "he" wins
+	 * @param steps Steps it took to win
+	 */
 	public static void onWin( int steps ) {
 		System.out.println( "You sir, or ma'am, win \"one million\" internetz!\n" +
 				"Well not really; men du klarede det på:\n" +
 				steps + " træk.");
 		game_over = true;		
 	}
+
+	/**
+	 * Called from Player, when "he" looses
+	 * @param steps Steps it took to loose
+	 */
 	public static void onDeath( int steps ) {
 		System.out.println( "Derp °_o\n" +
 				"Du døde vist\n" +
