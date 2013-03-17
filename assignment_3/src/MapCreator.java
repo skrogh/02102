@@ -13,7 +13,7 @@ public class MapCreator {
 	
     private static int pStartX;
     private static int pStartY;
-
+    private static int gridSize;
 	private static FileWriter fstream;
 	private static BufferedWriter out;
 	
@@ -26,12 +26,13 @@ public class MapCreator {
 		addedWalls = new ArrayList<Wall>();
 		addedCheckpoints = new ArrayList<Checkpoint>();
 		
+        gridSize = getGridSize();
 		
 		boolean exit_and_save = false;
 		
 		StdDraw.setCanvasSize( 640, 480 );
-		StdDraw.setXscale( 0, 640 );
-		StdDraw.setYscale( 480, 0 );
+		StdDraw.setXscale( 0, 640 / gridSize );
+		StdDraw.setYscale( 480 / gridSize, 0 );
         StdDraw.show();		
 		
 		while ( !exit_and_save ) {
@@ -75,8 +76,9 @@ public class MapCreator {
 	 * ====================================================
 	 */
 	public static String getFileName() {
-		String fileName = "maps" + File.separator + "map";
 		
+		String fileName = "maps" + File.separator + "map";
+
 		boolean valid_name_found = false;
 		int mapCount = 0;
 		
@@ -192,7 +194,7 @@ public class MapCreator {
 			}
 		}
 		
-		for ( int i = 0; i < addedCheckpoints.size(); i++ ) {
+		for ( int i = 1; i < addedCheckpoints.size(); i++ ) {
 			xStart = addedCheckpoints.get( i ).xPos;
 			yStart = addedCheckpoints.get( i ).yPos;
 			xEnd = addedCheckpoints.get( i ).xEnd;
@@ -216,6 +218,20 @@ public class MapCreator {
 		
 		saveString = Integer.toString( xStart ) + " " + Integer.toString( yStart ) + " " + Integer.toString( xEnd )
 				+ " " + Integer.toString( yEnd ) + " " + "checkpoint" + "\n";
+		try {
+			out.write( saveString );
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		xStart = gridSize;
+		yStart = gridSize;
+		xEnd = gridSize; 
+		yEnd = gridSize;
+		
+		saveString = Integer.toString( xStart ) + " " + Integer.toString( yStart ) + " " + Integer.toString( xEnd )
+				+ " " + Integer.toString( yEnd ) + " " + "gridsize" + "\n";
 		try {
 			out.write( saveString );
 		} catch (IOException e) {
@@ -264,5 +280,21 @@ public class MapCreator {
         pStartX = (int) StdDraw.mouseX();
         pStartY = (int) StdDraw.mouseY();
         render();
+    }
+
+    public static int getGridSize() {
+        System.out.println( "Please enter a positive integer gridsize" );
+        int gridSize = 0;
+        try {
+            Scanner inputScanner = new Scanner( System.in );
+            gridSize = inputScanner.nextInt();
+            if ( gridSize <= 0 ) 
+                return getGridSize();
+            else
+                return gridSize;
+        }
+        catch(Exception ex) {
+            return getGridSize();
+        }
     }
 }

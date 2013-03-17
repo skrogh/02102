@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.io.*;
 
 public class Map {
 	
@@ -19,7 +19,7 @@ public class Map {
 		this.mapWidth = 0;
 		this.walls = new ArrayList<int[]>();
 		this.checkpoints = new ArrayList<int[]>();
-		loadMap(); // load dummy map
+        loadMapFromFile();
 	}
 	
 	public void loadMap() { // dummy
@@ -62,9 +62,33 @@ public class Map {
 	
     public void loadMapFromFile() {
         String filename = getFileName();
-        Scanner lineScanner = new Scanner( new FileReader( filename ) );
-        while ( lineScanner.hasNextLine() ) {
-            break;
+        try {
+            Scanner lineScanner = new Scanner( new FileReader( filename ) );
+        
+            while ( lineScanner.hasNextLine() ) {
+                int xStart, yStart, xEnd, yEnd;
+                Scanner elementScanner = new Scanner( lineScanner.nextLine() );
+                xStart = elementScanner.nextInt();
+                yStart = elementScanner.nextInt();
+                xEnd = elementScanner.nextInt();
+                yEnd = elementScanner.nextInt();
+                int[] posArray = new int[]{ xStart, yStart, xEnd, yEnd };
+                String element = elementScanner.next();
+                if ( element.equals( "wall" ) )
+                    walls.add( posArray );
+                else if ( element.equals( "checkpoint" ) )
+                    checkpoints.add( posArray );
+                else if ( element.equals( "startpoint" ) ) {
+                    this.xStart = xStart;
+                    this.yStart = yStart;
+                } else if ( element.equals( "gridsize" ) ) {
+                    this.mapWidth = 640 / xStart; //xStart is gridSize
+                    this.mapHeight = 480 / xStart;
+                }
+            }
+        }
+        catch(FileNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
     
@@ -73,7 +97,7 @@ public class Map {
         Scanner inputScanner = new Scanner( System.in );
         String mapName = inputScanner.next();
             
-		String filename = "maps" + File.separator + mapName;
+		String filename = "maps" + File.separator + mapName + ".map";
         File attemptFile = new File( filename );
         if ( attemptFile.exists() ) {
             return filename;
