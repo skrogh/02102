@@ -2,11 +2,13 @@
 \subsection{Beskrivelse og Design}
 Der ønskes et program der kan simulere og give en grafisk repræsentation af en randomwalk i 2 dimensioner. \\
 \\
-Randomwalken skal starte i (0,0) i et 2n x 2n koordinatsystem hvor n er et tal som en bruger af programmet har specificeret. \\
-Dette implementeres i et vores program ved at lave et 512x512pixel canvas der skaleres efter koordinatsystemets størrelse. 2 variable, der beskriver x og y for tegnepositionen, initialiseres og i et while loop bruges java util bibliotekets random klasse til at bestemme en tilfældig ændring af tegnepositionen hvorefter der tegnes en prik på tegnepositionen. Overskrider tegnepositionen koordinatsystemets grænser, afbrydes programmet.
+Randomwalken skal starte i (0,0) i et 2n+1 x 2n+1 koordinatsystem hvor n er et tal som en bruger af programmet har specificeret. \\
+Dette implementeres i et vores program ved at lave et kvadratisk canvas der skaleres efter koordinatsystemets størrelse.
+2 variable, der beskriver x og y for tegnepositionen, initialiseres og i et while loop bruges java util bibliotekets random klasse til at bestemme en tilfældig ændring af tegnepositionen hvorefter der tegnes en prik på tegnepositionen. Overskrider tegnepositionen koordinatsystemets grænser, afbrydes programmet.
 \\
 \\
-Da det kan tage lang tid at tegne en randomwalk med tilhørende positionsoutput i konsollen, er der tilføjet en debug mode der skal tilslås for at få positionsændringer vist i konsollen.
+Da det kan tage lang tid at tegne en randomwalk med tilhørende positionsoutput i konsollen, er der tilføjet en debug mode der skal tilslås for at få positionsændringer vist i konsollen. Dette tilføjer også skærmopdatering efter hvert træk.
+
 \subsection{Programtest}
 Først testes metoden, der får input fra brugeren:
 
