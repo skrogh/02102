@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class Map {
@@ -56,4 +56,28 @@ public class Map {
 		return checkpoints;
 	}
 	
+    public void loadMapFromFile() {
+        String filename = getFileName();
+        Scanner lineScanner = new Scanner( new FileReader( filename ) );
+        while ( lineScanner.hasNextLine() ) {
+            break;
+        }
+    }
+    
+    public String getFileName() {
+        System.out.println( "Enter the name of the map file to be loaded eg. \"map1\" " );
+        Scanner inputScanner = new Scanner( System.in );
+        String mapName = inputScanner.next();
+            
+		String filename = "maps" + File.separator + mapName;
+        File attemptFile = new File( filename );
+        if ( attemptFile.exists() ) {
+            return filename;
+        }
+        else {
+            System.out.println( "The file was not found, try again" );
+            return getFileName();
+        }
+
+    }
 }
