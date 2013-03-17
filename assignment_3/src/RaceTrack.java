@@ -13,10 +13,11 @@ public class RaceTrack {
 	public static ArrayList<Checkpoint> checkpoints;
 	private static boolean game_over;	
 	public static Map map;	
+	public static Scanner console;
 
 	public static void main( String args[] ) {
 		debug = false;
-		Scanner console = new Scanner( System.in );
+		console = new Scanner( System.in );
 
 		gameObjects = new ArrayList<GameObject>();
 		checkpoints = new ArrayList<Checkpoint>();
@@ -122,8 +123,9 @@ public class RaceTrack {
 		}
 
 		gameObjects.add( new Player( map.getStart()[0], map.getStart()[1], checkpoints ) );
-
-		gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 20000, checkpoints, gameObjects ) );
+		
+		if ( promptForToken( "Run \"AI\", type \"y\" for yes: ", "y", "Running \"AI\"", "Not running \"AI\"" ) )
+			gameObjects.add( new AgentManager( map.getStart()[0], map.getStart()[1], 20000, checkpoints, gameObjects ) );
 
 	}
 
@@ -192,4 +194,30 @@ public class RaceTrack {
         Button testButton = new Button( 25, 25, 4, 4, "hello world!" );
         gameObjects.add( testButton );
     }
+    
+    /**
+	 * Prompts the user for a token, If they write the correct one; true is returned
+	 * 
+	 * @param message Message to display to the user
+	 * @param token Token to look for
+	 * @param succes Message shown on token match
+	 * @param falure Message to show on no match
+	 * @return Returns true if match, else returns false
+	 */
+	public static boolean promptForToken( String message, String token, String succes, String falure ) {
+		System.out.print( message );
+		try {
+			if ( console.nextLine().matches( token ) ) {
+				System.out.println( succes );
+				return true;
+			} else {
+				System.out.println( falure );
+				return false;
+			}
+		} catch ( Exception e) {
+			System.out.println( falure );
+			return false;
+		}
+	}
+	
 }
