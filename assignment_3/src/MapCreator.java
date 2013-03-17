@@ -20,9 +20,18 @@ public class MapCreator {
 	private static ArrayList<Wall> addedWalls;
 	private static ArrayList<Checkpoint> addedCheckpoints;
 	
+    /*==============================================================
+     * main()
+     * When program is running: 
+     *      SHIFT+S to save startpoint
+     *      SHIFT+C to save checkpoint
+     *      SHIFT+W to save wall
+     *      ESCAPE to save map and quit
+     * No map will be saved unless there is at least a checkpoint and
+     * a wall.
+     * =============================================================
+     */
 	public static void main( String args[] ) {
-		
-		
 		addedWalls = new ArrayList<Wall>();
 		addedCheckpoints = new ArrayList<Checkpoint>();
 		
@@ -62,10 +71,9 @@ public class MapCreator {
                     break;
 				}
 			}
-            //render();
+            render();
 		}
 		
-		System.out.println("durr");
 	}
 	
 	
@@ -103,6 +111,12 @@ public class MapCreator {
 		return fileName;
 	}
 	
+    /*=================================================================
+     * recordWall()
+     * Instantiates a wall object and lets a user modify it's endpoints
+     * until the mouse is pressed.
+     * ================================================================
+     */
 	public static void recordWall() {
 		int xStart = (int) StdDraw.mouseX();
 		int yStart = (int) StdDraw.mouseY();
@@ -124,6 +138,11 @@ public class MapCreator {
 		
 	}
 	
+    /*==============================================================
+     * recordCheckpoint()
+     * same as recordWall(), just for checkpoints.
+     * =============================================================
+     */
 	public static void recordCheckpoint() {
 		int xStart = (int) StdDraw.mouseX();
 		int yStart = (int) StdDraw.mouseY();
@@ -147,6 +166,12 @@ public class MapCreator {
 		
 	}
 	
+    /*===============================================================
+     * saveToFIle()
+     * Saves the current map objects to a file in the format
+     * "int, int, int, int, string"
+     * ==============================================================
+     */
 	public static void saveToFile() {
         if ( addedWalls.size() == 0 || addedCheckpoints.size() == 0 ) {
             System.out.println( "No map saved, you cannot save a map without walls or checkpoints" );
@@ -262,7 +287,13 @@ public class MapCreator {
 			e.printStackTrace();
 		}
 	}
-	
+    
+
+    /*=================================================================
+     * render()
+     * Render the object to be displayed in the map creator window
+     * ===============================================================
+     */
 	public static void render() {
         StdDraw.clear( StdDraw.WHITE );
 		for ( int i = 0; i < addedWalls.size(); i++ ) 
@@ -273,15 +304,40 @@ public class MapCreator {
 		}
         StdDraw.setPenColor( StdDraw.GREEN );
         StdDraw.point(pStartX, pStartY);
+
+        //draw grid
+        StdDraw.setPenRadius( 0.001 );
+        for( int i = 0; i <= 640 / gridSize; i++ ) {
+            StdDraw.setPenColor( StdDraw.LIGHT_GRAY );
+            StdDraw.line( i, 0, i, 480 / gridSize );
+        }
+
+        for( int i = 0; i <= 480 / gridSize; i++ ) {
+            StdDraw.setPenColor( StdDraw.LIGHT_GRAY );
+            StdDraw.line( 0, i, 640 / gridSize, i );
+        }
+
         StdDraw.show(0);
 	}
+    
 
+    /*================================================================
+     * recordStartPoint()
+     * Records the point at which the player will start when the
+     * map is loaded.
+     * ===============================================================
+     */
     public static void recordStartPoint() {
         pStartX = (int) StdDraw.mouseX();
         pStartY = (int) StdDraw.mouseY();
         render();
     }
-
+    
+    /*================================================================
+     * getGridSize()
+     * Returns a gridsize entered by the player
+     * ==============================================================
+     */
     public static int getGridSize() {
         System.out.println( "Please enter a gridsize >=1" );
         int gridSize = 0;

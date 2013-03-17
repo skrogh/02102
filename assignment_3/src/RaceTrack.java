@@ -25,6 +25,7 @@ public class RaceTrack {
 		while ( true ) {
 			game_over = false;
 			setupMap( map );
+            setupGUI();
 			System.out.println( "Game has started!" );
 
 			// Game loop
@@ -186,4 +187,9 @@ public class RaceTrack {
 		game_over = true;
 	}
 
+
+    public static void setupGUI() {
+        Button testButton = new Button( 25, 25, 4, 4, "hello world!" );
+        gameObjects.add( testButton );
+    }
 }
