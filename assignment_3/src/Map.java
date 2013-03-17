@@ -21,31 +21,7 @@ public class Map {
 		this.checkpoints = new ArrayList<int[]>();
         loadMapFromFile();
 	}
-	 
-	/**
-	 * load a dummy map
-	 */
-	public void loadMap() {
-		this.mapWidth = 64;
-		this.mapHeight = 48;
-		this.walls = new ArrayList<int[]>();
-		walls.add( new int[]{0, 0, 64, 0} );
-		walls.add( new int[]{64, 0, 64, 48} );
-		walls.add( new int[]{64, 48, 0, 48} );
-		walls.add( new int[]{0, 48, 0, 0} );
-		walls.add( new int[]{14, 24, 50, 24} );
-		walls.add( new int[]{32, 10, 32, 38} );
-
-
-		
-		this.checkpoints = new ArrayList<int[]>();
-		checkpoints.add( new int[]{0, 24, 14, 24} );
-		checkpoints.add( new int[]{14, 0, 14, 24} );
-		checkpoints.add( new int[]{50, 0, 50, 24} );
-		checkpoints.add( new int[]{50, 24, 64, 24} );
-		checkpoints.add( new int[]{32, 38, 32, 48} );
-		checkpoints.add( new int[]{0, 24, 14, 24} );
-	}
+	
 	
 	public int[] getSize() {
 		return new int[] {mapWidth, mapHeight};
@@ -63,6 +39,12 @@ public class Map {
 		return checkpoints;
 	}
 	
+    /*================================================================
+     * loadMapFromFile()
+     *  Steps through the mapfile and instantiates the objects
+     *  described
+     *================================================================
+     */
     public void loadMapFromFile() {
         String filename = getFileName();
         try {
@@ -91,10 +73,19 @@ public class Map {
             }
         }
         catch(FileNotFoundException ex) {
-            ex.printStackTrace();
+            System.out.println( "ERROR LOADING MAP PLEASE TRY AGAIN " );
+            walls.clear();
+            checkpoints.clear();
+            loadMapFromFile();
         }
     }
     
+    /*==================================================================
+     * getFileName()
+     *  Prompts the user for a filename and appends it to the
+     *  mapfile path.
+     *==================================================================
+     */
     public String getFileName() {
         System.out.println( "Enter the name of the map file to be loaded eg. \"map1\" " );
         Scanner inputScanner = new Scanner( System.in );

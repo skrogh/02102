@@ -35,3 +35,22 @@ Er der ikke placeret både et checkpoint og en wall vil programmet ikke gemme ba
 
 \subsection{Programtest}
 
+
+\subsubsection{Test af baneeditor}
+Følgende ting er testet i MapCreator
+\begin{itemize}
+\item Programmet godtager ikke negative grid-størrelser.
+\item Programmet gemmer ikke baner uden checkpoints og mure.
+\end{itemize}
+
+Det er ikke testet hvad der sker hvis der bliver smidt en exception imens programmet er igang til at skrive til en fil. Programmet vil dog afbryde saveToFile() metoden hvis dette sker og den korrupte mapfil skal herefter slettes manuelt.\\
+\\
+Når mappet skal loades til gennemkørsel er det testet at:
+\begin{itemize}
+\item Programmet tjekker at filen eksisterer og loader ikke filer der ikke eksisterer.
+\item Programmet gør intet med linjer der ikke har et accepteret element token.
+\end{itemize}
+Stoppes programudførslen pga. en exception imens banen loades fra en fil vil de allerede loadede objekter blive slettet fra objektlisten og brugeren blive bedt om at prøve at indtaste et nyt map navn.\\
+Det er ikke muligt at garantere for at programudførslen vil foregå på denne måde,men da disse tests er successfulde skal ekstra bugs findes ved videre playtesting.
+\\
+Til slut skal det nævnes at det selvfølgelig er muligt at editere map filerne i hånden og derved skabe sjove situationer. Men dette er der ikke lavet safeguards imod da det ikke vurderes som vigtigt i denne applikation.

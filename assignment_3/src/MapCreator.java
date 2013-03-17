@@ -181,8 +181,7 @@ public class MapCreator {
 		try {
 			fstream = new FileWriter( fileName );
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+            return;
 		}
 		out = new BufferedWriter( fstream );
         String saveString = "";
@@ -198,8 +197,7 @@ public class MapCreator {
 		try {
 			out.write( saveString );
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            return;
 		}
 		
 		//save all walls and checkpoints (except first checkpoint)
@@ -214,8 +212,7 @@ public class MapCreator {
 			try {
 				out.write( saveString );
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                return;
 			}
 		}
 		
@@ -230,8 +227,7 @@ public class MapCreator {
 			try {
 				out.write( saveString );
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                return;
 			}
 		}
 		
@@ -246,8 +242,7 @@ public class MapCreator {
 		try {
 			out.write( saveString );
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            return;
 		}
         
 		xStart = gridSize;
@@ -260,8 +255,7 @@ public class MapCreator {
 		try {
 			out.write( saveString );
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            return;
 		}
         
         xStart = pStartX;
@@ -276,15 +270,13 @@ public class MapCreator {
 			out.write( saveString );
             System.out.println( " Map saved" );
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            return;
 		}
 
 		try {
 			out.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            return;
 		}
 	}
     
