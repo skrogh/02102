@@ -2,14 +2,16 @@ import java.util.*;
 
 
 public class AgentPlayer extends Player {
-	
+
 	private ArrayList<Integer> moves; // stores list of moves
 	public ArrayList<Integer> drove; // stores list of moves
 	public ArrayList<Integer> child; // stores list of moves
 	private int goal;
+	private int lookAhead;
 	public int fertility;
-	
-	public AgentPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, int goal, ArrayList<Integer> moves ){
+	private double cpDistance;
+
+	public AgentPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, int goal, int lookAhead, ArrayList<Integer> moves ){
 		super( x, y, checkpoints );
 		this.ID = IDs.AI;
 		this.moves = (ArrayList<Integer>) moves.clone();
@@ -17,10 +19,12 @@ public class AgentPlayer extends Player {
 		this.drove = new ArrayList<Integer>();
 		this.child = new ArrayList<Integer>();
 		this.goal = this.checkpoints.size() - goal;
+		this.lookAhead = lookAhead;
+		cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
 
 	}
-	
-	public AgentPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, int goal ){
+
+	public AgentPlayer( int x, int y, ArrayList<Checkpoint> checkpoints, int goal, int lookAhead ){
 		super( x, y, checkpoints );
 		this.ID = IDs.AI;
 		this.moves = new ArrayList<Integer>();
@@ -28,8 +32,10 @@ public class AgentPlayer extends Player {
 		this.drove = new ArrayList<Integer>();
 		this.child = new ArrayList<Integer>();
 		this.goal = this.checkpoints.size() - goal;
+		this.lookAhead = lookAhead;
+		cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
 	}
-	
+
 	public void render() {
 		if ( state == states.ALIVE ) {
 			int[] pointP = path.get(0);
@@ -43,26 +49,36 @@ public class AgentPlayer extends Player {
 					StdDraw.line( pointP[0], pointP[1], point[0], point[1] );
 					pointP = point;
 				}
+				StdDraw.setPenColor( StdDraw.BLACK );
+				StdDraw.setPenRadius( 0.001 );
+				StdDraw.point( xPos, yPos );
 			}
-			StdDraw.setPenColor( StdDraw.BLACK );
-			StdDraw.setPenRadius( 0.001 );
-			StdDraw.point( xPos, yPos );
 		}
 	}
-	
+
 	public void update()  {
+		// Kill if moving the wrong way
+		double dis;
+		if ( checkpoints.size() > 0 )
+			dis = distanceToCheckpointSq( checkpoints.get( 0 ) );
+		else
+			dis = 0;
+		if ( dis > cpDistance )
+			state = states.DEAD;
+		cpDistance = dis;
+
 		if ( moves.isEmpty() )
 			moves.add( (int) ( Math.floor(Math.random()*9) + 1 ) );
-		
+
 		drove.add( moves.remove( 0 ) );
 		movePlayer( drove.get( drove.size() - 1) );
-		
+
 		super.update();
 	}
-	
+
 	public void keyPressed( int key ) {
 	}
-	
+
 	public void onDeath( int steps ) {
 		state = states.DEAD;
 	}
@@ -70,17 +86,23 @@ public class AgentPlayer extends Player {
 
 	}
 	public void onCheckpoint ( int steps ) {
-		if ( checkpoints.size() == goal + 1 ) {
+		if ( checkpoints.size() > 0 )
+			cpDistance = distanceToCheckpointSq( checkpoints.get( 0 ) );
+		else
+			cpDistance = 0;
+
+		if ( checkpoints.size() == goal + lookAhead ) {
 			child = (ArrayList<Integer>) drove.clone();
-			if ( goal == -1 ) {
-				fertility = this.steps;
+			if ( goal + lookAhead == 0 ) {
+				fertility = steps;
 				state = states.DEAD;
 			}
 		}
 		if ( checkpoints.size() <= goal ) {
-			fertility = this.steps;
+			fertility = steps;
 			state = states.DEAD;
 		}
+		
 	}
-	
+
 }

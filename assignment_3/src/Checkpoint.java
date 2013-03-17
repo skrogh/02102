@@ -21,5 +21,9 @@ public class Checkpoint extends GameObject {
 		StdDraw.setPenRadius( 0.003 );
 		StdDraw.line( xPos, yPos, xEnd, yEnd );
 	}
+	
+	public int[] getPosition() {
+		return new int[] {xPos, yPos, xEnd, yEnd};
+	}
 
 }

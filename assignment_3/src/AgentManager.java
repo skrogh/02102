@@ -13,6 +13,7 @@ public class AgentManager extends GameObject {
 	private int waitNumber, passNumber;
 	private double mutateRate;
 	private int optimizationRuns;
+	private int lookAhead;
 	
 	public AgentManager( int startX, int startY, int agents, ArrayList<Checkpoint> checkpoints, ArrayList<GameObject> gameObjects ){
 		
@@ -31,22 +32,23 @@ public class AgentManager extends GameObject {
 		this.startY = startY;
 		this.checkpoints = checkpoints; // Make reference, not copy, as we will not change this.
 		this.gameObjects = gameObjects; // Make reference to game objects
-		checkpointsToPass = 3;
 		waitNumber = 200;
-		passNumber = 1;
+		passNumber = 20;
 		mutateRate = 0.005;
-		optimizationRuns = 5;
+		optimizationRuns = 3;
+		lookAhead = 1;
+		checkpointsToPass = 2 + lookAhead;
 		
 		// Create agents:
 		for ( int i = 0; i < agents; i++ ) {
-			this.agents.add( new AgentPlayer( this.startX, this.startY, this.checkpoints, checkpointsToPass ) );
+			this.agents.add( new AgentPlayer( this.startX, this.startY, this.checkpoints, checkpointsToPass, lookAhead ) );
 		}
 		
 	}
 	
 	public void update() {
 		// Check if time for new generation
-		if ( moves.size() > waitNumber )
+		if ( moves.size() >= waitNumber )
 			newGeneration();
 		
 		// List for storing agents to be replaced 
@@ -79,6 +81,9 @@ public class AgentManager extends GameObject {
 				move.add( agent.fertility );
 				move.addAll( (ArrayList<Integer>) agent.child.clone() );
 				moves.add( move );
+				
+				// Print progress
+				System.out.println( "Progress: " + moves.size() + " / " + waitNumber );
 			}
 			agents.remove( agent );
 			addAgent();
@@ -88,11 +93,16 @@ public class AgentManager extends GameObject {
 	
 	private void addAgent() {
 		ArrayList<Integer> path = (ArrayList<Integer>) breed.get( (int) ( Math.random() * breed.size() ) ).clone();
+		// Alter steps
 		for ( int i = 0; i < path.size(); i++ ) {
 			if ( Math.random() < mutateRate )
 				path.set( i, (int) ( (int) ( Math.floor(Math.random() * 9 ) + 1 ) ) );
 		}
-		agents.add( new AgentPlayer( this.startX, this.startY, this.checkpoints, checkpointsToPass, path ) );
+		// Remove steps
+		for ( int i = 0; i < Math.random() * 0.1 * mutateRate * path.size(); i++ )
+			path.remove( (int) Math.floor(Math.random() * path.size() ) );
+		
+		agents.add( new AgentPlayer( this.startX, this.startY, this.checkpoints, checkpointsToPass, lookAhead, path ) );
 	}
 
 	public void render() {
@@ -127,8 +137,8 @@ public class AgentManager extends GameObject {
 		int nAgents = agents.size();
 		agents.clear();
 		checkpointsToPass++;
-		if ( checkpointsToPass > checkpoints.size() + 1 ) {
-			checkpointsToPass = checkpoints.size() + 1;
+		if ( checkpointsToPass > checkpoints.size() + lookAhead ) {
+			checkpointsToPass = checkpoints.size() + lookAhead;
 			optimizationRuns--;
 			mutateRate = mutateRate * 0.95 + 1 * 0.05;
 			if ( optimizationRuns < 0 ) {
