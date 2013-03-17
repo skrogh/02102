@@ -56,7 +56,7 @@ public class PrimeFactors {
      */
 	public static long getInput() {
 		System.out.println( "Enter a positive integer greater than 1 to factorize" +
-				", exit to termite: " );
+				", exit to terminate: " );
 		long factorNumber = 2;
 		try {
 			factorNumber = inputScanner.nextLong();

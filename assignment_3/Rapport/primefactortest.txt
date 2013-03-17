@@ -1,0 +1,17 @@
+Enter a positive integer greater than 1 to factorize, exit to terminate: 24
+[2, 2, 2, 3]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 1111111111111111111
+[1111111111111111111]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 9201111169755555649
+[3033333343, 3033333343]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 9223372036854775783
+[9223372036854775783]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 9223372036854775807
+[7, 7, 73, 127, 337, 92737, 649657]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 42
+[2, 3, 7]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 1337
+[7, 191]
+Enter a positive integer greater than 1 to factorize, exit to terminate: 314159265359
+[314159265359]
+Enter a positive integer greater than 1 to factorize, exit to terminate: exit

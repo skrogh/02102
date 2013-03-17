@@ -1,0 +1,4 @@
+Enter a positive integer greater than 1 to factorize, exit to terminate: -1
+Enter a positive integer greater than 1 to factorize, exit to terminate: 111111111111111111111111111111111111111111111111111111111111111
+Enter a positive integer greater than 1 to factorize, exit to terminate: NaN
+Enter a positive integer greater than 1 to factorize, exit to terminate: exit
