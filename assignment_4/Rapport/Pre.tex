@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{fancyhdr}
+\usepackage[top=3cm, bottom=2cm, left=2cm, right=4cm]{geometry}
+\usepackage[danish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{{pictures/}}
+%\usepackage{textpos}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listingsutf8}
+\usepackage{courier}
+ 
+ \usepackage{hyperref}
+ 
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{mauve}{rgb}{0.6,0,0}
+%\definecolor{box}{rgb}{0.98,0.98,0.98} % box
+
+%TESTTESTTEST
+
+%setup listings
+\lstset{language=Java,
+  extendedchars=true,
+  language=Octave,                % the language of the code
+  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=2,                   % the step between two line-numbers. If it's 1, each line 
+                                  % will be numbered
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=single,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  tabsize=4,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                   % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+  %keywordstyle=\color{blue},          % keyword style
+  %commentstyle=\color{dkgreen},       % comment style
+  %stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*,...},              % if you want to add more keywords to the set
+  deletekeywords={...}              % if you want to delete keywords from the given language
+}
+\lstset{literate=%
+{æ}{{\ae}}1
+{å}{{\aa}}1
+{ø}{{\o}}1
+{Æ}{{\AE}}1
+{Å}{{\AA}}1
+{Ø}{{\O}}1
+{°}{{${}^o$}}1
+{I̅}{{$\overline{\mbox{I}}$}}1
+{X̅}{{$\overline{\mbox{X}}$}}1
+{V̅}{{$\overline{\mbox{V}}$}}1
+{L̅}{{$\overline{\mbox{L}}$}}1
+{D̅}{{$\overline{\mbox{D}}$}}1
+{C̅}{{$\overline{\mbox{C}}$}}1
+{M̅}{{$\overline{\mbox{M}}$}}1
+{M̅}{{$\overline{\mbox{M}}$}}1
+}
+
+ \lstloadlanguages{% Check Dokumentation for further languages ...
+         %[Visual]Basic
+         %Pascal
+         %C
+         %C++
+         %XML
+         %HTML
+         %Java
+         %VHDL
+ }
+%\DeclareCaptionFont{blue}{\color{blue}} 
+
+%\captionsetup[lstlisting]{singlelinecheck=false, labelfont={blue}, textfont={blue}}
+%\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+%\lstset{language=Java}
+
+\addto\captionsdanish{%
+  \renewcommand{\abstractname}%
+    {Abstract}%
+}
+
+%\setcounter{chapter}{1}
+\setcounter{section}{0}
+
+\pagestyle{fancy}
+
+%\lhead{}
+%\chead[<ch-even>]{<ch-odd>}	
+\rhead{Carsten Nielsen s123161, Søren Krogh Andersen s123369}
+
+\cfoot[\thepage]{\thepage}
