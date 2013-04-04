@@ -7,6 +7,7 @@ public class ArtikelTest {
         String titel = "titel";
         Artikel[] referenceliste = {};
         testArtikel( forfattere, referenceliste, tidsskrift, titel ); 
+
     }
 
     public static void testArtikel( String[] forfattere, Artikel[] referenceliste, Tidsskrift tidsskrift, String titel ) {
@@ -16,5 +17,8 @@ public class ArtikelTest {
         assert test.getReferenceliste() == referenceliste : "fejl i referenceliste";
         assert test.getTidsskrift() == tidsskrift : "fejl i tidsskrift";
         assert test.getForfattere() == forfattere : "fejl i forfattere";
+        System.out.println( test.toString() );
+        System.out.println( test.getReferenceliste() );
+        System.out.println( test.getReferenceliste().length );
     }
 }

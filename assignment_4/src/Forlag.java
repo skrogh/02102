@@ -12,9 +12,11 @@ public class Forlag {
     public String getName() { return this.name; }
     public String getSted() { return this.sted; }
 
-    public void printInfo() {
-        System.out.println( "Navn: " + name );
-        System.out.println( "Sted: " + sted );
+    public String toString() {
+        String returnString = "Navn: " + name + "\n";
+        returnString += "Sted: " + sted;
+        
+        return returnString;
     }
 	
 }
