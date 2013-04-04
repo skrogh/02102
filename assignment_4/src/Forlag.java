@@ -1,6 +1,3 @@
-import java.awt.event.ActionListener;
-import java.util.EventListener;
-
 
 public class Forlag {
 
@@ -11,5 +8,13 @@ public class Forlag {
 		this.name = name;
 		this.sted = sted;
 	}
+
+    public String getName() { return this.name; }
+    public String getSted() { return this.sted; }
+
+    public void printInfo() {
+        System.out.println( "Navn: " + name );
+        System.out.println( "Sted: " + sted );
+    }
 	
 }

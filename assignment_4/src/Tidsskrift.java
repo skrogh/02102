@@ -8,7 +8,6 @@ public class Tidsskrift {
 	public Tidsskrift( String titel ) {
 		this.titel = titel;
 	}
-	
 	public void setISSN( String ISSN ) { this.ISSN = ISSN; }
 	public String getISSN() { return this.ISSN; }
 	
@@ -18,4 +17,9 @@ public class Tidsskrift {
 	public void setForlag( Forlag forlag ) { this.forlag = forlag; }
 	public Forlag getForlag() { return this.forlag; }
 	
+    public void printInfo() {
+        System.out.println( "Titel: " + titel );
+        System.out.println( "ISSN: " + ISSN );
+        System.out.println( "Forlag: " + ( ( forlag == null ) ? "" : forlag.getName() ) );
+    }
 }
