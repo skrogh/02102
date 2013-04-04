@@ -10,7 +10,8 @@ public class Artikel {
         this.forfattere = forfattere;
         this.titel = titel;
         this.tidsskrift = tidsskrift;
-
+        Artikel[] emptyRef = {};
+        this.referenceliste = emptyRef;
     }
 
     public void setForfattere( String[] forfattere ) { this.forfattere = forfattere; }
@@ -25,17 +26,19 @@ public class Artikel {
     public void setTitel( String titel ) { this.titel = titel; }
     public String getTitel() { return this.titel; }
 
-    public void printInfo() {
+    public String toString() {
         String forfatterString = Arrays.toString( forfattere );
-        System.out.println( "Forfatter(e) : " + forfatterString.substring( 1, forfatterString.length() - 1 ) );
+        String returnString =  "Forfatter(e) : " + forfatterString.substring( 1, forfatterString.length() - 1 ) + "\n";
         String referencelisteString = "";
         if ( referenceliste != null ) {
             for( int i = 0; i < referenceliste.length; i++ ) {
                 referencelisteString += referenceliste[i].getTitel();
             }
         }
-        System.out.println( "Referencer : " + referencelisteString );
+        returnString += "Referencer : " + referencelisteString + "\n";
 
-        System.out.println( "Tidsskrift: " + tidsskrift.getTitel() );
+        returnString +=  "Tidsskrift: " + tidsskrift.getTitel();
+
+        return returnString;
     }
 }
