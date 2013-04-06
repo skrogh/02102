@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class Cutil {
-    
+
     public enum option { NEGATIVE, POSITIVE };
 
     //================================================
@@ -17,7 +17,8 @@ public class Cutil {
     // Matches console input with acceptor list
     // and returns accepted string if found
     //===============================================
-    public static String promptString( String promptString, String[] acceptors ) {
+    public static String promptStringSet( String promptString, String[] acceptors ) {
+        System.out.println( promptString );
         Scanner inputScanner = new Scanner( System.in );
         String acceptedString = "";
         String inputString = inputScanner.next();
@@ -32,6 +33,14 @@ public class Cutil {
         return acceptedString;
     }
 
+    public static String promptString( String promptString ) {
+        System.out.println( promptString ); 
+        Scanner inputScanner = new Scanner( System.in );
+        String inputString = inputScanner.next();
+        inputScanner.close();
+        return inputString;
+    }
+
     public static int promptInt( String promptString,  int min, int max ) throws IllegalArgumentException {
         Scanner inputScanner = new Scanner( System.in );
         System.out.println( promptString );
@@ -43,26 +52,26 @@ public class Cutil {
             return inputInt;
         else
             throw new IllegalArgumentException();
-        
+
     }
 
     public static int promptInt( String promptString,  option option ) throws IllegalArgumentException {
         try {
             switch( option ) {
-            case NEGATIVE:
-                return promptInt( promptString,  - Integer.MAX_VALUE, 0 );
-            case POSITIVE:
-                return promptInt( promptString,  0, Integer.MAX_VALUE );
-            default:
-                throw new IllegalArgumentException();
-                
+                case NEGATIVE:
+                    return promptInt( promptString,  - Integer.MAX_VALUE, 0 );
+                case POSITIVE:
+                    return promptInt( promptString,  0, Integer.MAX_VALUE );
+                default:
+                    throw new IllegalArgumentException();
+
             }
         }
         catch( IllegalArgumentException ex ) {
             throw ex;
         } 
     }
-    
+
     public static double promptDouble( String promptString,  double min, double max ) throws IllegalArgumentException {
         Scanner inputScanner = new Scanner( System.in );
         System.out.println( promptString );
@@ -74,67 +83,67 @@ public class Cutil {
             return inputDouble;
         else
             throw new IllegalArgumentException();
-        
+
     }
 
     public static double promptDouble( String promptString,  option option ) throws IllegalArgumentException {
         try {
             switch( option ) {
-            case NEGATIVE:
-                return promptDouble( promptString,  - Double.MAX_VALUE, 0 );
-            case POSITIVE:
-                return promptDouble( promptString,  0, Double.MAX_VALUE );
-            default:
-                throw new IllegalArgumentException();
-                
+                case NEGATIVE:
+                    return promptDouble( promptString,  - Double.MAX_VALUE, 0 );
+                case POSITIVE:
+                    return promptDouble( promptString,  0, Double.MAX_VALUE );
+                default:
+                    throw new IllegalArgumentException();
+
             }
         }
         catch( IllegalArgumentException ex ) {
             throw ex;
         } 
     }
-    
+
     public static int[][] fileToIntArray( String filename, int columns ) throws IOException {
-    	try {
-    		int lines = countFileLines( filename );
-    		int[][] datamatrix = new int[ lines ][ columns ];
-    		
-    		Scanner lineReader = new Scanner( new File( filename ) );
-    		String line = "";
-    		Scanner lineDissector = new Scanner( line );
-    		for( int i = 0; i < lines; i++ ) {
-    			line = lineReader.nextLine();
-    			for( int j = 0; j < columns; j++ ) {
-    				datamatrix[ i ][ j ] = lineDissector.nextInt();
-    			}
-    		}
-    		
-    		lineReader.close();
-    		lineDissector.close();
-    		
-    		return datamatrix.clone();
-    	}
-    	catch( IOException ex ) {
-    		throw ex;
-    	}
-    	
+        try {
+            int lines = countFileLines( filename );
+            int[][] datamatrix = new int[ lines ][ columns ];
+
+            Scanner lineReader = new Scanner( new File( filename ) );
+            String line = "";
+            for( int i = 0; i < lines; i++ ) {
+                line = lineReader.nextLine();
+                Scanner lineDissector = new Scanner( line );
+                for( int j = 0; j < columns; j++ ) {
+                    datamatrix[ i ][ j ] = lineDissector.nextInt();
+                }
+                lineDissector.close();
+            }
+
+            lineReader.close();
+
+            return datamatrix.clone();
+        }
+        catch( IOException ex ) {
+            throw ex;
+        }
+
     }
-    
+
     public static int countFileLines( String filename ) throws IOException {
-    	
-    	try {
-    	Scanner lineCounter = new Scanner( new File( filename ) );
-    	int lines = 0;
-    	while ( lineCounter.hasNextLine() ) { 
-    		lineCounter.nextLine();
-    		lines++;
-    	}
-    	lineCounter.close();
-    	
-    	return lines;
-    	}
-    	catch( IOException ex ) {
-    		throw ex;
-    	}
+
+        try {
+            Scanner lineCounter = new Scanner( new File( filename ) );
+            int lines = 0;
+            while ( lineCounter.hasNextLine() ) { 
+                lineCounter.nextLine();
+                lines++;
+            }
+            lineCounter.close();
+
+            return lines;
+        }
+        catch( IOException ex ) {
+            throw ex;
+        }
     }
 }
