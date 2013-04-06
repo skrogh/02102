@@ -21,10 +21,6 @@ public class GameOfLife {
 	GameOfLife( int xSize, int ySize, boolean random ) {
 		state = new int[xSize][ySize];
 		colors = new Color[0];
-		colors = new Color[] {
-				new Color( 50, 50, 80 ),
-				new Color( 100, 100, 255 ),
-		};
 		edgeState = -1;
 
 		// Load default rule-set and random colors
@@ -44,7 +40,8 @@ public class GameOfLife {
 	 * @param initialState
 	 */
 	GameOfLife( int[][] initialState ) {
-		state = initialState.clone();
+		state = new int[1][1];
+		setStates( initialState );
 		colors = new Color[0];
 		edgeState = -1;
 
@@ -145,7 +142,7 @@ public class GameOfLife {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Advance the Game of Life by one generation 
 	 */
@@ -164,7 +161,7 @@ public class GameOfLife {
 		}
 		state = nextState;
 	}
-	
+
 	/**
 	 * Render the game of life with it's top corner state[0][0] in (0, 0) SdtDraw coordinates. the size is set by width and height.
 	 * Due to funky aliasing artifacts, it is advised that the screen is not cleared under the area being drawn in,
@@ -205,7 +202,7 @@ public class GameOfLife {
 					width / state.length * 0.5d, height / state[0].length * 0.5d );
 
 	}
-	
+
 	/**
 	 * 
 	 * @param x corner of the area, the game is drawn in
@@ -222,7 +219,7 @@ public class GameOfLife {
 
 		return mX;
 	}
-	
+
 	/**
 	 * 
 	 * @param x corner of the area, the game is drawn in
@@ -239,7 +236,7 @@ public class GameOfLife {
 
 		return mY;
 	}
-	
+
 	/**
 	 * @return the stare array as a String of lines of numbers with state[0][0] in the top left corner
 	 * and state[n][m] in  bottom right corner 
@@ -282,10 +279,10 @@ public class GameOfLife {
 	private int mod( int in, int mod ) {
 		if ( mod == 0 )
 			return in;
-		
+
 		if ( mod < 0 )
 			return in;
-		
+
 		mod = Math.abs( mod );
 
 		while ( in >= mod )
@@ -302,7 +299,7 @@ public class GameOfLife {
 	 * @param x coordinate for cell
 	 * @param y coordinate for cell
 	 */
-	public void alterCell( int x, int y ) {
+	public void alterState( int x, int y ) {
 		if ( ( x >= 0 ) && ( y >= 0 ) && ( x < state.length ) && ( y < state[0].length ) )
 			state[x][y] = mod( state[x][y] + 1, states );
 	}
@@ -313,9 +310,34 @@ public class GameOfLife {
 	 * @param y coordinate for cell
 	 * @param state to set the cell to
 	 */
-	public void setCell( int x, int y, int state ) {
+	public void setState( int x, int y, int state ) {
 		if ( ( x >= 0 ) && ( y >= 0 ) && ( x < this.state.length ) && ( y < this.state[0].length ) )
 			this.state[x][y] = mod( state, states );
+	}
+
+	/**
+	 * Safe setter for the whole state array
+	 * @param state
+	 * @return true, if the state was set, else false
+	 */
+	public boolean setStates( int[][] state ) {
+		if ( state.length < 1 )
+			return false;
+		if ( state[0].length < 1 )
+			return false;
+
+		for ( int i = 0; i < state.length; i++ ) {
+			if ( i > 0 )
+				if ( state[i].length != state[i - 1].length ) 
+					return false;
+			for ( int j = 0; j < state[i].length; j++ )
+				if ( ( state[i][j] < 0) || ( state[i][j] > states - 1 ) )
+					return false;
+		}
+		
+		this.state = state.clone();
+		
+		return true;
 	}
 
 	/**
@@ -390,6 +412,14 @@ public class GameOfLife {
 				if ( j > rules.length - 1 )
 					return false;
 
+		return true;
+	}
+	
+	public boolean setColors( Color[] colors ) {
+		this.colors = colors.clone();
+		
+		addMissingColors();
+		
 		return true;
 	}
 

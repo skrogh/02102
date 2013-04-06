@@ -23,7 +23,7 @@ public class GameOfLifeMain {
 			else if ( mousePressed && ( !mouseLast ) )
 				setState = golObj.getState( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ) );
 			if ( mousePressed )
-				golObj.setCell( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ), setState + 1 );
+				golObj.setState( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ), setState + 1 );
 			
 			golObj.render( 1, 0, 1, 1 );
 			golObj.renderMouse( 1, 0, 1, 1 );
