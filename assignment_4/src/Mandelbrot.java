@@ -14,7 +14,7 @@ public class Mandelbrot {
     private static ArrayList<double[]> pointList;
     private static Color[] colors;
 
-    private static double zoomfactor = 2;
+    private static double zoomfactor = 1;
     private static int cPart = 1;
     private static int rPart = 0;
     private static int colorPart = 2;
@@ -105,8 +105,8 @@ public class Mandelbrot {
         pointList.clear();
         //dividing by numbers different from 2 to circumvent
         //StdDraws padding "feature"
-        renderCenterX = StdDraw.mouseX() - sideLength / 2.2;
-        renderCenterY = StdDraw.mouseY() + sideLength / 1.7;
+        renderCenterX = StdDraw.mouseX();
+        renderCenterY = StdDraw.mouseY();
         sideLength = sideLength / zoomfactor;
         System.out.println( renderCenterX + " " + renderCenterY );
         setupScales();
