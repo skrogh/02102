@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 
 
@@ -45,7 +46,7 @@ public class ColorGenerator {
                 (int)Math.random() * 255 ) ;
     }
 
-    public static Color[] generateColorMapFromFile( String filename ) throws IllegalArgumentException {
+    public static Color[] generateColorMapFromFile( String filename ) throws IOException {
         try {
             int[][] datamatrix = Cutil.fileToIntArray( filename, 3 );
             Color[] colors = new Color[ datamatrix.length ];
@@ -55,8 +56,8 @@ public class ColorGenerator {
 
             return colors.clone();
         }
-        catch( Exception ex ) {
-            throw new IllegalArgumentException();
+        catch( IOException ex ) {
+            throw ex;
         }
     }
 }

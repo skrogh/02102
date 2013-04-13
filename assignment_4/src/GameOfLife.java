@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.io.IOException;
 
 
 
@@ -426,6 +427,40 @@ public class GameOfLife {
 		this.colors = colors.clone();
 		
 		addMissingColors();
+		
+		return true;
+	}
+	
+	public boolean loadSetup( String ruleFile, String stateFile, String colorFile, boolean print ) {
+		int[][] ruleFileLoad;
+		int[][] stateFileLoad;
+		Color[] colorFileLoad;
+		try {
+			ruleFileLoad = Cutil.fileToIntArray( ruleFile );
+		} catch (IOException e) {
+			if ( print )
+				System.out.println( "Error loading file: " + ruleFile );
+			return false;
+		}
+		try {
+			stateFileLoad = Cutil.fileToIntArray( stateFile );
+		} catch (IOException e) {
+			if ( print )
+				System.out.println( "Error loading file: " + stateFile );
+			return false;
+		}
+		try {
+			colorFileLoad = ColorGenerator.generateColorMapFromFile( colorFile );
+		} catch (IOException e) {
+			if ( print )
+				System.out.println( "Error loading file: " + colorFile );
+			return false;
+		}
+		int[][] currentState = state;
+		int[][] currentRules = rules;
+		Color[] currentColors = colors;
+		
+		
 		
 		return true;
 	}
