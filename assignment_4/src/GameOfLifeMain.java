@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class GameOfLifeMain {
 	public static boolean mouseLast = false;
 	public static int setState;

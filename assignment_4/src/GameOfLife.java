@@ -415,6 +415,13 @@ public class GameOfLife {
 		return true;
 	}
 	
+	/**
+	 * Loads the specified set of colors,
+	 * If not enough colors are loaded, random ones are generated
+	 * @param colors
+	 * @return
+	 */
+	
 	public boolean setColors( Color[] colors ) {
 		this.colors = colors.clone();
 		

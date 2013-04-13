@@ -14,7 +14,7 @@ public class Mandelbrot {
     private static ArrayList<double[]> pointList;
     private static Color[] colors;
 
-    private static double zoomfactor = 1;
+    private static double zoomfactor = 5;
     private static int cPart = 1;
     private static int rPart = 0;
     private static int colorPart = 2;
