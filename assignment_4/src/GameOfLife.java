@@ -29,11 +29,7 @@ public class GameOfLife {
 
 		// Initialize random states, if told to:
 		if ( random )
-			for ( int i = 0; i < state.length; i++ ) {
-				for ( int j = 0; j < state[0].length; j++ ) {
-					state[i][j] = (int) ( Math.random() * states );
-				}
-			}
+			randomize();
 	}
 
 	/**
@@ -49,6 +45,13 @@ public class GameOfLife {
 		// Load default rule-set and random colors
 		setRules();
 
+	}
+	
+	/**
+	 * Creates a dummy game of life
+	 */
+	GameOfLife( ) {
+		this( new int[][]{{0}} );
 	}
 
 	/**
@@ -430,7 +433,7 @@ public class GameOfLife {
 
 		return true;
 	}
-	
+
 	/**
 	 * Load a rule set, an initial state and a color map. Reverts changes on error
 	 * @param ruleFile
@@ -466,7 +469,7 @@ public class GameOfLife {
 		}
 		return loadSetup ( ruleFileLoad, stateFileLoad, colorFileLoad, print );
 	}
-	
+
 	/**
 	 * Set a rule set, an initial state and a color map. Reverts changes on error
 	 * @param ruleFile
@@ -493,7 +496,7 @@ public class GameOfLife {
 			return false;					
 		}
 	}
-	
+
 	/**
 	 * Same as above, but with standard GOL rule set
 	 * @param stateFile
@@ -505,9 +508,9 @@ public class GameOfLife {
 		return loadSetup( new int[][] {
 				{0,		0, 0, 0, 0, 1, 0},	// 0.  Dead
 				{1,		0, 0, 0, 1, 1, 0},	// 1.  living
-				}, stateFile, colorFile, print );
+		}, stateFile, colorFile, print );
 	}
-	
+
 	/**
 	 * Same as above, but with random colors
 	 * @param stateFile
@@ -518,7 +521,17 @@ public class GameOfLife {
 		return loadSetup( new int[][] {
 				{0,		0, 0, 0, 0, 1, 0},	// 0.  Dead
 				{1,		0, 0, 0, 1, 1, 0},	// 1.  living
-				}, stateFile, new Color[0], print );
+		}, stateFile, new Color[0], print );
 	}
 
+	/**
+	 * randomized the game floor
+	 */
+	public void randomize() {
+		for ( int i = 0; i < state.length; i++ ) {
+			for ( int j = 0; j < state[0].length; j++ ) {
+				state[i][j] = (int) ( Math.random() * states );
+			}
+		}
+	}
 }
