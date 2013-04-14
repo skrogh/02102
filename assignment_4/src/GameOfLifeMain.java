@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Scanner;
 
 public class GameOfLifeMain {
 	public static boolean mouseLast = false;
@@ -16,7 +17,6 @@ public class GameOfLifeMain {
 		golObj.render( 1, 0, 1, 1 );
 		//System.out.println( golObj );
 		//System.out.println( golObj.printNeighbors() );
-
 		for (;;) {
 			boolean mousePressed = StdDraw.mousePressed();
 			//System.out.println( "now: " + mousePressed + " last: " + mouseLast );
@@ -26,7 +26,9 @@ public class GameOfLifeMain {
 				setState = golObj.getState( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ) );
 			if ( mousePressed )
 				golObj.setState( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ), setState + 1 );
-			
+			//Clear key buffer
+			while ( StdDraw.hasNextKeyTyped() )
+				StdDraw.nextKeyTyped();
 			golObj.render( 1, 0, 1, 1 );
 			golObj.renderMouse( 1, 0, 1, 1 );
 			StdDraw.show( 0 );
@@ -34,6 +36,5 @@ public class GameOfLifeMain {
 			//System.out.println( golObj.printNeighbors() );
 			mouseLast = mousePressed;
 		}
-
 	}
 }

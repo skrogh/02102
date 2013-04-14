@@ -335,9 +335,9 @@ public class GameOfLife {
 				if ( ( state[i][j] < 0) || ( state[i][j] > states - 1 ) )
 					return false;
 		}
-		
+
 		this.state = state.clone();
-		
+
 		return true;
 	}
 
@@ -415,22 +415,30 @@ public class GameOfLife {
 
 		return true;
 	}
-	
+
 	/**
 	 * Loads the specified set of colors,
 	 * If not enough colors are loaded, random ones are generated
 	 * @param colors
 	 * @return
 	 */
-	
+
 	public boolean setColors( Color[] colors ) {
 		this.colors = colors.clone();
-		
+
 		addMissingColors();
-		
+
 		return true;
 	}
 	
+	/**
+	 * Load a rule set, an initial state and a color map. Reverts changes on error
+	 * @param ruleFile
+	 * @param stateFile
+	 * @param colorFile
+	 * @param print print messages on file load error
+	 * @return
+	 */
 	public boolean loadSetup( String ruleFile, String stateFile, String colorFile, boolean print ) {
 		int[][] ruleFileLoad;
 		int[][] stateFileLoad;
@@ -456,13 +464,61 @@ public class GameOfLife {
 				System.out.println( "Error loading file: " + colorFile );
 			return false;
 		}
-		int[][] currentState = state;
-		int[][] currentRules = rules;
-		Color[] currentColors = colors;
-		
-		
-		
-		return true;
+		return loadSetup ( ruleFileLoad, stateFileLoad, colorFileLoad, print );
+	}
+	
+	/**
+	 * Set a rule set, an initial state and a color map. Reverts changes on error
+	 * @param ruleFile
+	 * @param stateFile
+	 * @param colorFile
+	 * @param print print messages on file load error
+	 * @return
+	 */
+	public boolean loadSetup( int[][] ruleFile, int[][] stateFile, Color[] colorFile, boolean print ) {
+		int[][] currentState = state.clone();
+		int[][] currentRules = rules.clone();
+		Color[] currentColors = colors.clone();
+
+		state = new int[1][1];
+		if ( setRules( ruleFile ) && setStates( stateFile ) && setColors( colorFile ) ) {
+			return true;
+		} else {
+			state = currentState;
+			rules = currentRules;
+			colors = currentColors;
+			if ( print )
+				System.out.println( "Error loading file set, check that ruleset is valid," +
+						"state array is non jaggered and no state exeeds the number of rules." );
+			return false;					
+		}
+	}
+	
+	/**
+	 * Same as above, but with standard GOL rule set
+	 * @param stateFile
+	 * @param colorFile
+	 * @param print
+	 * @return
+	 */
+	public boolean loadSetup( int[][] stateFile, Color[] colorFile, boolean print ) {
+		return loadSetup( new int[][] {
+				{0,		0, 0, 0, 0, 1, 0},	// 0.  Dead
+				{1,		0, 0, 0, 1, 1, 0},	// 1.  living
+				}, stateFile, colorFile, print );
+	}
+	
+	/**
+	 * Same as above, but with random colors
+	 * @param stateFile
+	 * @param print
+	 * @return
+	 */
+	public boolean loadSetup( int[][] stateFile, boolean print ) {
+		return loadSetup( new int[][] {
+				{0,		0, 0, 0, 0, 1, 0},	// 0.  Dead
+				{1,		0, 0, 0, 1, 1, 0},	// 1.  living
+				}, stateFile, new Color[0], print );
 	}
 
 }
