@@ -1,0 +1,75 @@
+\section{Opgave 2}
+
+\subsection{Specifikation}
+Der ønskes et program der kan vise et udsnit af mandelbrotmængden i et vindue. Mængden skal kunne farvelægges med 
+tilfældige farver eller med farver angivet i en fil. Brugeren skal kunne bevæge sig rundt i mængden med musen og 
+indtaste kommandoer i konsollen der tillader brugeren at ændre på figurstørrelsen, udsnittet af mængden brugeren 
+ser osv.. \\
+
+Der er givet en fuldstændig specifikation af klassen Complex, der fungerer som en container for komplekse tal, 
+og enkelte regneoperationer der kan udføres på dem. \\
+
+NB: Da det ikke er specificeret hvilken version af java runtime miljøet der skal understøttes, anvendes i mandelbrot programmet funktioner der kun understøttes i JRE version 1.7 og frem.
+\subsection{Design}
+I henhold til specifikation opstilles følgene klasser
+\begin{itemize}
+    \item Mandelbrot; main-klasse til håndtering af grafik og interaktion med brugeren.
+    \item ColorGenerator; klasse til håndtering af farver.
+    \item Complex; Container til komplekse tal og enkelte regneoperationer.
+\end{itemize}
+
+\subsubsection{Complex klassen}
+Complex klassen indeholder to felter af typen double, disse repræsenterer den imaginære og reelle del af et komplekst tal.
+Da klassen er en utility klasse ses dens metoder nedenfor så kildekolden til Mandelbrot kan læses uden at kende til kildekoden i complex.
+\begin{itemize}
+    \item public Complex(); Konstruktør til at oprette et komplekst tal med værdien 0 + 0i.
+    \item public Complex( double re, double im ); overloadet konstruktør til at oprette et komplekst tal med værdien re +im i
+    \item public Complex( Complex z ); overloadet konstruktør til at oprette et komplekst tal identisk med z.
+    \item public double getRe()/getIm(); getter metoder til re og im felterne.
+    \item public double abs(); returnerer absolutværdien som en double.
+    \item public Complex plus( Complex other ) returnerer værdien af addition mellem other og objektet metoden kaldes på.
+    \item public Complex times( Complex other ) returnerer værdien af multiplikation mellem other og objektet metoden kaldes på
+\end{itemize}
+Klassen bruges som utility klasse i Mandelbrot programmet.
+
+\subsubsection{ColorGenerator klassen}
+Klassen ColorGenerator indeholder metoder til at håndtere farver af typen java.awt.Color. Klassen kan generere et
+sæt af random farver, eller indlæse et sæt af farver fra en fil. Dette er nødvendigt eftersom specifikationen kræver
+at mandebrotprogrammet kan tegne mandelbrotmængden med tilfældige farver, eller farver indlæst fra en fil. \\
+
+
+Da klassen er en utility klasse ses dens metoder nedenfor så kildekoden til Mandelbrot kan læses uden at kende til kildekoden i ColorGenerator.
+\begin{itemize}
+    \item public Color[] generateRandomColorMap( int numColors ) Returnerer en kopi af et array med tilfældige unikke farver af størrelse numColors. Smider IllegalArgumentException hvis numColors er \textless = 0 eller så stor at køretiden er uendelig. 
+    \item public Color generateRandomColor() Returnerer en tilfældig farve.
+    \item public Color[] generateColorMapFromFile( String fileName ) Returnerer en kopi af et array med farver specificeret i en fil. Smider IOException hvis der sker en fil i fillæsningen.
+\end{itemize}
+
+ColorGenerator klassen anvedes i Mandelbrot programmet til at håndtere hvilken farve et specifikt punkt skal tegnes med.
+
+\subsubsection{Mandelbrot klassen}
+Mandelbrot klassen er den statiske klasse der indeholder mandelbrot-programmets kontrolflow. Ydermere indeholder Mandelbrot klassen metoder til at håndtere input fra brugeren og rendering af mandelbrotsættet. \\
+
+Programflowet er som følger:
+\begin{enumerate}
+    \item Initialiser programvindue med standardværdier.
+    \item Tegn den del af mandelbrotsættet der er i fokus.
+    \item Tjek om brugeren har indtastet konsolinput, hvis ja; opdater det viste udsnit af mandelbrotmængden.
+    \item Tjek om brugeren trykker på musen, hvis ja; opdater det viste udsnit af mandelbrotmængden.
+    \item Gå til 2.
+\end{enumerate}
+
+Når programmet køres åbnes således et vindue med de arbitrære standard værdier hvorefter brugeren kan navigere rundt i mandelbrot sættet med musen, eller med konsol kommandoer. \\
+Der er følgene konsolkommandoer til rådighed.
+\begin{itemize}
+    \item set figuresize *int x* ændrer figurstørrelsen i vinduet til x*x.
+    \item set gridsize *int x* ændrer antallet af punkter i det komplekse plan der evalueres til x*x.
+    \item set sidelength *double x* ændrer sidelængden af viste udsnit af det komplekse plan til x.
+    \item set center *double x* *double y* ændrer centrum af den viste punktmængde til x + iy.
+    \item set zoomfactor *double x* ændrer zoomfactoren der bruges ved museklik til x. x<1 zoomer ud.
+    \item set colormap *string map* ændrer farvekoden til farver specificeret i filen med stien map. Hvis der indtastes ''random'' skiftes der til en tilfældigt genereret farvekode.
+\end{itemize}
+Hvis programmet ikke genkender en kommando printes ''No such command'' til konsollen og kommandoen ignoreres. Ligeledes printes ''Error parsing command'', plus den sidst genkendte del af en kommando,  hvis programmet ikke kan genkende de indre dele af en kommando.
+
+
+\subsection{Testing}
