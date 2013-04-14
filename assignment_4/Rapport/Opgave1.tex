@@ -1,0 +1,49 @@
+\section{Opgave 1}
+
+\subsection{Specifikation}
+Der ønskes et program der kan håndtere artikler, forlag og tidsskrifter. Disse entiteter skal implementeres
+som objekter der indeholder følgene felter og metoder:
+\paragraph{Forlag}
+\begin{itemize}
+    \item String navn, navnet på forlaget som en streng.
+    \item String sted, forlagets geografiske placerings, som en streng.
+    \item Forlag( navn, sted ), ikke-overloaded konstruktør.
+\end{itemize}
+
+\paragraph{Tidsskrift}
+\begin{itemize}
+    \item String titel, tidsskriftets titel som en streng.
+    \item String ISSN, tidsskriftets ISSN nummer som en streng.
+    \item Forlag forlag, tidsskriftets forlag som objekt af typen Forlag.
+    \item Tidsskrift( titel ), ikke-overloaded konstruktør der kun tager titlen på tidsskriftet.
+    \item setISSN( ISSN ), setter-metode til at sætte ISSN.
+    \item setForlag( forlag ), setter-metode til at sætte tidsskriftets forlag.
+\end{itemize}
+
+\paragraph{Artikel}
+\begin{itemize}
+    \item String[] forfattere, liste af forfattere repræsenteret ved et streng-array.
+    \item String titel, artiklens titel som en streng.
+    \item Tidsskrift tidsskrift, tidsskriftet artiklen blev publiceret i som et objekt af typen tidsskrift.
+    \item Artikel[] referenceliste, array af artikler som artiklen refererer til.
+    \item Artikel( forfattere, titel, tidsskrift ), ikke-overloaded konstruktør.
+    \item setReferenceliste( referenceliste ), setter-metode til at sætte referencelisten.
+\end{itemize}
+
+Ydermere skal toString metoden overskrives i hver klasse.\\
+
+
+Da andet ikke er specificeret, og dette ikke er en komplet specifikation har, vi valgt at erklære alle felter som private og skrive getter/setter metode til hvert felt.
+
+\subsection{Design}
+De tre klasser der skal skrives ifølge specifikation er meget simple og mængden af reelt design er således begrænset.
+Det er dog værd at nævne at hver klasses konstruktør sørger for at alle felter er initialiserede til en standardværdi
+i stedet for at lade et objekt blive initialiseret med tomme felter. Dette er gjort for at undgå NullPointerExceptions 
+i de andre klasser der anvender klassen, uden at vide hvordan klassen fungerer internt.
+
+\subsection{Testing}
+Til at teste klasserne Forlag, Artikel og Tidsskrift, er der skrevet tre testklasser, ArtikelTest, ForlagTest og TidsskriftTest. Disse klasser indeholder mainprogrammer der instantierer objekter af den klasse de er skrevet for at teste, og bruger assert statements til at eftertjekke at alt fungerer som forventet.
+Hver testklasse tester som minimum at objekter instantieres med de parametre der sendes til kosntruktøren, og at getter/setter metoderne fungerer som ønsket.
+Klasserne testes således ved at køre mainprogrammerne i testklasserne efter at have tilslået assertions i java-virtelmasikenens
+kørselsparametre. Assertions enables ved i kommandolinjen at inkludere muligheden ''-ea'' når java programmet køres,
+eller i eclipse Prefenceres  \textgreater Java \textgreater Installed JREs \textgreater JUnit \textgreater ea checkbox.
