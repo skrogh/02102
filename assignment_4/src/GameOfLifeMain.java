@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.util.Scanner;
+
 
 public class GameOfLifeMain {	
 	public static void main( String[] args ) {
@@ -8,13 +7,13 @@ public class GameOfLifeMain {
 		GameOfLife golObj = new GameOfLife();
 
 		StdDraw.setCanvasSize( 512, 512 );
-		StdDraw.setXscale( 0, 2 );
+		StdDraw.setXscale( 0, 1 );
 		StdDraw.setYscale( 1, 0 );
 
 		switch ( Cutil.promptStringSet( "Type \"load\" to load a file set,\n" +
 				"Type \"random\" to initialize a random game of life,\n" +
 				"Type \"clean\" to initialize a random game of life:",
-				new String[] {"load", "random"} ) ) {
+				new String[] {"load", "random", "clean"} ) ) {
 				case "load":
 					if ( !golObj.loadSetup( Cutil.promptString( "Write filename for rules, N for Game of life" ),
 							Cutil.promptString( "Write filename for initial state"),
@@ -25,7 +24,7 @@ public class GameOfLifeMain {
 					try {
 						golObj = new GameOfLife( Cutil.promptInt( "width:", Cutil.option.POSITIVE ),
 								Cutil.promptInt( "height:", Cutil.option.POSITIVE ), true );
-					} catch ( IllegalArgumentException ex ) {
+					} catch ( Exception ex ) {
 						System.out.println( "Please enter positive values" );
 					}
 					break;
@@ -33,7 +32,7 @@ public class GameOfLifeMain {
 					try {
 						golObj = new GameOfLife( Cutil.promptInt( "width:", Cutil.option.POSITIVE ),
 								Cutil.promptInt( "heigth:", Cutil.option.POSITIVE ), false );
-					} catch ( IllegalArgumentException ex ) {
+					} catch ( Exception ex ) {
 						System.out.println( "Please enter positive values" );
 					}
 					break;
