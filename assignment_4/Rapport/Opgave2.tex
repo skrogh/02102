@@ -69,13 +69,18 @@ Der er følgene konsolkommandoer til rådighed.
     \item set zoomfactor *double x* ændrer zoomfactoren der bruges ved museklik til x. x<1 zoomer ud.
     \item set colormap *string map* ændrer farvekoden til farver specificeret i filen med stien map. Hvis der indtastes ''random'' skiftes der til en tilfældigt genereret farvekode.
 \end{itemize}
-Hvis programmet ikke genkender en kommando printes ''No such command'' til konsollen og kommandoen ignoreres. Ligeledes printes ''Error parsing command'', plus den sidst genkendte del af en kommando,  hvis programmet ikke kan genkende de indre dele af en kommando.
+Hvis programmet ikke genkender en kommando printes ''No such command'' til konsollen og kommandoen ignoreres. Ligeledes printes ''Error parsing command'', plus den sidst genkendte del af en kommando,  hvis programmet ikke kan genkende de indre dele af en kommando.\\
 
+Ovenstående er ikke en optimal måde at håndtere museinput på, da der kun udføres et tjek hver gang programmet kører igennem sit update-loop. Dette medfører at museklik der eksekveres imens programmet renderer et nyt billede, eller håndterer konsolinput ikke bliver registreret. En bedre løsning ville være at have en tråd dedikeret til bruger input.
+Denne tråd ville stille alle indtastede kommandoer op på en stack der så kunne tømmes når mainprogrammet har tid.\\
+Konsolinput håndtering lider ikke af samme problem da der kan laves en buffer som fyldes op imens programmet eksekverer anden kode.
 
 \subsection{Testing}
 
 Til test af Complex klassen er der skrevet en klasse TestComplex der anvender assert statements til at verificere at alle metoderne virker korrekt. \\
 ColorGenerator er sværere at teste med assert statements, men det er verificeret at de to metoder der kaster exceptions, kaster dem på de korrekte betingelser. \\
+Korrektheden af resten af ColorGenerator verificeres i testen af mandelbrot programmet. \\
+
 
 Main programmet er et interaktivt program og vil derfor blive testet ved at forsøge at lave en inputsekvens der dækker hele programmet. Nedenfor ses en enkelt input sekvens og snapshots af det renderede billede for hver ændring.
 \lstinputlisting[caption={Inputsekvens til madelbrot programmet}, label=mandelseq]{mandel.log}
