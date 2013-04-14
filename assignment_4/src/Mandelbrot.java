@@ -1,3 +1,17 @@
+//============================================
+//Mandelbrot - main class for the Mandelbrot
+//program. Sets up default values and renders
+//a section of the mandelbrot set to in a window
+//
+//Implements mouse navigation and various
+//console commands. Window is updated every
+//time a buffer of console commands have
+//been processed or the mouse is clicked.
+//
+// Carsten Nielsen s123161 & Søren Krogh 
+// Andersen s123369
+//============================================
+
 import java.awt.Color;
 import java.util.*;
 import java.io.*;
@@ -22,6 +36,8 @@ public class Mandelbrot {
     private static Scanner inputScanner;
     private static boolean update_needed;
 
+    //Setup default values and start 
+    //input/output loop
     public static void main( String[] args ) {
         pointList = new ArrayList<double[]>();
         inputScanner = new Scanner( System.in );
@@ -56,6 +72,10 @@ public class Mandelbrot {
         }
     }
 
+    //======================================
+    //iterate - estimates whether or not
+    //a number is the the mandelbrot set
+    //=====================================
     public static int iterate(Complex z0) {
         Complex z = new Complex(z0);
         for (int i = 0; i < MAX; i++) {
@@ -67,6 +87,13 @@ public class Mandelbrot {
         return MAX - 1;
     }
 
+    //======================================
+    //render - renders the currently focused
+    //area of the plane using rectangles
+    //for dots. Applies colors from the
+    //colors array to visualize the mandel-
+    //brot set.
+    //=====================================
     public static void render() {
         StdDraw.show( 0 );
         StdDraw.clear();
@@ -85,6 +112,11 @@ public class Mandelbrot {
         StdDraw.show( 0 );
     }
 
+    //=========================================
+    // update - updates the pointlist with
+    // new information. Called the set of points
+    // to be displayed changes.
+    // ========================================
     public static void update() {
         for( int i = 0; i < resolution; i++ ) {
             for( int j = 0; j < resolution; j++ ) {
@@ -101,6 +133,10 @@ public class Mandelbrot {
 
     }
 
+    //============================================
+    // setupWindow - sets up the JFrame and 
+    // StdDraw coordinate-scaling 
+    // ===========================================
     public static void setupWindow() {
         StdDraw.setCanvasSize( CANVAS_WIDTH, CANVAS_HEIGHT );	
         setupScales();
@@ -112,10 +148,19 @@ public class Mandelbrot {
 
     }
 
+    //=============================================
+    // generateColor - returns a color based on
+    // indexing in the colors array
+    // ============================================
     public static Color generateColor( int heat ) {
         return  ( heat <= MAX ) ? colors[ heat ] : new Color( 255, 0, 0 );
     }
 
+    //=============================================
+    //onMouseClick - gets the new centerpoint,
+    // adjusts display scaling and calls update
+    // and render to update the screen
+    // ===========================================
     public static void onMouseClick() {
         pointList.clear();
         //dividing by numbers different from 2 to circumvent
@@ -129,6 +174,20 @@ public class Mandelbrot {
         render();
     }
 
+    //=============================================
+    //handleConsoleInput - reads input from the
+    // console whenever the buffer is not empty.
+    // Set up to be easily extendible with 
+    // arbitrary levels of words in commands.
+    // Currently supports the commands:
+    // 
+    // set figuresize *int x*
+    // set gridsize *int x*
+    // set sidelength *double x*
+    // set center *double x* *double y*
+    // set zoomfactor *double x*
+    // set colormap *String filename* //random to generate random
+    //=============================================
     public static void handleConsoleInput() {
 //        Scanner inputScanner = new Scanner( System.in );
         try {
@@ -154,8 +213,8 @@ public class Mandelbrot {
                                 errorParsingCommand( "set gridsize" );
                             break;
                         case "sidelength":
-                            if ( lineScanner.hasNextInt() ) {
-                                setSidelength( lineScanner.nextInt() );
+                            if ( lineScanner.hasNextDouble() ) {
+                                setSidelength( lineScanner.nextDouble() );
                                 break;
                             } else
                                 errorParsingCommand( "set sidelength" );
@@ -206,6 +265,9 @@ public class Mandelbrot {
         }
     }
 
+    //=============================================
+    //SETTER METHODS BEGIN
+    //============================================
     public static void setFiguresize( int newSize ) {
         CANVAS_WIDTH = newSize;
         CANVAS_HEIGHT = newSize;
@@ -220,7 +282,7 @@ public class Mandelbrot {
         update_needed = true;
     }
 
-    public static void setSidelength( int newSize ) {
+    public static void setSidelength( double  newSize ) {
         sideLength = newSize;
         setupScales();
         System.out.println( "sidelength set to " + newSize );
@@ -253,6 +315,10 @@ public class Mandelbrot {
         System.out.println( "colormap set to " + newMap );
         update_needed = true;
     }
+    //=========================================
+    //SETTER METHODS END
+    //=========================================
+
     public static void noSuchCommand() {
         System.out.println( "No such command" );
     }

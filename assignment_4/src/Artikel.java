@@ -1,3 +1,13 @@
+//===========================================
+//Artikel
+// Indeholder liste af forfattere,
+// referenceliste til andre artikler,
+// tidsskriftet artiklen er publiceret i
+// og titlen på artiklen.
+// Carsten Nielsen s123161 & Søren Krogh 
+// Andersen s123369
+//============================================
+
 import java.util.*;
 
 public class Artikel {
@@ -29,6 +39,7 @@ public class Artikel {
     public String toString() {
         String forfatterString = Arrays.toString( forfattere );
         String returnString =  "Forfatter(e) : " + forfatterString.substring( 1, forfatterString.length() - 1 ) + "\n";
+        returnString += "Titel: " + titel + "\n";
         String referencelisteString = "";
         if ( referenceliste != null ) {
             for( int i = 0; i < referenceliste.length; i++ ) {

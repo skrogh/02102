@@ -8,6 +8,20 @@ public class ArtikelTest {
         Artikel[] referenceliste = {};
         testArtikel( forfattere, referenceliste, tidsskrift, titel ); 
 
+        Forlag UniPress = new Forlag( "University Press", "Denmark" );
+        Tidsskrift JoL = new Tidsskrift( "Journal of Logic" );
+        JoL.setForlag( UniPress );
+
+        Tidsskrift brain = new Tidsskrift( "Brain" );
+
+        Artikel A = new Artikel( new String[]{ "A. Abe & A. Turing" }, "A", JoL );
+
+        Artikel B = new Artikel( new String[]{ "B. Bim" }, "B", JoL );
+        A.setReferenceliste( new Artikel[]{ B } );
+
+        System.out.println( A.toString() );
+        System.out.println( B.toString() );
+
     }
 
     public static void testArtikel( String[] forfattere, Artikel[] referenceliste, Tidsskrift tidsskrift, String titel ) {

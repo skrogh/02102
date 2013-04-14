@@ -9,11 +9,11 @@ import java.io.*;
 import java.util.*;
 
 public class Cutil {
-
+    
 	public enum option { NEGATIVE, POSITIVE };
 
 	//================================================
-	// Cutil - returns accepted string
+	// promptStringSet - returns accepted string
 	// Matches console input with acceptor list
 	// and returns accepted string if found
 	//===============================================
@@ -32,7 +32,11 @@ public class Cutil {
 		inputScanner.close();
 		return acceptedString;
 	}
-
+    
+    //=================================================
+    // promptString - like promptStringSet, but
+    // returns any string entered
+    // ===============================================
 	public static String promptString( String promptString ) {
 		System.out.println( promptString ); 
 		Scanner inputScanner = new Scanner( System.in );
@@ -41,7 +45,11 @@ public class Cutil {
 		return inputString;
 	}
 
-    
+    //================================================
+    // promptInt - returns an int entered in the
+    // console in the range min - max
+    // overloaded to take positive and negative ints
+    // ==============================================
 	public static int promptInt( String promptString,  int min, int max ) throws IllegalArgumentException {
 		Scanner inputScanner = new Scanner( System.in );
 		System.out.println( promptString );
@@ -72,7 +80,12 @@ public class Cutil {
 			throw ex;
 		} 
 	}
-
+    
+    //===============================================
+    // promptDouble - like promptInt, only for 
+    // doubles. Also overloaded to take negative
+    // or positives only
+    // =============================================
 	public static double promptDouble( String promptString,  double min, double max ) throws IllegalArgumentException {
 		Scanner inputScanner = new Scanner( System.in );
 		System.out.println( promptString );
@@ -104,6 +117,11 @@ public class Cutil {
 		} 
 	}
 
+    //======================================================
+    // fileToIntArray - reads an int matrix in a file into
+    // a 2-dimensional array and returns the array.
+    // Overloaded to read jagged arrays
+    // ====================================================
 	public static int[][] fileToIntArray( String filename, int columns ) throws java.io.IOException {
 		try {
 			int[][]result = fileToIntArray( filename );
@@ -117,7 +135,7 @@ public class Cutil {
 			throw ex;
 		}
 	}
-
+    
 	public static int[][] fileToIntArray( String filename ) throws java.io.IOException {
 		try {
 			//int lines = countFileLines( filename );
@@ -154,7 +172,11 @@ public class Cutil {
 			throw ex;
 		}
 	}
-
+    
+    //===================================================
+    // countFileLines - returns the number of lines in
+    // a file
+    // =================================================
 	public static int countFileLines( String filename ) throws java.io.IOException {
 
 		try {

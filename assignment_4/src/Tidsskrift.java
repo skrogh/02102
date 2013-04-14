@@ -1,3 +1,10 @@
+//============================================
+//Tidsskrift
+// Indeholder navn, ISSN nummer og tilhørende
+// forlag for et tidsskrift.
+// Carsten Nielsen s123161 & Søren Krogh 
+// Andersen s123369
+//============================================
 
 public class Tidsskrift {
 
@@ -22,7 +29,7 @@ public class Tidsskrift {
     public String toString() {
         String returnString =  "Titel: " + titel + "\n";
         returnString += "ISSN: " + ISSN + "\n";
-        returnString += "Forlag: " + ( ( forlag == null ) ? "" : forlag.getName() );
+        returnString += "Forlag: " + ( ( forlag == null ) ? "" : forlag.getNavn() );
 
         return returnString;
     }

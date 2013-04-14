@@ -1,4 +1,8 @@
 
+// Carsten Nielsen s123161 & Søren Krogh 
+// Andersen s123369
+//============================================
+
 public class Complex {
     private double re;
     private double im;
