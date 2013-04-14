@@ -46,7 +46,7 @@ public class GameOfLife {
 		setRules();
 
 	}
-	
+
 	/**
 	 * Creates a dummy game of life
 	 */
@@ -446,8 +446,12 @@ public class GameOfLife {
 		int[][] ruleFileLoad;
 		int[][] stateFileLoad;
 		Color[] colorFileLoad;
+
 		try {
-			ruleFileLoad = Cutil.fileToIntArray( ruleFile );
+			if ( ruleFile.matches( "N" ) )
+				ruleFileLoad = new int[][] { {0, 0, 0, 0, 0, 1, 0}, {1, 0, 0, 0, 1, 1, 0} };
+			else
+				ruleFileLoad = Cutil.fileToIntArray( ruleFile );
 		} catch (IOException e) {
 			if ( print )
 				System.out.println( "Error loading file: " + ruleFile );
@@ -461,6 +465,9 @@ public class GameOfLife {
 			return false;
 		}
 		try {
+			if ( colorFile.matches( "N" ) )
+				colorFileLoad = new Color[0];
+			else
 			colorFileLoad = ColorGenerator.generateColorMapFromFile( colorFile );
 		} catch (IOException e) {
 			if ( print )

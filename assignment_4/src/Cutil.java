@@ -9,6 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class Cutil {
+	public static Scanner inputScanner = new Scanner( System.in );
     
 	public enum option { NEGATIVE, POSITIVE };
 
@@ -19,17 +20,16 @@ public class Cutil {
 	//===============================================
 	public static String promptStringSet( String promptString, String[] acceptors ) {
 		System.out.println( promptString );
-		Scanner inputScanner = new Scanner( System.in );
 		String acceptedString = "";
 		String inputString = inputScanner.next();
-
+		
 		for( int i = 0; i < acceptors.length; i++ ) {
 			if( inputString.equals( acceptors[ i ] ) ) {
 				acceptedString = inputString;
 				break;
 			}
 		}
-		inputScanner.close();
+		
 		return acceptedString;
 	}
     
@@ -39,9 +39,8 @@ public class Cutil {
     // ===============================================
 	public static String promptString( String promptString ) {
 		System.out.println( promptString ); 
-		Scanner inputScanner = new Scanner( System.in );
+		while ( !inputScanner.hasNext() );
 		String inputString = inputScanner.next();
-		inputScanner.close();
 		return inputString;
 	}
 
@@ -51,11 +50,9 @@ public class Cutil {
     // overloaded to take positive and negative ints
     // ==============================================
 	public static int promptInt( String promptString,  int min, int max ) throws IllegalArgumentException {
-		Scanner inputScanner = new Scanner( System.in );
 		System.out.println( promptString );
 
 		int inputInt = inputScanner.nextInt();
-		inputScanner.close();
 
 		if( inputInt > min && inputInt < max )
 			return inputInt;
@@ -87,11 +84,9 @@ public class Cutil {
     // or positives only
     // =============================================
 	public static double promptDouble( String promptString,  double min, double max ) throws IllegalArgumentException {
-		Scanner inputScanner = new Scanner( System.in );
 		System.out.println( promptString );
 
 		double inputDouble = inputScanner.nextDouble();
-		inputScanner.close();
 
 		if( inputDouble > min && inputDouble < max )
 			return inputDouble;
