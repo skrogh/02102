@@ -78,7 +78,7 @@ Trykkes der med musen, gemmes værdien af cellen under den. Så længe den holde
 
 \paragraph{setRules(int[][])} Sætter et regelsæt, hvis dette er gyldigt og ingen celler lever, der ikke findes i regelsættet.
 I et regelsæt er hver række regelsættet for en celletilstand, første kolonne angiver antalet af ``liv'' denne tælder for,
-mere om dette under \emph{step()}, de næste kolonner angiver, hvad der sker med denne celle, når summen af ``liv''
+mere om dette under \emph{neighbors}, de næste kolonner angiver, hvad der sker med denne celle, når summen af ``liv''
 omkring den har forskellige værdier. første kolonne er ved 0 eller mindre, næste 1, så 2 osv. et større antal liv ender altid i kolonnen længst til højre.
 
 kalder \emph{addMissingColors()}
@@ -87,33 +87,60 @@ kalder \emph{addMissingColors()}
 
 \paragraph{addMissingColors()} Tilføjer farver til alle celletyper uden farver.
 
-\paragraph{neighbors(int, int)} Udregner antallet af naboliv for en given celle, dette gøres ved at kigge på cellerne rundt om.
+\paragraph{neighbors(int, int)} Udregner antallet af naboliv for en given celle,
+dette gøres ved at kigge på cellerne rundt om og aflæse mængden af ``liv'' denne tæler for i \emph{rules}.
 Dem under, dem ved siden af og dem over. 
 Er \emph{edgeState}=-1 kaldes \emph{mod} på begge komposanter for koordinatet til celler rundt om,
 dette gør at ex celle$(10, 5)$ med state størrelse $(10, 10)$ bliver til celle$(0, 5)$
 
-\paragraph{step()} Udregner og 
+\paragraph{step()} Udregner næste tilstand for alle celler, og sætter dem til dette.
+For hver celle kaldes \emph{neighbors} og det aflæses i \emph{rules}, hvilken celle de så skal blive til
 
+\paragraph{render(double, double, double, double)} Tegner alle celler i det specificerede område.
 
-\paragraph{render(double, double, double, double)}
-\paragraph{renderMouse(double, double, double, double)}
-\paragraph{mouseX(double, double, double, double)}
-\paragraph{mouseY(double, double, double, double)}
-\paragraph{toString()}
-\paragraph{printNeighbors()}
-\paragraph{mod(int, int)}
-\paragraph{alterState(int, int)}
-\paragraph{setState(int, int, int)}
-\paragraph{setStates(int[][])}
-\paragraph{getRules()}
-\paragraph{getColors()}
-\paragraph{getStates()}
-\paragraph{getState()}
-\paragraph{getState(int, int)}
-\paragraph{validRules(int[][])}
-\paragraph{setColors(Color[])}
-\paragraph{loadSetup(String, String, String, boolean)}
-\paragraph{loadSetup(int[][], int[][], Color[], boolean)}
-\paragraph{loadSetup(int[][], Color[], boolean)}
-\paragraph{loadSetup(int[][], boolean)}
-\paragraph{randomize()}
+\paragraph{renderMouse(double, double, double, double)} Tegner en rød markør for musen, låst til cellegitteret, når cellerne tegnes i det specificerede område.
+
+\paragraph{mouseX(double, double, double, double)} Retunerer musens X komposant i antal celler, når disse tegnes i det specificerede område.
+Er musen udenfor retuneres -1.
+
+\paragraph{mouseY(double, double, double, double)} Retunerer musens Y komposant i antal celler, når disse tegnes i det specificerede område.
+Er musen udenfor retuneres -1.
+
+\paragraph{toString()} Skriver tilstanden af alle celler til konsollen med celle(0,0) i øverste, venstre hjørne.
+
+\paragraph{printNeighbors()} Skriver antallet af naboer for alle celler til konsollen med celle(0,0) i øverste, venstre hjørne.
+
+\paragraph{mod(int, int)} Folder et tal om, så det ligger mellem 0 og 2. argument. ex: mod$(10, 9) = 1$, mod$(-1, 2) = 1$
+
+\paragraph{alterState(int, int)} Ændre den givne celle, til den næste i regelsættet.
+
+\paragraph{setState(int, int, int)} Sætter den givne celle til en værdi. Folder rundt, så en celle sat til 4, når der kun er 3 typer bliver 0.
+
+\paragraph{setStates(int[][])} Sikker sætter for alle celler. Ændre kun celler, hvis det givne array er ``lige'' og ingen celler ikke findes i regelsættet.
+
+\paragraph{getRules()} Retunerer en kopi af regelsættet.
+
+\paragraph{getColors()} Retunerer en kopi af farvesættet.
+
+\paragraph{getStates()} Retunerer antallet af regler/celletyper.
+
+\paragraph{getState()} Retunerer en kopi af celle-stadie-arrayet.
+
+\paragraph{getState(int, int)} Retunerer celle-typen i det givne koordinat.
+
+\paragraph{validRules(int[][])} Checker om et givent regelsætr er validt og om der findes celler, ikke specificerert i dette.
+
+\paragraph{setColors(Color[])} Sætter farvesættet til dette. Tilføjer manglende farver.
+
+\paragraph{loadSetup(String, String, String, boolean)} Indhenter et fuldt setup, regler, states, farver. regler og farver kan undlades ved argument ``N''.
+retunerer sand ved succes. Kan printe hvad fejlen er, hvis en opstår.
+
+\paragraph{loadSetup(int[][], int[][], Color[], boolean)} Indhenter et fuldt setup, regler, states, farver.
+retunerer sand ved succes. Kan printe hvad fejlen er, hvis en opstår.
+
+\paragraph{loadSetup(int[][], Color[], boolean)} Samme som ovenfor, men med \gol regler
+
+\paragraph{loadSetup(int[][], boolean)} Samme som ovenfor, men tilfældige farver.
+
+\paragraph{randomize()} Sætter alle celler til tilfældige værdier.
+
