@@ -46,7 +46,7 @@ public class ColorGenerator {
                 (int)Math.random() * 255 ) ;
     }
 
-    public static Color[] generateColorMapFromFile( String filename ) throws IOException {
+    public static Color[] generateColorMapFromFile( String filename ) throws java.io.IOException {
         try {
             int[][] datamatrix = Cutil.fileToIntArray( filename, 3 );
             Color[] colors = new Color[ datamatrix.length ];

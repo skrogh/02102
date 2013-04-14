@@ -41,6 +41,7 @@ public class Cutil {
 		return inputString;
 	}
 
+    
 	public static int promptInt( String promptString,  int min, int max ) throws IllegalArgumentException {
 		Scanner inputScanner = new Scanner( System.in );
 		System.out.println( promptString );
@@ -103,7 +104,7 @@ public class Cutil {
 		} 
 	}
 
-	public static int[][] fileToIntArray( String filename, int columns ) throws IOException {
+	public static int[][] fileToIntArray( String filename, int columns ) throws java.io.IOException {
 		try {
 			int[][]result = fileToIntArray( filename );
 			for ( int i = 0; i < result.length; i++ ) {
@@ -117,7 +118,7 @@ public class Cutil {
 		}
 	}
 
-	public static int[][] fileToIntArray( String filename ) throws IOException {
+	public static int[][] fileToIntArray( String filename ) throws java.io.IOException {
 		try {
 			//int lines = countFileLines( filename );
 			ArrayList<ArrayList<Integer>> datamatrix = new ArrayList<ArrayList<Integer>>();
@@ -154,7 +155,7 @@ public class Cutil {
 		}
 	}
 
-	public static int countFileLines( String filename ) throws IOException {
+	public static int countFileLines( String filename ) throws java.io.IOException {
 
 		try {
 			Scanner lineCounter = new Scanner( new File( filename ) );
@@ -171,4 +172,6 @@ public class Cutil {
 			throw ex;
 		}
 	}
+
+
 }

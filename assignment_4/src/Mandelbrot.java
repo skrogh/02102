@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.util.*;
+import java.io.*;
 
 public class Mandelbrot {
 
@@ -14,18 +15,28 @@ public class Mandelbrot {
     private static ArrayList<double[]> pointList;
     private static Color[] colors;
 
-    private static double zoomfactor = 5;
+    private static double zoomfactor = 1;
     private static int cPart = 1;
     private static int rPart = 0;
     private static int colorPart = 2;
+    private static Scanner inputScanner;
+    private static boolean update_needed;
 
     public static void main( String[] args ) {
         pointList = new ArrayList<double[]>();
+        inputScanner = new Scanner( System.in );
         setupWindow();
-        colors = ColorGenerator.generateColorMapFromFile( "colormaps/mandel.mnd" ); // ColorGenerator.generateRandomColorMap( MAX );
+        try {
+            colors = ColorGenerator.generateColorMapFromFile( "colormaps/mandel.mnd" ); // ColorGenerator.generateRandomColorMap( MAX );
+        } catch(Exception ex) {
+            //error loading colormap, fail silently and make default colors
+            colors = new Color[1];
+            colors[0] = new Color( 0, 0, 0 );
+        }
         update();
         render();
         while( true ) {
+            handleConsoleInput();
             if( StdDraw.mousePressed() )
                 onMouseClick();
             else {
@@ -35,8 +46,13 @@ public class Mandelbrot {
                 catch( InterruptedException ex ) {
                     Thread.currentThread().interrupt();
                 }
-
             }
+            if ( update_needed ) {
+                update();
+                render();
+                update_needed = false;
+            }
+
         }
     }
 
@@ -66,7 +82,6 @@ public class Mandelbrot {
 
 
         }
-
         StdDraw.show( 0 );
     }
 
@@ -112,5 +127,137 @@ public class Mandelbrot {
         setupScales();
         update();
         render();
+    }
+
+    public static void handleConsoleInput() {
+//        Scanner inputScanner = new Scanner( System.in );
+        try {
+        BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
+
+        while( br.ready() ) {
+            Scanner lineScanner = new Scanner( br.readLine() );
+            if ( lineScanner.hasNext() && lineScanner.next().equals( "set" ) ) {
+                if ( lineScanner.hasNext() ) {
+                    switch( lineScanner.next() ) {
+                        case "figuresize":
+                            if ( lineScanner.hasNextInt() ) {
+                            setFiguresize( lineScanner.nextInt() );
+                            break;
+                            } else 
+                                errorParsingCommand( "set figuresize" );
+                            break;
+                        case "gridsize":
+                            if ( lineScanner.hasNextInt() ) {
+                                setGridsize( lineScanner.nextInt() );
+                                break;
+                            } else
+                                errorParsingCommand( "set gridsize" );
+                            break;
+                        case "sidelength":
+                            if ( lineScanner.hasNextInt() ) {
+                                setSidelength( lineScanner.nextInt() );
+                                break;
+                            } else
+                                errorParsingCommand( "set sidelength" );
+                            break;
+                        case "center":
+                            if ( lineScanner.hasNextDouble() ) {
+                                double newX = lineScanner.nextDouble();
+                                if ( lineScanner.hasNextDouble() ) {
+                                    double newY = lineScanner.nextDouble();
+                                    setCenter( newX, newY );
+                                    break;
+                                } else
+                                    errorParsingCommand( "set center" );
+                            } else
+                                errorParsingCommand( "set center" );
+                            break;
+                        case "zoomfactor":
+                            if ( lineScanner.hasNextDouble() ) {
+                                setZoomfactor( lineScanner.nextDouble() );
+                                break;
+                            } else 
+                                errorParsingCommand( "set zoomfactor" );
+                            break;
+                        case "colormap":
+                            if ( lineScanner.hasNext() ) {
+                                setColormap( lineScanner.next() );
+                                break;
+                            } else
+                                errorParsingCommand( "set colormap" );
+                            break;
+                        default:
+                            errorParsingCommand( "set" );
+                    }
+                } else {
+                    noSuchCommand();
+                    break;
+                }
+            } else {
+                noSuchCommand();
+                break;
+              
+            }
+            lineScanner.close();
+        }
+        }
+        catch( IOException ex) {
+            System.out.println( "Input error" );
+        }
+    }
+
+    public static void setFiguresize( int newSize ) {
+        CANVAS_WIDTH = newSize;
+        CANVAS_HEIGHT = newSize;
+        setupWindow();
+        System.out.println( "figuresize set to " + newSize + "x" + newSize );
+        update_needed = true;
+    }
+
+    public static void setGridsize( int newSize ) {
+        resolution = newSize;
+        System.out.println( "gridsize set to " + newSize );
+        update_needed = true;
+    }
+
+    public static void setSidelength( int newSize ) {
+        sideLength = newSize;
+        setupScales();
+        System.out.println( "sidelength set to " + newSize );
+        update_needed = true;
+    }
+
+    public static void setCenter( double newX, double newY ) {
+        renderCenterX = newX;
+        renderCenterY = newY;
+        setupScales();
+        System.out.println( "center set to " + newX + " " + newY + "i" );
+        update_needed = true;
+    }
+
+    public static void setZoomfactor( double newFactor ) {
+        zoomfactor = newFactor;
+        System.out.println( "zoomfactor set to " + newFactor );
+        
+    }
+
+    public static void setColormap( String newMap ) {
+        try {
+        if ( newMap.equals( "random" ) )
+            colors = ColorGenerator.generateRandomColorMap( MAX );
+        else
+            colors = ColorGenerator.generateColorMapFromFile( newMap );
+        } catch( Exception ex ) {
+            System.out.println( "error loading colormap" );
+        }
+        System.out.println( "colormap set to " + newMap );
+        update_needed = true;
+    }
+    public static void noSuchCommand() {
+        System.out.println( "No such command" );
+    }
+
+    public static void errorParsingCommand( String command ) {
+        System.out.println( "Error parsing command" + command );
     }
 }
