@@ -190,76 +190,76 @@ public class Mandelbrot {
     // set colormap *String filename* //random to generate random
     //=============================================
     public static void handleConsoleInput() {
-//        Scanner inputScanner = new Scanner( System.in );
+        //        Scanner inputScanner = new Scanner( System.in );
         try {
-        BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
+            BufferedReader br = new BufferedReader( new InputStreamReader( System.in ) );
 
-        while( br.ready() ) {
-            Scanner lineScanner = new Scanner( br.readLine() );
-            if ( lineScanner.hasNext() && lineScanner.next().equals( "set" ) ) {
-                if ( lineScanner.hasNext() ) {
-                    switch( lineScanner.next() ) {
-                        case "figuresize":
-                            if ( lineScanner.hasNextInt() ) {
-                            setFiguresize( lineScanner.nextInt() );
-                            break;
-                            } else 
-                                errorParsingCommand( "set figuresize" );
-                            break;
-                        case "gridsize":
-                            if ( lineScanner.hasNextInt() ) {
-                                setGridsize( lineScanner.nextInt() );
+            while( br.ready() ) {
+                Scanner lineScanner = new Scanner( br.readLine() );
+                if ( lineScanner.hasNext() && lineScanner.next().equals( "set" ) ) {
+                    if ( lineScanner.hasNext() ) {
+                        switch( lineScanner.next() ) {
+                            case "figuresize":
+                                if ( lineScanner.hasNextInt() ) {
+                                    setFiguresize( lineScanner.nextInt() );
+                                    break;
+                                } else 
+                                    errorParsingCommand( "set figuresize" );
                                 break;
-                            } else
-                                errorParsingCommand( "set gridsize" );
-                            break;
-                        case "sidelength":
-                            if ( lineScanner.hasNextDouble() ) {
-                                setSidelength( lineScanner.nextDouble() );
-                                break;
-                            } else
-                                errorParsingCommand( "set sidelength" );
-                            break;
-                        case "center":
-                            if ( lineScanner.hasNextDouble() ) {
-                                double newX = lineScanner.nextDouble();
-                                if ( lineScanner.hasNextDouble() ) {
-                                    double newY = lineScanner.nextDouble();
-                                    setCenter( newX, newY );
+                            case "gridsize":
+                                if ( lineScanner.hasNextInt() ) {
+                                    setGridsize( lineScanner.nextInt() );
                                     break;
                                 } else
+                                    errorParsingCommand( "set gridsize" );
+                                break;
+                            case "sidelength":
+                                if ( lineScanner.hasNextDouble() ) {
+                                    setSidelength( lineScanner.nextDouble() );
+                                    break;
+                                } else
+                                    errorParsingCommand( "set sidelength" );
+                                break;
+                            case "center":
+                                if ( lineScanner.hasNextDouble() ) {
+                                    double newX = lineScanner.nextDouble();
+                                    if ( lineScanner.hasNextDouble() ) {
+                                        double newY = lineScanner.nextDouble();
+                                        setCenter( newX, newY );
+                                        break;
+                                    } else
+                                        errorParsingCommand( "set center" );
+                                } else
                                     errorParsingCommand( "set center" );
-                            } else
-                                errorParsingCommand( "set center" );
-                            break;
-                        case "zoomfactor":
-                            if ( lineScanner.hasNextDouble() ) {
-                                setZoomfactor( lineScanner.nextDouble() );
                                 break;
-                            } else 
-                                errorParsingCommand( "set zoomfactor" );
-                            break;
-                        case "colormap":
-                            if ( lineScanner.hasNext() ) {
-                                setColormap( lineScanner.next() );
+                            case "zoomfactor":
+                                if ( lineScanner.hasNextDouble() ) {
+                                    setZoomfactor( lineScanner.nextDouble() );
+                                    break;
+                                } else 
+                                    errorParsingCommand( "set zoomfactor" );
                                 break;
-                            } else
-                                errorParsingCommand( "set colormap" );
-                            break;
-                        default:
-                            errorParsingCommand( "set" );
+                            case "colormap":
+                                if ( lineScanner.hasNext() ) {
+                                    setColormap( lineScanner.next() );
+                                    break;
+                                } else
+                                    errorParsingCommand( "set colormap" );
+                                break;
+                            default:
+                                errorParsingCommand( "set" );
+                        }
+                    } else {
+                        noSuchCommand();
+                        break;
                     }
                 } else {
                     noSuchCommand();
                     break;
+
                 }
-            } else {
-                noSuchCommand();
-                break;
-              
+                lineScanner.close();
             }
-            lineScanner.close();
-        }
         }
         catch( IOException ex) {
             System.out.println( "Input error" );
@@ -301,19 +301,21 @@ public class Mandelbrot {
     public static void setZoomfactor( double newFactor ) {
         zoomfactor = newFactor;
         System.out.println( "zoomfactor set to " + newFactor );
-        
+
     }
 
     public static void setColormap( String newMap ) {
         try {
-        if ( newMap.equals( "random" ) )
-            colors = ColorGenerator.generateRandomColorMap( MAX );
-        else
-            colors = ColorGenerator.generateColorMapFromFile( newMap );
+            if ( newMap.equals( "random" ) ) {
+                colors = ColorGenerator.generateRandomColorMap( MAX );
+                System.out.println( "colormap set to " + newMap );
+            } else {
+                colors = ColorGenerator.generateColorMapFromFile( newMap );
+                System.out.println( "colormap set to " + newMap );
+            }
         } catch( Exception ex ) {
             System.out.println( "error loading colormap" );
         }
-        System.out.println( "colormap set to " + newMap );
         update_needed = true;
     }
     //=========================================
@@ -325,6 +327,6 @@ public class Mandelbrot {
     }
 
     public static void errorParsingCommand( String command ) {
-        System.out.println( "Error parsing command" + command );
+        System.out.println( "Error parsing command " + command );
     }
 }
