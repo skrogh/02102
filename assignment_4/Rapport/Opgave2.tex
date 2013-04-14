@@ -69,7 +69,90 @@ Der er følgene konsolkommandoer til rådighed.
     \item set zoomfactor *double x* ændrer zoomfactoren der bruges ved museklik til x. x<1 zoomer ud.
     \item set colormap *string map* ændrer farvekoden til farver specificeret i filen med stien map. Hvis der indtastes ''random'' skiftes der til en tilfældigt genereret farvekode.
 \end{itemize}
-Hvis programmet ikke genkender en kommando printes ''No such command'' til konsollen og kommandoen ignoreres. Ligeledes printes ''Error parsing command'', plus den sidst genkendte del af en kommando,  hvis programmet ikke kan genkende de indre dele af en kommando.
+Hvis programmet ikke genkender en kommando printes ''No such command'' til konsollen og kommandoen ignoreres. Ligeledes printes ''Error parsing command'', plus den sidst genkendte del af en kommando,  hvis programmet ikke kan genkende de indre dele af en kommando.\\
 
+Ovenstående er ikke en optimal måde at håndtere museinput på, da der kun udføres et tjek hver gang programmet kører igennem sit update-loop. Dette medfører at museklik der eksekveres imens programmet renderer et nyt billede, eller håndterer konsolinput ikke bliver registreret. En bedre løsning ville være at have en tråd dedikeret til bruger input.
+Denne tråd ville stille alle indtastede kommandoer op på en stack der så kunne tømmes når mainprogrammet har tid.\\
+Konsolinput håndtering lider ikke af samme problem da der kan laves en buffer som fyldes op imens programmet eksekverer anden kode.
 
 \subsection{Testing}
+
+Til test af Complex klassen er der skrevet en klasse TestComplex der anvender assert statements til at verificere at alle metoderne virker korrekt. \\
+ColorGenerator er sværere at teste med assert statements, men det er verificeret at de to metoder der kaster exceptions, kaster dem på de korrekte betingelser. \\
+Korrektheden af resten af ColorGenerator verificeres i testen af mandelbrot programmet. \\
+
+
+Main programmet er et interaktivt program og vil derfor blive testet ved at forsøge at lave en inputsekvens der dækker hele programmet. Nedenfor ses en enkelt input sekvens og snapshots af det renderede billede for hver ændring.
+\lstinputlisting[caption={Inputsekvens til madelbrot programmet}, label=mandelseq]{mandel.log}
+Disse input afprøver hele programmets featureset. En listing med fejlinput ses nedenfor.
+
+\begin{lstlisting}[caption=fejlinput i mandelbrot konsol]
+java Mandelbrot
+foo
+No such command
+set foobar
+Error parsing command set
+set colormap foo
+Error loading colormap
+set gridsize 9999999999999999999999999999999999999999
+Error parsing command set gridsize
+set gridsize 42.0
+Error parsing command set gridsize
+\end{lstlisting}
+Det ses her at programmet håndterer fejlinput korrekt. Både ikke genkendelige kommandoer og typefejl.
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M0.png}
+        \caption{ Render af default værdier }
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M2.png}
+        \caption{ Snapshot efter linje 2 i listing \ref{mandelseq} }
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M3.png}
+        \caption{ Snapshot efter linje 8 i listing \ref{mandelseq}, eksempel på museinput. }
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M4.png}
+        \caption{ Snapshot efter linje 9 i listing \ref{mandelseq}. }
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M5.png}
+        \caption{ Snapshot efter linje 11 i listing \ref{mandelseq}. }
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M6.png}
+        \caption{ Snapshot efter linje 13 i listing \ref{mandelseq}}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M7.png}
+        \caption{ Snapshot efter linje 15 i listing \ref{mandelseq}.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M8.png}
+        \caption{ Snapshot efter linje 19 i listing \ref{mandelseq}.}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M9.png}
+        \caption{ Snapshot efter linje 21 i listing \ref{mandelseq}.}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{pictures/M10.png}
+        \caption{ Snapshot efter linje 23 i listing \ref{mandelseq}.}
+    \end{subfigure}
+\end{figure}
