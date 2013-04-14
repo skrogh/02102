@@ -1,0 +1,25 @@
+java Mandelbrot
+set center -1 1
+center set to -1.0 1.0i
+set zoomfactor 1
+zoomfactor set to 1.0
+new center: -0.06328124999999973 -0.8820312500000003i
+new center: 0.18164062500000022 -1.2988281250000002i
+new center: -0.6390624999999998 -0.23750000000000024i
+set gridsize 20
+gridsize set to 20
+set figuresize 400
+figuresize set to 400x400
+set gridsize 512
+gridsize set to 512
+set figuresize 512
+figuresize set to 512x512
+set center 0.10259 -0.641
+center set to 0.10259 -0.641i
+set sidelength 0.0086
+sidelength set to 0.0086
+set colormap colormaps/blues.mnd
+colormap set to colormaps/blues.mnd
+set colormap random
+colormap set to random
+
