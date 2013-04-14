@@ -1,0 +1,119 @@
+\newcommand{\gol}{\emph{GameOfLife}}
+
+\section{Opgave 1}
+
+\subsection{Specifikation}
+Der ønskes et program, der kan udfører simuleringer af celle liv efter modellen \emph{Conway's Game of Life},
+se evt \url{http://en.wikipedia.org/wiki/Game_of_life}.
+
+følgende er implimenteret:
+\begin{itemize}
+  \item et \emph{GameOfLife} objekt, der dog også kan håndterer andre cellulare automier.
+  \item Constructor der tillader at initalisere et \emph{GameOfLife} objekt
+  med en given størrelse, tilfældigt eller ej.
+  \item Constructor der tillader at initalisere et \emph{GameOfLife} objekt
+  med en given start tilstand.
+  \item Mulighed for at tage et enkelt skridt frem.
+  \item Mulighed for at tage skridt kontinuert.
+  \item Mulighed for at hente \emph{GameOfLife} objekter fra filer.
+  \item Mulighed for at hente andre regelsæt end game of life fra filer.
+  \item Mulighed for at hente farve fra filer.
+  \item Mulighed for at manipulerer \emph{GameOfLife} objekter med musen.
+  \item ``Banen'' er sat op som en torus, dvs. kanterne rører hinanden.
+\end{itemize}
+
+\subsection{Design}
+
+\subsubsection{ GameOfLifeMain klassen }
+Dette er en statisk klasse, der lader en bruger lege med \emph{GameOfLife} klassen.
+Brugeren kan lave og manipulerer et \emph{GameOfLife} objekt her.
+
+Et dummy \emph{GameOfLife} objekt tegnes på et $512\times512$ canvas og
+brugeren bedes om at vælge mellem at hente et sæt filer, lave en tilfældig bane eller en ``ren'' bane.
+
+Brugeren kan nu simulerer enkelte skridt ved at trykke på \emph{mellemrum},
+eller flere ved at holde tasten.
+
+Brugeren kan også manipulerer celler med musen.
+
+\paragraph{ \gol initialsering }
+Brugeren bedes om at vælge mellem 3. muligheder.
+
+Skrives ordet \emph{random}, spørges om en størrelse og et \gol objekt laves med denne størrelse, tilfældig farve og starttilstand.
+
+Skrives ordet \emph{clean}, spørges om en størrelse og et \gol objekt laves med denne størrelse, tilfældig farve og alle celler som døde.
+
+Skrives ordet \emph{load}, spørges om en sæt filer.
+Regelfil, starttilstandsfil og farvefil. Både regel- og farvefilen accepterer ``N'';
+I hvilket tilfælde Conway's Game of Life hhv. tilfældige farver benyttes.
+
+\paragraph{ Skridt }
+Der tages et skridt, hver gang der trykkes på mellemrum. Holdes denne inde skriver maskinen naturligvis flere til key-bufferen.
+Denne tømmes, hvert skridt - da hvert skrict kan tage lang tid at udregne og simulieringen ikke ville stoppe, når mellemrumstasten løftes da.
+
+\paragraph{ Mussemanipulation }
+Trykkes der med musen, gemmes værdien af cellen under den. Så længe den holdes, sættes celler under den til denne værdi plus én.
+\gol objektet holder styr på at ``folde'' værdier, så en levende celle bliver til en død, i stedet for en celle uden regler.
+
+
+\subsubsection{ GameOfLife klassen}
+
+\gol klassen har følgende data:
+\begin{itemize}
+  \item int edgeState; Bestemmer hvilen tilstand sidderne har. -1 for en torus.
+  \item int[][] state; Gemmer data om værdien i alle celler. Dette array forudsættes at være med lige kanter, og ikke tomt.
+  \item int[][] rules; Gemmer regelsættet
+  \item int states; Antallet af forskellige states, det samme som rækkeantallet i rules.
+  \item Color[] colors; Array af farver til cellerne.
+\end{itemize}
+
+
+
+
+\paragraph{ GameOfLife(int, int, boolean)} Laver et \gol objekt med Conway's regler og en given størrelse. Der kan vælges en tilfældig starttilstand.
+
+\paragraph{ GameOfLife(int[][]) } Laver et \gol obejkt med Conway's regler og en given starttilstand. Er denne ikke valid laves et \gol med én celle.
+
+\paragraph{GameOfLife()} aver et \gol obejkt med Conway's regler og én celle.
+
+\paragraph{setRules(int[][])} Sætter et regelsæt, hvis dette er gyldigt og ingen celler lever, der ikke findes i regelsættet.
+I et regelsæt er hver række regelsættet for en celletilstand, første kolonne angiver antalet af ``liv'' denne tælder for,
+mere om dette under \emph{step()}, de næste kolonner angiver, hvad der sker med denne celle, når summen af ``liv''
+omkring den har forskellige værdier. første kolonne er ved 0 eller mindre, næste 1, så 2 osv. et større antal liv ender altid i kolonnen længst til højre.
+
+kalder \emph{addMissingColors()}
+
+\paragraph{setRules()} Sætter regelsættet til \emph{Conway's Game of Life}
+
+\paragraph{addMissingColors()} Tilføjer farver til alle celletyper uden farver.
+
+\paragraph{neighbors(int, int)} Udregner antallet af naboliv for en given celle, dette gøres ved at kigge på cellerne rundt om.
+Dem under, dem ved siden af og dem over. 
+Er \emph{edgeState}=-1 kaldes \emph{mod} på begge komposanter for koordinatet til celler rundt om,
+dette gør at ex celle$(10, 5)$ med state størrelse $(10, 10)$ bliver til celle$(0, 5)$
+
+\paragraph{step()} Udregner og 
+
+
+\paragraph{render(double, double, double, double)}
+\paragraph{renderMouse(double, double, double, double)}
+\paragraph{mouseX(double, double, double, double)}
+\paragraph{mouseY(double, double, double, double)}
+\paragraph{toString()}
+\paragraph{printNeighbors()}
+\paragraph{mod(int, int)}
+\paragraph{alterState(int, int)}
+\paragraph{setState(int, int, int)}
+\paragraph{setStates(int[][])}
+\paragraph{getRules()}
+\paragraph{getColors()}
+\paragraph{getStates()}
+\paragraph{getState()}
+\paragraph{getState(int, int)}
+\paragraph{validRules(int[][])}
+\paragraph{setColors(Color[])}
+\paragraph{loadSetup(String, String, String, boolean)}
+\paragraph{loadSetup(int[][], int[][], Color[], boolean)}
+\paragraph{loadSetup(int[][], Color[], boolean)}
+\paragraph{loadSetup(int[][], boolean)}
+\paragraph{randomize()}
