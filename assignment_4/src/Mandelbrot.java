@@ -64,6 +64,7 @@ public class Mandelbrot {
                 }
             }
             if ( update_needed ) {
+                pointList.clear();
                 update();
                 render();
                 update_needed = false;
@@ -168,7 +169,7 @@ public class Mandelbrot {
         renderCenterX = StdDraw.mouseX();
         renderCenterY = StdDraw.mouseY();
         sideLength = sideLength / zoomfactor;
-        System.out.println( renderCenterX + " " + renderCenterY );
+        System.out.println( "new center: " +  renderCenterX + " " + renderCenterY + "i" );
         setupScales();
         update();
         render();
