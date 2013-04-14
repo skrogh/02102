@@ -1,20 +1,49 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-public class GameOfLifeMain {
-	public static boolean mouseLast = false;
-	public static int setState;
-	
+public class GameOfLifeMain {	
 	public static void main( String[] args ) {
+		boolean mouseLast = false;
+		int setState = 0;
+		GameOfLife golObj = new GameOfLife();
+
 		StdDraw.setCanvasSize( 1024, 512 );
 		StdDraw.setXscale( 0, 2 );
 		StdDraw.setYscale( 1, 0 );
 
-		// StdDraw.setPenRadius( 100 / 512d );
-
+		//Stop automatic update
 		StdDraw.show( 0 );
-		GameOfLife golObj = new GameOfLife( 512, 512, true );
-		golObj.render( 1, 0, 1, 1 );
+
+		switch ( Cutil.promptStringSet( "Type \"load\" to load a file set,\n" +
+				"Type \"random\" to initialize a random game of life,\n" +
+				"Type \"clean\" to initialize a random game of life:",
+				new String[] {"load", "random"} ) ) {
+				case "load":
+					if ( !golObj.loadSetup( Cutil.promptString( "Write filename for rules" ),
+							Cutil.promptString( "Write filename for initial state"),
+							Cutil.promptString( "Write filename for colorfile" ), true ) )
+						System.out.println( "Error in loading" );
+					break;
+				case "random":
+					try {
+						golObj = new GameOfLife( Cutil.promptInt( "width:", Cutil.option.POSITIVE ),
+								Cutil.promptInt( "width:", Cutil.option.POSITIVE ), true );
+					} catch ( IllegalArgumentException ex ) {
+						System.out.println( "Please enter positive values" );
+					}
+					break;
+				case "clean":
+					try {
+						golObj = new GameOfLife( Cutil.promptInt( "width:", Cutil.option.POSITIVE ),
+								Cutil.promptInt( "width:", Cutil.option.POSITIVE ), false );
+					} catch ( IllegalArgumentException ex ) {
+						System.out.println( "Please enter positive values" );
+					}
+					break;
+
+		}
+
+		golObj.render( 0, 0, 1, 1 );
 		//System.out.println( golObj );
 		//System.out.println( golObj.printNeighbors() );
 		for (;;) {
@@ -23,14 +52,14 @@ public class GameOfLifeMain {
 			if ( StdDraw.hasNextKeyTyped() && ( StdDraw.nextKeyTyped() == ' ' ) )
 				golObj.step();
 			else if ( mousePressed && ( !mouseLast ) )
-				setState = golObj.getState( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ) );
+				setState = golObj.getState( golObj.mouseX( 0, 0, 1, 1 ), golObj.mouseY( 0, 0, 1, 1 ) );
 			if ( mousePressed )
-				golObj.setState( golObj.mouseX( 1, 0, 1, 1 ), golObj.mouseY( 1, 0, 1, 1 ), setState + 1 );
+				golObj.setState( golObj.mouseX( 0, 0, 1, 1 ), golObj.mouseY( 0, 0, 1, 1 ), setState + 1 );
 			//Clear key buffer
 			while ( StdDraw.hasNextKeyTyped() )
 				StdDraw.nextKeyTyped();
-			golObj.render( 1, 0, 1, 1 );
-			golObj.renderMouse( 1, 0, 1, 1 );
+			golObj.render( 0, 0, 1, 1 );
+			golObj.renderMouse( 0, 0, 1, 1 );
 			StdDraw.show( 0 );
 			//System.out.println( golObj );
 			//System.out.println( golObj.printNeighbors() );
