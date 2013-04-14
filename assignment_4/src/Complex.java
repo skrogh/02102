@@ -1,3 +1,11 @@
+//===========================================
+//Complex 
+// Container class for complex numbers 
+// and arithmatic operations on complex 
+// numbers.
+// Carsten Nielsen s123161 & Søren Krogh 
+// Andersen s123369
+//============================================
 
 public class Complex {
     private double re;

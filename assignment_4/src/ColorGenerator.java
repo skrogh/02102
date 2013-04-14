@@ -1,3 +1,11 @@
+//============================================
+//ColorGenerator
+// Generates arrays of colors randomly or
+// from a file using RGB values
+// Carsten Nielsen s123161 & Søren Krogh 
+// Andersen s123369
+//============================================
+
 import java.awt.*;
 import java.io.*;
 import java.util.*;
@@ -5,9 +13,18 @@ import java.util.*;
 
 
 public class ColorGenerator {
-
+    
+    //========================================
+    // generateRandomColorMap
+    // Generates a number of unique random
+    // colors. Very slow for a very large 
+    // number of colors.
+    // Returns colors in an array
+    // ======================================
     public static Color[] generateRandomColorMap( int numColors ) throws IllegalArgumentException {
-        if ( numColors <= 0 )
+        //throw exception if number of colors is too small
+        //or so large that runtime will be infinite
+        if ( numColors <= 0  || numColors >= 16581375 - 1)
             throw new IllegalArgumentException();
 
         Color[] colors = new Color[ numColors ];
@@ -40,13 +57,23 @@ public class ColorGenerator {
         }
         return colors.clone();
     }
-
+    
+    //============================================
+    // generateRandomColor - generates a single
+    // random color and returns it
+    // ==========================================
     public static Color generateRandomColor() {
         return new Color( (int)Math.random() * 255, (int)Math.random() * 255,
                 (int)Math.random() * 255 ) ;
     }
 
-    public static Color[] generateColorMapFromFile( String filename ) throws IOException {
+    //============================================
+    // generateColorMapFromFile - generates a
+    // color map corresponding to RGB values in
+    // a text file. Returns an array with the
+    // colors.
+    // ==========================================
+    public static Color[] generateColorMapFromFile( String filename ) throws java.io.IOException {
         try {
             int[][] datamatrix = Cutil.fileToIntArray( filename, 3 );
             Color[] colors = new Color[ datamatrix.length ];
