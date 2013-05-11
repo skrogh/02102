@@ -14,6 +14,8 @@ Tilføj funktionerne newStack, pop, push, top og empty.
 
 */
 
+enum { REALLOC_ERROR, MALLOC_ERROR };
+
 int pop( stack_t * stack_p ) {
     return stack_p -> array[ --stack_p -> size ];
 }
@@ -25,13 +27,14 @@ int pop( stack_t * stack_p ) {
 //=======================================
 void push( stack_t * stack_p, int value ) {
     if ( stack_p -> size >= stack_p -> capacity ) {
-        stack_t * tmp = realloc( stack_p -> array, 2 * stack_p -> capacity * sizeof ( int ) );
+        int * tmp = realloc( stack_p -> array, 2 * stack_p -> capacity * sizeof ( int ) );
 
-        if ( tmp != NULL )
+        if ( tmp != NULL ) {
             stack_p -> array = tmp;
+        }
         else {
             printf( "Integer stack too large, halting process" );
-            exit(1);
+            exit( REALLOC_ERROR );
         }
 
         stack_p -> capacity *= 2;
@@ -55,9 +58,28 @@ int top( stack_t * stack_p ) {
 // initial capacity 1.
 //=======================================
 stack_t * newStack( void ) {
+    stack_t * stack_tmp = malloc( sizeof ( int ) );
+
     stack_t * stack_p = malloc( sizeof ( stack_t ) );
+
+    if ( stack_tmp != NULL ) {
+        stack_p = stack_tmp;
+    } else {
+        printf( "cannot allocate stack, halting process\n");
+        exit( MALLOC_ERROR );
+    }
+
+
     stack_p -> capacity = 1;
     stack_p -> size = 0;
+    int * tmp = malloc( sizeof ( int ) );
+
+    if ( tmp != NULL ) {
+        stack_p -> array = tmp;
+    } else {
+        printf( "cannot allocate stack, halting process\n");
+        exit( MALLOC_ERROR );
+    }
     stack_p -> array = malloc( sizeof ( int ) );
 
     return stack_p;

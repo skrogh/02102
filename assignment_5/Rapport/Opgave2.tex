@@ -1,0 +1,43 @@
+\section{Opgave 2}
+
+\subsection{Specifikation og Design}
+Der ønskes en implementation af en heltals-stack. Stacken skal kunnet tilgås via et struct, der også indeholder information om hvor mange elementer der er i stacken og hvor mange elementer stacken kan holde før den bliver gjort større. Implementation skal understøtte følgene operationer:
+
+\begin{itemize}
+\item push, lægger et heltal på toppen af stacken
+\item pop, returnerer det øverste element på stacken og fjerner det fra stacken.
+\item top, returnerer det øverste element på stacken uden at fjerne det.
+\item newStack, returnerer en pointer til et nyt struct med en ny stack.
+\item empty, returnerer 1 hvis stacken er tom, 0 i andre tilfælde.
+\end{itemize}
+
+Yderligere skal en ny stack, når den bliver allokeret, have plads til et enkelt element, og hvis stacken bliver fyldt skal der allokeres plads til dobbelt så mange elementer. \\
+
+Operationerne er implementeret i hver deres funktion, dog håndterer push() funktionen også skaleringeren af stacken når den bliver fyldt. Da der eksisterer en empty() funktionen, er der ikke indbygget sikkerhed eller fejlmeddelser hvis en bruger af stack-implementationen forsøger at poppe flere elementer fra stacken end den indeholder. Dette resulterer i udefineret opførsel da stackpointeren vil pege på det område i hukommelsen der ligger før selve stacken. Yderligere vil programmet også udvise udefineret opførsel hvis et heltal, som er større end grænsen for heltal, tilføjes til stacken. Dette vil typisk skabe overflow.\\
+
+Der er dog implementeret fejlhåndtering når stackens størrelse skal forøges og når der skal allokeres hukommelse til stacken for første gang. Dette er nødvendigt da den maksimale stackstørrelse er implementationsspecifik og afhænger af hvor meget hukommelse programmet har til rådighed, samt størrelsen af integer primitiven. Kan der ikke allokeres mere hukommelse til stacken, har vi valgt at lade programmet melde fejl ved at skrive en fejlbesked til konsollen og afslutte programmet med en fejlkode defineret i en enumeration. 
+
+\subsection{Test}
+Den givne testsekvens i stackMain.c er omskrevet til at teste følgene tilfælde
+\begin{itemize}
+\item Stack initialisering.
+\item Pushing til stacken.
+\item Popping af stacken.
+\item Pop af tom stack.
+\item Push af tal større end et integer.
+\item Korrekt reaktion ved fyldt stack eller begrænset hukommelse.
+\end{itemize}
+
+Nedenfor ses outputtet fra testen når stackMain programmet køres.
+
+\lstinputlisting[caption=Test af stack.c]{stackMain.txt}
+Det ses fra testen at stacken bliver for stor når størrelsen forsøges fordoblet fra en kapacitet på 134217728 elementer. Dette er et resultat af følgene linje i "stack.c".
+
+\begin{lstlisting}[caption=stack.c udsnit, language=C]
+stack_t * tmp = realloc( stack_p -> array, 2 * stack_p -> capacity * sizeof ( int ) );
+\end{lstlisting}
+
+realloc() forventer en variabel af typen size\_t som sit andet argument og da
+size\_t er et typedefineret unsigned integer, fejler realloc() afhængigt af implementationsplatformens primitivstørrelser. Med en integerstørrelse på 32-bit er det ved en stack kapacitet på 134217728, med 16-bit vil det være 4095 osv. \\
+
+Hermed er alt testet, undtagen fejl i den initielle allokation af stacken. Dette er ikke testet da det ville kræve at begrænse den mængde hukommelse programmet har til rådighed, til kun 3*sizeof( int ). 

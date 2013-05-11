@@ -1,0 +1,38 @@
+Pop 10 added numbers + 10 values before the stack memory space 
+popped 815
+popped 239
+popped 1157
+popped 515
+popped 911
+popped 960
+popped 869
+popped 29
+popped 787
+popped 49
+popped -1128679445
+popped 134221858
+popped 385290408
+popped 1547330363
+popped -4
+popped 6494072
+popped 16
+popped 201330723
+popped 485953698
+popped 0
+
+Peek at the stack
+peeking: 42 
+
+Filling the stack
+pop value, stack size, stack capacity 
+13421771  13421772  16777216 
+13421771  26843543  33554432 
+13421771  40265314  67108864 
+13421771  53687085  67108864 
+13421771  67108856  67108864 
+13421771  80530627  134217728 
+13421771  93952398  134217728 
+13421771  107374169  134217728 
+13421771  120795940  134217728 
+13421771  134217711  134217728 
+Integer stack too large, halting process

@@ -20,6 +20,7 @@ int main() {
 
   //pop the random numbers and continue popping
   // even though the stack is empty
+  printf( "Pop 10 added numbers + 10 values before the stack memory space \n" );
   for( j = 0; j < 20; j++ ) {
     printf( "popped %d\n", pop(myStack) );
   }
@@ -28,9 +29,12 @@ int main() {
   myStack = newStack();
   //test peeking at the stack
   push( myStack, 42 );
+  printf( "\nPeek at the stack\n" );
   printf( "peeking: %d \n", top( myStack ) );
 
   //Make the stack too large
+  printf( "\nFilling the stack\n");
+  printf( "pop value, stack size, stack capacity \n" );
   while (!empty(myStack)) {
     int i = 0;
     for( i=0; i< 13421772; i++ ) {
@@ -39,7 +43,7 @@ int main() {
 
     int value;
     value = pop(myStack);
-    printf("popped: %d  %d  %d \n", value, myStack -> size, myStack -> capacity );
+    printf("%d  %d  %d \n", value, myStack -> size, myStack -> capacity );
   }
   return 0;
 }
