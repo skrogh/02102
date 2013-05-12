@@ -74,26 +74,47 @@ Det er kun muligt at gøre dette, uden at ryde de relevate områder i
 \emph{data}-bitsne da \emph{data} er sat til 0 fra start.
 
 Paritetsbitten enkodes nu. Dette gøre ved at ``xor''e alle relevante bits i
-\emph{data} sammen med \^ operationen. Denne bit er således høj, hvis der er et
-ulige antal 1'ere i de relevante \emph{data}-bits. Dette kan bruges til at vise
+\emph{data} sammen med \^\ operationen. Denne bit er således høj, hvis der er
+et ulige antal 1'ere i de relevante \emph{data}-bits. Dette kan bruges til at vise
 om et ulige antal bits har ændret sig under lagringen af dataen.
 For mere info om paritet læs: \url{http://en.wikipedia.org/wiki/Parity_bit}
 
-\paragraph{int decodeStudentParity( student\_t* )} retunerer 1, hvis der er
-uverenstemmelse mellem paritetsbitten og resten af dataen i for den pågældende
+\paragraph{int decodeStudentParity( student\_t* student )} retunerer 1, hvis der
+er uverenstemmelse mellem paritetsbitten og resten af dataen i for den pågældende
 studrende.
 
-\paragraph{char* decodeStudentName( student\_t* )} giver en pointer til navnet
-på den pågældende studerende. Egenligt ikke en nødvenighed at have denne
+\paragraph{char* decodeStudentName( student\_t* student )} giver en pointer til
+navnet på den pågældende studerende. Egenligt ikke en nødvenighed at have denne
 funktion, men det skaber en vis symetri i resten af koden.
 
-\paragraph{int decodeStudentYear( student\_t* )} og resten af decode
+\paragraph{int decodeStudentYear( student\_t* student )} og resten af decode
 funktionerne finder det korrekte sted i \emph{data} og benytter bit forskydning og maskering
 til at retunere de originale værdier. for \emph{year} skaleres, så 0 bliver til
 2009, 31 til 2040.
 
-\paragraph{void printStudent( student\_t* )} printer info om den givne
+\paragraph{void printStudent( student\_t* student )} printer info om den givne
 studerende til terminalen. Hvis der er uoverenstemmelse mellem data og
 paritetsbit printes en fejlbesked i stedet.
 
 \subsubsection{Funktioner til behandling af \emph{database\_t} typen}
+\paragraph{void addStudent( database\_t* database, student\_t* student )}
+Hvis fejl-flaget ikke er sat, tilføjes den studerende til databasen; hvis det er
+printes en besked herom. I begge tilfælde printes dataen i den modtagende
+studerende til terminalen. Den studerende tilføjes naturligvis kun, hvis der er
+plads til denne i databasen, ellers printes en fejlbesked om at databasen er
+fuld.
+
+\paragraph{void listStudents( database\_t* database )} Går igennem alle de
+studerende og kalder \emph{void printStudent( student\_t* student )} på dem.
+Forud for dette printes den studerendes nummer (placering i databasen)
+
+\subsection{Brugerflade}
+I \emph{main} funktionen befinder sig en løkke, der leder efter inputs fra
+brugeren. Før hvert kald efter bruger input kaldes \emph{fflush( stdout )} da
+eclipsekonsollen ikke selv håndterer at tømme bufferen efter hver linje.
+Ligeledes kaldes \emph{rewind( stdin )} efterfølgende, for at fjerne eventuelle
+linjeskift, der ville blive opfattet ved næste kald efter input.
+
+Indtastes andet end tal, smides en besked om at det er uden virkning og
+indtastes et tal, der ikke har nogen funktion, mindes brugeren om, hvad de
+forskellige tal gør.
