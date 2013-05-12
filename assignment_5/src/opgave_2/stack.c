@@ -8,6 +8,9 @@
 #include <stdio.h>
 #include "stack.h"
 
+#define STACK_TOO_LARGE "\nInteger stack too large, halting process\n"
+#define ALLOCATION_ERROR "\ncannot allocate stack, halting process\n"
+
 /*
 
 Tilføj funktionerne newStack, pop, push, top og empty.
@@ -33,7 +36,7 @@ void push( stack_t * stack_p, int value ) {
             stack_p -> array = tmp;
         }
         else {
-            printf( "Integer stack too large, halting process" );
+            printf( STACK_TOO_LARGE );
             exit( REALLOC_ERROR );
         }
 
@@ -65,7 +68,7 @@ stack_t * newStack( void ) {
     if ( stack_tmp != NULL ) {
         stack_p = stack_tmp;
     } else {
-        printf( "cannot allocate stack, halting process\n");
+        printf( ALLOCATION_ERROR);
         exit( MALLOC_ERROR );
     }
 
@@ -77,10 +80,9 @@ stack_t * newStack( void ) {
     if ( tmp != NULL ) {
         stack_p -> array = tmp;
     } else {
-        printf( "cannot allocate stack, halting process\n");
+        printf( ALLOCATION_ERROR );
         exit( MALLOC_ERROR );
     }
-    stack_p -> array = malloc( sizeof ( int ) );
 
     return stack_p;
 }
