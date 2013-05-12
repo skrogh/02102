@@ -9,7 +9,7 @@
 #define NAME_SIZE 5
 #define DATABASE_SIZE 10000
 #define DATA_BITS 13
-#define COMMAND_MSG "\n" "0: Halt\n" "1: List all students\n" "2: Add a new student\n" "3: Test database"
+#define COMMAND_MSG "\n" "0: Halt\n" "1: List all students\n" "2: Add a new student\n" "3: Test database\n" "4: Corrupt student data >:) (use only for testing)"
 
 typedef struct {
 	char name[NAME_SIZE];
@@ -26,6 +26,7 @@ char* decodeStudentName( student_t* student );
 int decodeStudentYear( student_t* student );
 int decodeStudentSemester( student_t* student );
 int decodeStudentGrade( student_t* student );
+int decodeStudentParity( student_t* student );
 
 void databaseTest();
 void addStudent( database_t* database, student_t student );
@@ -38,6 +39,7 @@ int main( void ) {
 	database_t database;
 	database.students = 0;
 
+	int id;
 	int year;
 	int grade;
 	int semester;
@@ -51,7 +53,7 @@ int main( void ) {
 		puts( "\nEnter command: " );
 		fflush( stdout );
 		if ( scanf( "%d", &choise ) > 0 ) {
-			fflush( stdin ); //Is this necessary?
+			rewind( stdin ); //Is this necessary?
 			switch ( choise ) {
 			case 0:
 				exit = 1;
@@ -65,25 +67,25 @@ int main( void ) {
 				fflush( stdout );
 				if ( scanf( "%4s", name ) <= 0 )
 					error = 1;
-				fflush( stdin );
+				rewind( stdin );
 
 				printf( "Year, 2009-2040: " );
 				fflush( stdout );
 				if ( scanf( "%d", &year ) <= 0 )
 					error = 1;
-				fflush( stdin );
+				rewind( stdin );
 
 				printf( "Semester, 0/1: " );
 				fflush( stdout );
 				if ( scanf( "%d", &semester ) <= 0 )
 					error = 1;
-				fflush( stdin );
+				rewind( stdin );
 
 				printf( "Grade, 0-255: " );
 				fflush( stdout );
 				if ( scanf( "%d", &grade ) <= 0 )
 					error = 1;
-				fflush( stdin );
+				rewind( stdin );
 
 				if ( !error )
 					addStudent( &database, encodeStudent( name, year, semester, grade ) );
@@ -93,12 +95,26 @@ int main( void ) {
 			case 3:
 				databaseTest();
 				break;
+			case 4:
+				printf( "Student id to corrupt: " );
+				fflush( stdout );
+				if ( scanf( "%d", &id ) > 0 )
+					if ( ( id >= 0 ) || ( id < DATABASE_SIZE ) ) {
+						printf( "Before: ");
+						printStudent( &(database.student[id]) );
+						database.student[id].data ^= 0x1;
+						printf( "After: ");
+						printStudent( &(database.student[id]) );
+					}
+				rewind( stdin );
+
+				break;
 			default:
 				puts( "Unknown command. Try:\n" COMMAND_MSG );
 			}
 		} else {
 			puts( "Only numbers are accepted" );
-			fflush( stdin ); //Prevent looping
+			rewind( stdin ); //Prevent looping
 		}
 	}
 
@@ -106,13 +122,18 @@ int main( void ) {
 	return 0;
 }
 
+/**
+ * Function for adding a student to the database.
+ * The student is only added, if the students data "error" flag is not asserted
+ * and there is room in the database.
+ */
 void addStudent( database_t* database, student_t student ){
-	if ( database->students < DATABASE_SIZE - 1 ) {
+	if ( database->students < DATABASE_SIZE ) {
 		if ( student.data & ( 0x1 << 15 ) ) {
 			printf( "ERROR! Student data is illegal! " );
 			printStudent( &student );
 		} else {
-			printf( "Adding student: " );
+			printf( "Adding student: s%04d ", database->students );
 			printStudent( &student );
 			database->student[database->students] = student;
 			database->students++;
@@ -122,34 +143,68 @@ void addStudent( database_t* database, student_t student ){
 	}
 }
 
+/**
+ * Lists all students and calculates the average for all non-corrupt data points
+ */
 void listStudents( database_t* database ){
 	int i;
+	int faults = 0;
 	double average = 0;
 	for ( i = 0; i < database->students; i++ ) {
-		printf( "s%04d ", i );
-		printStudent( &(database->student[i]) );
-		//average += decodeSudentGrade( &(database->student[i]) );
+		printf( "s%04d ", i ); //Id
+		printStudent( &(database->student[i]) ); //name, year, semester, grade
+		if ( decodeStudentParity( &(database->student[i]) ) ) //if corrupt, do not use for average
+			faults++;
+		else
+			average += (double) decodeStudentGrade( &(database->student[i]) );
 	}
-	average /= database->students;
-	//printf( "\n Average grade: %d", average );
+	average /= database->students - faults;
+	printf( "\nAverage grade: %3.2f\n", average );
 }
 
+/**
+ * Returns a pointer to the name of a given student
+ */
 char* decodeStudentName( student_t* student ){
 	return student->name;
 }
 
+/**
+ * Returns the starting year for a given student.
+ */
 int decodeStudentYear( student_t* student ){
 	return ( student->data & 0x1F ) + MIN_YEAR;
 }
 
+/**
+ * Returns the starting semester for a given student. 0 for autumn 1 for spring
+ */
 int decodeStudentSemester( student_t* student ){
 	return ( student->data >> 5 ) & 0x1;
 }
 
+/**
+ * Returns the gade of a student
+ */
 int decodeStudentGrade( student_t* student ){
 	return ( student->data >> 6 ) & 0xFF;
 }
 
+/**
+ * Returns 1 of there were problems with data parity. 0 if no problems
+ */
+int decodeStudentParity( student_t* student ){
+	int parity = 0;
+	int i;
+	for ( i = 0; i < DATA_BITS; i++ )
+		parity ^= ( student->data << i ) & 0x1;
+	return ( ( student->data >> 14 ) & 0x1 ) ^ parity;
+}
+
+/**
+ * Encode student data for space saving. If the entered data does not "fit",
+ * that field is not set and the error flag is asserted
+ */
 student_t encodeStudent( char* name, int year, int semester, int grade ){
 	int i;
 	int parity = 0;
@@ -192,7 +247,11 @@ student_t encodeStudent( char* name, int year, int semester, int grade ){
 	return student;
 }
 
+/**
+ * Tests different inputs to the database, but not the terminal/UI
+ */
 void databaseTest( void ){
+	int i;
 	database_t database;
 	database.students = 0;
 	puts( "Initializing test:" );
@@ -225,14 +284,22 @@ void databaseTest( void ){
 	puts( "( \"J\\nOH\", 2009, 0, 0 )" );
 	addStudent( &database, encodeStudent( "J\nOH", 2009, 0, 0 ) );
 	listStudents( &database );
+	puts( "Write something to do test of filled database" );
+	fflush ( stdout );
+	scanf( "%d", &i );
+	rewind( stdin );
+	puts( "Adding 10000 students" );
+	for ( i = 0; i < DATABASE_SIZE; i++ )
+		addStudent( &database, encodeStudent( "Many", 2009, 0, 128 ) );
+
 }
 
+/**
+ * Prints information about a particular student. If there are parity problems,
+ * this will be displayed.
+ */
 void printStudent( student_t* student ){
-	int parity = 0;
-	int i;
-	for ( i = 0; i < DATA_BITS; i++ )
-		parity ^= ( student->data << i ) & 0x1;
-	if ( ( ( student->data >> 14 ) & 0x1 ) ^ parity ) {
+	if ( decodeStudentParity( student ) ) {
 		printf( "ERROR! DATA IS CORRUPTED!!\n" );
 	} else {
 		printf( "%s ", decodeStudentName( student ) );
