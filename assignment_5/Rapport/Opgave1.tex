@@ -1,0 +1,14 @@
+\section{Opgave 1}
+\subsection{Specifikation, Design og Test}
+	Der ønskes en funktion "calculate" der får det givne program til at udskrive
+\begin{lstlisting}[caption=Ønsket output fra exam.c]
+2+2=4
+4+2=6
+\end{lstlisting}
+
+Da der er givet en hjælpefunktion "helper", som tager 3 heltal (x,y,z) og printer dem på formen "x+y=z", benytter calculate et simpelt funktionskald til helper for at opnå den ønskede udskrift. \\
+
+Det er muligt at inducere fejl i calculate funktionen ved at kalde den med et struct, som indeholder to heltal der ved indbyrdes addition skaber overflow. Grænsen for overflow er implementationsspecifik og medfører udefineret opførsel.\\
+	
+
+Den givne main-funktion bruges til at teste programmet og det producerer den ønskede udskrift.
