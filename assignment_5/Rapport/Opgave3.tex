@@ -1,0 +1,99 @@
+\section{Opgave 3}
+\subsection{Specifikation}
+Der skal skrives et program \emph{cudb}, en database med studerende. For hver
+studerende skal følgende gemmes:
+\begin{itemize}
+	\item Navn, bestående af max fire tegn
+	\item Startår, et tal mellem 2009 og 2040, begge inklusive.
+	\item Start semester: 0 for forår, 1 for efterår
+	\item Karaktergennemsnit, et tal mellem 0 og 255, begge inklusive.
+\end{itemize}
+
+For at gemme dette kompakt, gemmes alt data, på nær navnet, i en enkelt integer.
+Datafrodelingen over de 14 første bits er således:
+\begin{itemize}
+	\item Bit $[0;~4]$: Startår 
+	\item Bit $5$: Semester
+	\item Bit $[6;~13]$: Karakter
+\end{itemize}
+
+Desuden benyttes bit 14 til paritets kontrol og bit 15 indikerer en fejl under
+oprettelse af den studerende.
+
+Programmet skal være i stand til at modtage et antal inputs fra brugeren, i
+form af tal der skrives til konsollen:
+\begin{itemize}
+	\item 0: Slut: Programmet afsluttes og lukker.
+	\item 1: List alle studerende: En liste med alle studerende kommer frem og
+	gennemsnittet af alle deres karakterer udregnes. Studerende med korrupt data
+	medrenes ikke.
+	\item 2: Tilføj studerende: Brugeren indtaster data om en studerende og denne
+	tilføjes til systemet.
+\end{itemize}
+Deuden tilføjes to funktioner
+\begin{itemize}
+	\item 3: Test database: en dummy-database oprettes og et antal studerene
+	tilføjes, nogle med ``gyldig'' data, andre med ugyldig. Dette gøres for nememre
+	at teste databasesystemet.
+	\item 4: Korrupter studerende: Vender bit 0, så paritetsbitten ikke længere
+	passer med dataen. Simulerer fejl under oplagring af data.
+\end{itemize}
+
+Databasen skal kunne indeholde $10000$ studerende
+
+\subsection{Design}
+En type, \emph{student\_t} er allerede oprettet.
+Denne indeholder et \emph{char array} med størrelsen fem,
+til navnet (4 tegn plus terminering) og en \emph{int} til at gemme data.
+
+En ny type, \emph{database\_t} oprettes. Denne type indeholder en variabel, der
+gemmer antallet af studerende i databasen, samt et array på $10000$ studerende.
+
+\subsubsection{Funktioner til behandling af \emph{student\_t} typen}
+\paragraph{student\_t* encodeStudent( char* name, int year, int semester, int
+grade )} Funktion der retunerer en variabel af \emph{student\_t} ud fra
+de givne inputs.
+Der oprettes en midliertidig \emph{student\_t} variabel og alle felter i denne
+sætes til 0 (eller tilsvarende).
+Det tjekkes om alle inputs overholder restriktionerne:
+\begin{itemize}
+	\item \emph{name} skal være på mindre end 4 tegn ex. slut-tegn
+	\item \emph{year} skal være mellem 2009 og 2040, begge inklusive
+	\item \emph{semester} skal være enten 1 eller 0.
+	\item \emph{grade} skal være mellem 0 og 255, begge inklusive
+\end{itemize}
+Alle felter der ikke opfylder dette sættes ikke i variablen der retunerers, og
+er derfor 0, desuden sættes fejflaget, bit 15 højt, hvis dette sker.
+
+\emph{year} skaleres, så 2009 svarer til 0 og 2040 til 31.
+\emph{year}, \emph{semester}, og \emph{grade} får lagt ``bit-masker'' på sig med
+\& operationen og bit-forskydes med operationen $<<$ de lægges nu ind i data
+feltet med operationen $|=$. \& operationen er egenligt ikke nødvendig, men
+medtages da det eferfølgende tal indikerer bit-bredden for tallet der gemmes.
+Det er kun muligt at gøre dette, uden at ryde de relevate områder i
+\emph{data}-bitsne da \emph{data} er sat til 0 fra start.
+
+Paritetsbitten enkodes nu. Dette gøre ved at ``xor''e alle relevante bits i
+\emph{data} sammen med \^ operationen. Denne bit er således høj, hvis der er et
+ulige antal 1'ere i de relevante \emph{data}-bits. Dette kan bruges til at vise
+om et ulige antal bits har ændret sig under lagringen af dataen.
+For mere info om paritet læs: \url{http://en.wikipedia.org/wiki/Parity_bit}
+
+\paragraph{int decodeStudentParity( student\_t* )} retunerer 1, hvis der er
+uverenstemmelse mellem paritetsbitten og resten af dataen i for den pågældende
+studrende.
+
+\paragraph{char* decodeStudentName( student\_t* )} giver en pointer til navnet
+på den pågældende studerende. Egenligt ikke en nødvenighed at have denne
+funktion, men det skaber en vis symetri i resten af koden.
+
+\paragraph{int decodeStudentYear( student\_t* )} og resten af decode
+funktionerne finder det korrekte sted i \emph{data} og benytter bit forskydning og maskering
+til at retunere de originale værdier. for \emph{year} skaleres, så 0 bliver til
+2009, 31 til 2040.
+
+\paragraph{void printStudent( student\_t* )} printer info om den givne
+studerende til terminalen. Hvis der er uoverenstemmelse mellem data og
+paritetsbit printes en fejlbesked i stedet.
+
+\subsubsection{Funktioner til behandling af \emph{database\_t} typen}
