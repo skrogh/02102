@@ -30,6 +30,8 @@
 
 # Eclipse files #
 *.project
+*.cproject
+*.settings
 
 # Logs and databases #
 ######################
