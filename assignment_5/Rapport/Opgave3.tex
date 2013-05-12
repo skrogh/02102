@@ -106,9 +106,12 @@ fuld.
 
 \paragraph{void listStudents( database\_t* database )} Går igennem alle de
 studerende og kalder \emph{void printStudent( student\_t* student )} på dem.
-Forud for dette printes den studerendes nummer (placering i databasen)
+Forud for dette printes den studerendes nummer (placering i databasen).
 
-\subsection{Brugerflade}
+Desuden udregnes alle de studerendes gennemsnit. Studerende med korrupt data
+medtages ikke i denne beregning.
+
+\subsubsection{Brugerflade}
 I \emph{main} funktionen befinder sig en løkke, der leder efter inputs fra
 brugeren. Før hvert kald efter bruger input kaldes \emph{fflush( stdout )} da
 eclipsekonsollen ikke selv håndterer at tømme bufferen efter hver linje.
@@ -118,3 +121,278 @@ linjeskift, der ville blive opfattet ved næste kald efter input.
 Indtastes andet end tal, smides en besked om at det er uden virkning og
 indtastes et tal, der ikke har nogen funktion, mindes brugeren om, hvad de
 forskellige tal gør.
+
+\paragraph{Testfunktioner} Der findes to muligheder for at teste databasen i
+``menuen'' den ene $3$ opretter en ny database og tilføjer nogle personer til
+denne, for at teste at forkerte inpust afvises. 
+Desuden udføres en test af fyldt database ved at lægge 10000 ens studerende ind.
+Da dette fylder konsollen ventes der på et brugerinput, der dog ikke benyttes
+som andet end startbesked. Mere om test senere.
+
+Den anden $4$ korrupterer dataen for en valgt studerende, så paritetskontrollen
+kan testes.
+
+\subsection{Test}
+Testmetoden kales fra terminalen med kommandoen $3$. Denne frsøger at tilføje 13
+studerende til en ny database. Der tilføjes studerende med start år, der er både
+legale og inkorrekte dataindtastniger.
+
+For hver test studerende står først den indtastede data. Det bør bemærkes at
+dette ikke er data indtastet fra konsollen, men kald til \emph{encodeStudent}
+efterfulgt af \emph{addStudent}.
+
+Alt opfører sig som forventet, omend med to særtilfælde:
+\paragraph{J\\0 12abc} Tilføjes, selvom navnet er for langt. Der stoppes dog med
+at læse fra navnet når escapekarakteren ``\\0'' nåes. Dette gør at den
+studerende blot får navnet ``J''. I helle arrayet står: $[J,\\0,\\0,\\0,\\0]$
+
+\paragraph{J\\nOH} Tilføjes ligeledes, navnet er jo på fire karakter, men det
+gliver nogle ``grimheder'', når de studerende skal vises, da linjeskiftet
+printes. Det ville ikke være svært at frasortere denne type af navne, men dette
+var ikke en prioitet.
+
+Gennemsnittet udregnes også korrekt til 36.43 da $\frac{255}{}7 \approx
+36.42857$
+
+Dernæst tilføjes 10000 ens studerende. Des ses at databasen ikke længere
+modtager studerende efter s9999, altså den 10000. studerende. Som ønsket
+
+Hele testsekvensen findes her:
+\begin{lstlisting}[caption=Kald til testfunktionen\, der er klippet
+ca. 10000 linjer ud\, da disse følger samme monster]
+Welcome to CUDB - The C University
+Data Base
+
+0: Halt
+1: List all students
+2: Add a new student
+3: Test database
+4: Corrupt student data >:) (use only for testing)
+
+Enter command: 
+3
+Initializing test:
+( "JOH0", 2009, 0, 0 )
+Adding student: s0000 JOH0 2009 Autumn 000
+( "JOH1", 2008, 0, 0 )
+ERROR! Student data is illegal! JOH1 2009 Autumn 000
+( "JOH2", 2040, 0, 0 )
+Adding student: s0001 JOH2 2040 Autumn 000
+( "JOH3", 2041, 0, 0 )
+ERROR! Student data is illegal! JOH3 2009 Autumn 000
+( "JOH4", 2009, 1, 0 )
+Adding student: s0002 JOH4 2009 Spring 000
+( "JOH5", 2009, 2, 0 )
+ERROR! Student data is illegal! JOH5 2009 Autumn 000
+( "JOH6", 2009, -1, 0 )
+ERROR! Student data is illegal! JOH6 2009 Autumn 000
+( "JOH7", 2009, 0, 255 )
+Adding student: s0003 JOH7 2009 Autumn 255
+( "JOH8", 2009, 0, 256 )
+ERROR! Student data is illegal! JOH8 2009 Autumn 000
+( "JOH9", 2009, 0, -1 )
+ERROR! Student data is illegal! JOH9 2009 Autumn 000
+( "JOH10", 2009, 0, 0 )
+ERROR! Student data is illegal!  2009 Autumn 000
+( "J11", 2009, 0, 0 )
+Adding student: s0004 J11 2009 Autumn 000
+( "J\0 12abc", 2009, 0, 0 )
+Adding student: s0005 J 2009 Autumn 000
+( "J\nOH", 2009, 0, 0 )
+Adding student: s0006 J
+OH 2009 Autumn 000
+s0000 JOH0 2009 Autumn 000
+s0001 JOH2 2040 Autumn 000
+s0002 JOH4 2009 Spring 000
+s0003 JOH7 2009 Autumn 255
+s0004 J11 2009 Autumn 000
+s0005 J 2009 Autumn 000
+s0006 J
+OH 2009 Autumn 000
+
+Average grade: 36.43
+Write something to do test of filled database
+3
+Adding 10000 students
+Adding student: s0007 Many 2009 Autumn 128
+Adding student: s0008 Many 2009 Autumn 128
+...
+...
+Adding student: s9995 Many 2009 Autumn 128
+Adding student: s9996 Many 2009 Autumn 128
+Adding student: s9997 Many 2009 Autumn 128
+Adding student: s9998 Many 2009 Autumn 128
+Adding student: s9999 Many 2009 Autumn 128
+Database is full, contact your local SYS-admin (or don't)
+Database is full, contact your local SYS-admin (or don't)
+Database is full, contact your local SYS-admin (or don't)
+Database is full, contact your local SYS-admin (or don't)
+Database is full, contact your local SYS-admin (or don't)
+Database is full, contact your local SYS-admin (or don't)
+Database is full, contact your local SYS-admin (or don't)
+
+Enter command:
+0
+Bye!
+\end{lstlisting}
+
+Brugerfladen testes nu:
+Først testes navne der er for lange. Det ses at disse slipper igennem, men kun
+de første fire bogstaver gives videre, ellers ville \emph{encodeStudent} fejle:
+\begin{lstlisting}[caption=Test af for lange navne]
+Enter command: 
+2
+Name, 4 chars: John Smith
+Year, 2009-2040: 2010
+Semester, 0/1: 1
+Grade, 0-255: 34
+Adding student: s0000 John 2010 Spring 034
+\end{lstlisting}
+
+Det testes hvad der sker når tekst indtastes i stedet for tal:
+\begin{lstlisting}[caption=Test af tekst i talfelt]
+Enter command: 
+2
+Name, 4 chars: Derp
+Year, 2009-2040: Fo
+Semester, 0/1: 0
+Grade, 0-255: 128
+Error in entered data
+\end{lstlisting}
+Ligeledes for tal, der ikke er ``tiladte''. Det ses at feltet i så fald bliver
+nulstillet og en fejlbesked printes:
+\begin{lstlisting}[caption=Test af forkerte tal i talfelt]
+Enter command: 
+2
+Name, 4 chars: Herp
+Year, 2009-2040: 2020
+Semester, 0/1: 1
+Grade, 0-255: 1337
+ERROR! Student data is illegal! Herp 2020 Spring 000
+\end{lstlisting}
+Disse to håndteres forskelligt, da tekst i et talfelt ikke giver noget tal at
+vidderegive til \emph{encodeStudent} og fejlen derfor smides af
+UI-håndteringsløkken. Testene udføres ikke for resten af felterne, da disse er
+kodet på samme måde.
+
+Der tilføjes et par legale studerende:
+\begin{lstlisting}[caption=Legale studerende]
+Enter command: 
+2
+Name, 4 chars: Jane
+Year, 2009-2040: 2018
+Semester, 0/1: 0
+Grade, 0-255: 234
+Adding student: s0001 Jane 2018 Autumn 234
+
+Enter command: 
+2
+Name, 4 chars: Jack
+Year, 2009-2040: 2040
+Semester, 0/1: 1
+Grade, 0-255: 12
+Adding student: s0002 Jack 2040 Spring 012
+\end{lstlisting}
+
+Og deres samlede gennemsnit udregnes:
+\begin{lstlisting}[caption=Print af database]
+Enter command: 
+1
+s0000 John 2010 Spring 034
+s0001 Jane 2018 Autumn 234
+s0002 Jack 2040 Spring 012
+
+Average grade: 93.33
+\end{lstlisting}
+
+Jane korrupteres:
+\begin{lstlisting}[caption=Korruptering af Jane]
+Enter command: 
+4
+Student id to corrupt: 1
+Before: Jane 2018 Autumn 234
+After: ERROR! DATA IS CORRUPTED!!
+\end{lstlisting}
+
+Databasen printes igen, det ses at Jane ikke tæller med i gennemsnitsudregningen
+mere:
+\begin{lstlisting}[caption=Print af korrupt database]
+Enter command: 
+1
+s0000 John 2010 Spring 034
+s0001 ERROR! DATA IS CORRUPTED!!
+s0002 Jack 2040 Spring 012
+
+Average grade: 23.00
+\end{lstlisting}
+
+Her har jeg glemt, hvordan man slutter programmet og prøver at skrive ``hjælp''.
+Dette håndteres også korrekt:
+\begin{lstlisting}[caption=Tekst i kommandofelt]
+Enter command: 
+Hjælp
+Only numbers are accepted
+\end{lstlisting}
+
+Derefter indtastes ``9001'', for at tjekke håndtering af tal-inpust, der ikke
+har nogen kommando:
+\begin{lstlisting}[caption=Kommandol\oe dst tal i kommandofelt]
+Enter command: 
+9001
+Unknown command. Try:
+
+0: Halt
+1: List all students
+2: Add a new student
+3: Test database
+4: Corrupt student data >:) (use only for testing)
+\end{lstlisting}
+
+Programmet lukkes ved at indtaste ``0'':
+\begin{lstlisting}[caption=afslutnign af program]
+Enter command: 
+0
+bye!
+\end{lstlisting}
+
+\subsubsection{Fejl}
+Der er fundet tre eksempler på ikke optimal opførsel.
+Den ene er, hvis alt for store, eller små tal indtastes, sker der uforudsigelige
+ting
+\begin{lstlisting}[caption=Afslutnign af program]
+Enter command: 
+Enter command: 
+-9999999999999999999999999999999999999999999
+
+Average grade: -1.#J
+\end{lstlisting}
+Dette skyldes sandsynligvis overflow.
+At gennemsnittet udregnes til $-1.\#J$ skyldes at der ingen studerende er i
+databasen og der derfor deles med nul, dette er fuldt legalt i C. $-1.\#J$
+betyder sandsyligvis enten $-\infty$, $\infty$ eller deling med $0$.
+Dette ses dog ikke som en alvorlig fejl, da et gennemsnit for ingen studerende
+jo ikke er definerbart.
+
+den sidste ``fejl'' opstår, hvis programmet termineres direkte fra
+\emph{Eclipse}, dette medfører en opførsel der tyder på at en masse tomme linjer
+sendes til konsollen:
+\begin{lstlisting}[caption=Terminering af program fra Eclipse]
+Enter command: 
+Only numbers are accepted
+...
+...
+Enter command: 
+Only numbers are accepted
+
+Enter command: 
+Only numbers are accepted
+
+Enter command: 
+Only numbers are accepted
+
+Enter command: 
+Only numbers are accepted
+\end{lstlisting}
+Antalet af linjer varierer, men sm regel mellem 12 og 14.
+
+
